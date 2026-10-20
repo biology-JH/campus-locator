@@ -47,5 +47,5 @@
 
 
 ## Vercel serverless build repair
-- [x] Resolve the reported error “no Express entrypoint in dist/public” by routing through the root Express serverless handler; keep the Vite frontend output in `dist/public`, but do not make that directory the Express entrypoint directory.
+- [ ] Resolve the reported error “no Express entrypoint in dist/public” by routing through the root Express serverless handler; keep the Vite frontend output in `dist/public`, but do not make that directory the Express entrypoint directory.
 - [x] Ensure `package.json`’s build command compiles the frontend and backend for Vercel serverless use, push the configuration to GitHub `main`, and do not run heavy local build tests.
