@@ -1,0 +1,2955 @@
+{
+  "source": "Explicit user-provided timetable cell corrections; each override requires an exact room, week, day, period, and occupant-text match.",
+  "overrides": [
+    {
+      "room": "A203",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "11 PS S 2-1 E 10 PS S 4 E",
+      "code": "SE",
+      "displayName": "Sarah Emberger"
+    },
+    {
+      "room": "A203",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson1",
+      "occupant": "11 PS S 2-1 E 10 PS S 4 E",
+      "code": "SE",
+      "displayName": "Sarah Emberger"
+    },
+    {
+      "room": "A203",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "11 PS S 2-1 E 10 PS S 4 E",
+      "code": "SE",
+      "displayName": "Sarah Emberger"
+    },
+    {
+      "room": "A203",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "11 PS S 2-1 E 10 PS S 4 E",
+      "code": "SE",
+      "displayName": "Sarah Emberger"
+    },
+    {
+      "room": "A203",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson3",
+      "occupant": "11 PS S 2-1 E 10 PS S 4 E",
+      "code": "SE",
+      "displayName": "Sarah Emberger"
+    },
+    {
+      "room": "A203",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson1",
+      "occupant": "11 PS S 2-1 E 10 PS S 4 E",
+      "code": "SE",
+      "displayName": "Sarah Emberger"
+    },
+    {
+      "room": "A512",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 GE B OH G L1 12 GE B OS G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "12 GE B OH G L1 12 GE B OS G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "12 GE B OH G L1 12 GE B OS G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 GE B OH G L1 12 GE B OS G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B606",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 GE B OH G L1 12 GE B OS G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B607",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 GE B OH G L1 12 GE B OS L1 G",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 EC B OS W L1 13 EC B OH W L1",
+      "code": "BW",
+      "displayName": "Woo Sik Byun"
+    },
+    {
+      "room": "A802",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 EC B OS W L1 13 EC B OH W L1",
+      "code": "BW",
+      "displayName": "Woo Sik Byun"
+    },
+    {
+      "room": "A802",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 EC B OS W L1 13 EC B OH W L1",
+      "code": "BW",
+      "displayName": "Woo Sik Byun"
+    },
+    {
+      "room": "A802",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 EC B OS W L1 13 EC B OH W L1",
+      "code": "BW",
+      "displayName": "Woo Sik Byun"
+    },
+    {
+      "room": "A804",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 EC B OS L1 W 13 EC B OH W L1",
+      "code": "BW",
+      "displayName": "Woo Sik Byun"
+    },
+    {
+      "room": "A804",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 EC B OS L1 W 13 EC B OH W L1",
+      "code": "BW",
+      "displayName": "Woo Sik Byun"
+    },
+    {
+      "room": "Art1",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "12 H AR Y TH AL L2 12 H AR Y TS AL L2",
+      "code": "HYAL",
+      "displayName": "Ho Ying Amata Lo"
+    },
+    {
+      "room": "Art1",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 H AR Y TH AL L2 12 H AR Y TS AL L2",
+      "code": "HYAL",
+      "displayName": "Ho Ying Amata Lo"
+    },
+    {
+      "room": "Art1",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "12 H AR Y TH AL L2 12 H AR Y TS AL L2",
+      "code": "HYAL",
+      "displayName": "Ho Ying Amata Lo"
+    },
+    {
+      "room": "Art1",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 H AR Y TH AL L2 12 H AR Y TS AL L2",
+      "code": "HYAL",
+      "displayName": "Ho Ying Amata Lo"
+    },
+    {
+      "room": "Art1",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "12 H AR Y TH AL L2 12 H AR Y TS AL L2",
+      "code": "HYAL",
+      "displayName": "Ho Ying Amata Lo"
+    },
+    {
+      "room": "Art2",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "12 H AR Y TH AL L2 12 H AR Y TS AL L2",
+      "code": "HYAL",
+      "displayName": "Ho Ying Amata Lo"
+    },
+    {
+      "room": "Art1",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 AR B TH D L1 13 AR B TS D L1",
+      "code": "BD",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "room": "Art2",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 AR B TH D L1 13 AR B TS D L1",
+      "code": "BD",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "room": "Art2",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 AR B TH D L1 13 AR B TS D L1",
+      "code": "BD",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "room": "Art2",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 AR B TH D L1 13 AR B TS D L1",
+      "code": "BD",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "room": "Art2",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 AR B TH D L1 13 AR B TS D L1",
+      "code": "BD",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "room": "Art2",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 AR B TH D L1 13 AR B TS D L1",
+      "code": "BD",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "10 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "08 MU S4 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson3",
+      "occupant": "08 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "10 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "08 MU S8 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 ES SH L1 P M",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "11 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson7",
+      "occupant": "07 MU S8 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "07 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson3",
+      "occupant": "09 MU S7 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "11 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson6",
+      "occupant": "10 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson7",
+      "occupant": "09 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson2",
+      "occupant": "11 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson5",
+      "occupant": "09 MU S3 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "08 MU S8 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "07 MU S9 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "10 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson6",
+      "occupant": "11 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "10 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "07 MU S8 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson3",
+      "occupant": "11 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "10 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "10 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson5",
+      "occupant": "08 MU S4 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "09 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson7",
+      "occupant": "07 MU S5 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson2",
+      "occupant": "10 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson3",
+      "occupant": "10 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson6",
+      "occupant": "09 MU S7 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson1",
+      "occupant": "10 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson2",
+      "occupant": "07 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson5",
+      "occupant": "07 MU S9 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "10 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "07 MU S5 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "09 MU S3 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B408",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson5",
+      "occupant": "08 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "08 MU S6 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson5",
+      "occupant": "07 DR A4 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "12 MU P SH S L1 12 MU P SS S L1",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "07 MU S4 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "07 DR A6 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "08 MU S7 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 MU SH L1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson5",
+      "occupant": "07 DR A5 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 MU P SH S L1 12 MU P SS S L1",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson3",
+      "occupant": "09 MU S5 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson1",
+      "occupant": "10 MU S2 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson2",
+      "occupant": "11 MU S3 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson3",
+      "occupant": "12 MU SH L1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson5",
+      "occupant": "09 MU S1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "08 MU S1 1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "12 MU P SH S L1 12 MU P SS S L1",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "09 MU S6 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson5",
+      "occupant": "08 MU S3 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson6",
+      "occupant": "07 MU S1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "07 MU S1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 MU P SH S L1 12 MU P SS S L1",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "08 MU S7 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "12 MU P SH S L1 12 MU P SS S L1",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "11 MU S1 P S",
+      "code": "PS",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "07 DR A5 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson2",
+      "occupant": "08 MU S1 1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson3",
+      "occupant": "07 DR A6 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 MU SH L1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson6",
+      "occupant": "09 MU S5 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson2",
+      "occupant": "08 MU S6 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson3",
+      "occupant": "07 DR A4 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "11 MU S3 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "07 MU S4 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "09 MU S6 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "09 MU S1 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "12 MU P SH S L1 12 MU P SS S L1",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B513",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson5",
+      "occupant": "08 MU S3 P S",
+      "code": "PS",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "room": "B607",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "11I E2 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "B304",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "12 ES P SH M L1 12 ES P SS M L1",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B303",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "13 ES C SH M L3 13 ES C SS M L3",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B401",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "12 ES P SH M L1 12 ES P SS M L1",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B401",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 SV ES C SH L3 C 12 SV ES C SS L3 C",
+      "staff": [
+        {
+          "code": "SV",
+          "displayName": "Stephanie Visser"
+        },
+        {
+          "code": "CC",
+          "displayName": "Curtis Chung"
+        }
+      ]
+    },
+    {
+      "room": "B401",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 ES P SH M L1 12 ES P SS M L1",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B404",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "13 ES C SH M L3 13 ES C SS M L3",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B404",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "13 ES C SH M L3 13 ES C SS M L3",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B404",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 ES C SH M L3 13 ES C SS M L3",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B403",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 ES P SH M L1 12 ES P SS M L1",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B403",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "13 ES C SH M L3 13 ES C SS M L3",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B605",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "12 SV ES C SH L3 C 12 SV ES C SS L3 C",
+      "staff": [
+        {
+          "code": "SV",
+          "displayName": "Stephanie Visser"
+        },
+        {
+          "code": "CC",
+          "displayName": "Curtis Chung"
+        }
+      ]
+    },
+    {
+      "room": "B605",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "12 ES P SH M L1 12 ES P SS M L1",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B301",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 ES C SS B L2 13 ES C SH B L2",
+      "code": "CB",
+      "displayName": "Craig Billington"
+    },
+    {
+      "room": "B301",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 ES C SS B L2 13 ES C SH B L2",
+      "code": "CB",
+      "displayName": "Craig Billington"
+    },
+    {
+      "room": "B301",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 ES C SS B L2 13 ES C SH B L2",
+      "code": "CB",
+      "displayName": "Craig Billington"
+    },
+    {
+      "room": "B404",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 BIO C HL M 4 13 BIO C SL M 4",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B404",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "13 BIO C HL M 4 13 BIO C SL M 4",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B404",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "13 BIO C HL M 4 13 BIO C SL M 4",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B403",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 ES C SS B L2 13 ES C SH B L2",
+      "code": "CB",
+      "displayName": "Craig Billington"
+    },
+    {
+      "room": "B403",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "13 BIO C HL M 4 13 BIO C SL M 4",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B602",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 ES C SS B L2 13 ES C SH B L2",
+      "code": "CB",
+      "displayName": "Craig Billington"
+    },
+    {
+      "room": "B604",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "13 BIO C HL M 4 13 BIO C SL M 4",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B604",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "13 BIO C HL M 4 13 BIO C SL M 4",
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "room": "B605",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 ES C SS B L2 13 ES C SH B L2",
+      "code": "CB",
+      "displayName": "Craig Billington"
+    },
+    {
+      "room": "A407",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "13 ES B SS G L1 13 ES B SH G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B301",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "13 ES B SS G L1 13 ES B SH G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B301",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 S CH K MH E L5 12 S CH K MS E L5",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B301",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "12 PH M YH S L3 12 PH M YS S L3",
+      "code": "MS",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "room": "B301",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "12 PH S YH KI L2 12 PH S YS KI L2",
+      "code": "SKI",
+      "displayName": "Samuel Kim"
+    },
+    {
+      "room": "B301",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "12 PH S YH KI L2 12 PH S YS KI L2",
+      "code": "SKI",
+      "displayName": "Samuel Kim"
+    },
+    {
+      "room": "B304",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 ES B SS G L1 13 ES B SH G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B304",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "12 PH M YH S L3 12 PH M YS S L3",
+      "code": "MS",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "room": "B303",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "12 PH S YH KI L2 12 PH S YS KI L2",
+      "code": "SKI",
+      "displayName": "Samuel Kim"
+    },
+    {
+      "room": "B305",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "12 PH M YH S L3 12 PH M YS L3 S",
+      "code": "MS",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "room": "B305",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 PH S YH KI L2 12 PH S YS L2 KI",
+      "code": "SKI",
+      "displayName": "Samuel Kim"
+    },
+    {
+      "room": "B305",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "13 ES B SS G L1 13 ES B SH L1 G",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B305",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "12 PH S YH KI L2 12 PH S YS L2 KI",
+      "code": "SKI",
+      "displayName": "Samuel Kim"
+    },
+    {
+      "room": "B404",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "13 ES B SS G L1 13 ES B SH G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B601",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "12 S CH K MH E L5 12 S CH K MS E L5",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B601",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "12 S CH K MH E L5 12 S CH K MS E L5",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B601",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 S CH K MH E L5 12 S CH K MS E L5",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B601",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 S CH K MH E L5 12 S CH K MS E L5",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B601",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 S CH K MH E L5 12 S CH K MS E L5",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "A512",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 S PS V YS R L1 13 S PS V YH R L1",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A512",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 S PS V YS R L1 13 S PS V YH R L1",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A512",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 S PS V YS R L1 13 S PS V YH R L1",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A511",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "12 PS A YS S L3 12 PS A YH S L3",
+      "code": "AS",
+      "displayName": "Saraswati Austin"
+    },
+    {
+      "room": "A709",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 PS A YS S L3 12 PS A YH S L3",
+      "code": "AS",
+      "displayName": "Saraswati Austin"
+    },
+    {
+      "room": "A702",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "12 PS A YS S L3 12 PS A YH S L3",
+      "code": "AS",
+      "displayName": "Saraswati Austin"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Monday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 S PS V YS R L1 13 S PS V YH R L1",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Thursday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson7",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Friday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 S PS V YS R L1 13 S PS V YH R L1",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Monday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 PS A YS S L3 12 PS A YH S L3",
+      "code": "AS",
+      "displayName": "Saraswati Austin"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Thursday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson7",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Friday",
+      "period": "mentor",
+      "occupant": "Ph oen ix5 G P",
+      "code": "GP",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "room": "A801",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "12 PS A YS S L3 12 PS A YH S L3",
+      "code": "AS",
+      "displayName": "Saraswati Austin"
+    },
+    {
+      "room": "A802",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "12 PS A YS S L3 12 PS A YH S L3",
+      "code": "AS",
+      "displayName": "Saraswati Austin"
+    },
+    {
+      "room": "A804",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 S PS V YS L1 R 13 S PS V YH R L1",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "B301",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "12 PH B YH T L1 12 PH B YS T L1",
+      "code": "BT",
+      "displayName": "Brian Totman"
+    },
+    {
+      "room": "B304",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "13 PH D YS K L1 13 PH D YH K L1",
+      "code": "DK",
+      "displayName": "Daniel Kim"
+    },
+    {
+      "room": "B303",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 ES P SS M L2 12 ES P SH M L2",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B303",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "12 ES P SS M L2 12 ES P SH M L2",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B303",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 ES P SS M L2 12 ES P SH M L2",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B305",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 PH D YS K L1 13 PH D YH L1 K",
+      "code": "DK",
+      "displayName": "Daniel Kim"
+    },
+    {
+      "room": "B305",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "13 PH D YS K L1 13 PH D YH L1 K",
+      "code": "DK",
+      "displayName": "Daniel Kim"
+    },
+    {
+      "room": "B305",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "13 PH D YS K L1 13 PH D YH L1 K",
+      "code": "DK",
+      "displayName": "Daniel Kim"
+    },
+    {
+      "room": "B401",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "12 ES P SS M L2 12 ES P SH M L2",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B404",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "12 ES P SS M L2 12 ES P SH M L2",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B501",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "13 PH D YS L1 K 13 PH D YH K L1",
+      "code": "DK",
+      "displayName": "Daniel Kim"
+    },
+    {
+      "room": "B501",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "13 PH D YS L1 K 13 PH D YH K L1",
+      "code": "DK",
+      "displayName": "Daniel Kim"
+    },
+    {
+      "room": "B501",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 PH B YH L1 T 12 PH B YS T L1",
+      "code": "BT",
+      "displayName": "Brian Totman"
+    },
+    {
+      "room": "B501",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 PH B YH L1 T 12 PH B YS T L1",
+      "code": "BT",
+      "displayName": "Brian Totman"
+    },
+    {
+      "room": "B605",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "12 ES P SS M L2 12 ES P SH M L2",
+      "code": "PM",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "room": "B605",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 PH B YH T L1 12 PH B YS T L1",
+      "code": "BT",
+      "displayName": "Brian Totman"
+    },
+    {
+      "room": "B307",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 PH B YH L1 T 12 PH B YS T L1",
+      "code": "BT",
+      "displayName": "Brian Totman"
+    },
+    {
+      "room": "B305",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 PH D YH N L3 13 PH D YS L3 N",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B305",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 PH D YH N L3 13 PH D YS L3 N",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B305",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 PH D YH N L3 13 PH D YS L3 N",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B501",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 PH M YH L3 S 12 PH M YS S L3",
+      "code": "MS",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "room": "B501",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "13 ES B SS L1 G 13 ES B SH G L1",
+      "code": "BG",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "room": "B501",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "12 PH M YH L3 S 12 PH M YS S L3",
+      "code": "MS",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "room": "B501",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 PH M YH L3 S 12 PH M YS S L3",
+      "code": "MS",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "room": "B605",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "13 PH D YS N L2 13 PH D YH N L2",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B605",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "13 PH D YS N L2 13 PH D YH N L2",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B702",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "13 PH D YS N L2 13 PH D YH N L2",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "A206",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "12 CO V MH L1 T 12 CO V MS T L1",
+      "code": "VT",
+      "displayName": "Vaishali Tanna"
+    },
+    {
+      "room": "A206",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 CO V MH L1 T 12 CO V MS T L1",
+      "code": "VT",
+      "displayName": "Vaishali Tanna"
+    },
+    {
+      "room": "A206",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 CO V MH L1 T 12 CO V MS T L1",
+      "code": "VT",
+      "displayName": "Vaishali Tanna"
+    },
+    {
+      "room": "A206",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 CO V MH L1 T 12 CO V MS T L1",
+      "code": "VT",
+      "displayName": "Vaishali Tanna"
+    },
+    {
+      "room": "A206",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 CO V MH L1 T 12 CO V MS T L1",
+      "code": "VT",
+      "displayName": "Vaishali Tanna"
+    },
+    {
+      "room": "A205",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 CO E MH M L1 13 CO E MS M L1",
+      "code": "EM",
+      "displayName": "Erwin Suguitan Manuel"
+    },
+    {
+      "room": "A205",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 CO E MH M L1 13 CO E MS M L1",
+      "code": "EM",
+      "displayName": "Erwin Suguitan Manuel"
+    },
+    {
+      "room": "A205",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 CO E MH M L1 13 CO E MS M L1",
+      "code": "EM",
+      "displayName": "Erwin Suguitan Manuel"
+    },
+    {
+      "room": "A205",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 CO E MH M L1 13 CO E MS M L1",
+      "code": "EM",
+      "displayName": "Erwin Suguitan Manuel"
+    },
+    {
+      "room": "A205",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 CO E MH M L1 13 CO E MS M L1",
+      "code": "EM",
+      "displayName": "Erwin Suguitan Manuel"
+    },
+    {
+      "room": "A205",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 CO E MH M L1 13 CO E MS M L1",
+      "code": "EM",
+      "displayName": "Erwin Suguitan Manuel"
+    },
+    {
+      "room": "B304",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 CH H MH R L4 13 CH H MS R L 4",
+      "code": "HR",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "room": "B304",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 CH H MH R L4 13 CH H MS R L 4",
+      "code": "HR",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "room": "B304",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 CH H MH R L4 13 CH H MS R L 4",
+      "code": "HR",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "room": "B304",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "12 S CH K MH E L4 12 S CH K MS E L4",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B303",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 CH H MH R L4 13 CH H MS R L 4",
+      "code": "HR",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "room": "B305",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "13 PH D YS N L2 13 PH D YH L2 N",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B501",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 PH S YH L2 KI 12 PH S YS KI L2",
+      "code": "SKI",
+      "displayName": "Samuel Kim"
+    },
+    {
+      "room": "B501",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 PH D YH L3 N 13 PH D YS N L3",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B501",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 PH D YH L3 N 13 PH D YS N L3",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B601",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 S CH K MH E L4 12 S CH K MS E L4",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B601",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "12 S CH K MH E L4 12 S CH K MS E L4",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B601",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 S CH K MH E L4 12 S CH K MS E L4",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B601",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 CH H MH R L4 13 CH H MS R L 4",
+      "code": "HR",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "room": "B601",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "12 S CH K MH E L4 12 S CH K MS E L4",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B602",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "12 S CH K MH E L4 12 S CH K MS E L4",
+      "code": "SKE",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "room": "B604",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 CH H MH R L4 13 CH H MS R L 4",
+      "code": "HR",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "room": "B303",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 CH M MH G L3 13 CH M MS G L 3",
+      "code": "MG",
+      "displayName": "Mahua Ganguly"
+    },
+    {
+      "room": "B601",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13 CH M MH G L3 13 CH M MS G L 3",
+      "code": "MG",
+      "displayName": "Mahua Ganguly"
+    },
+    {
+      "room": "B602",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 CH M MH G L3 13 CH M MS G L 3",
+      "code": "MG",
+      "displayName": "Mahua Ganguly"
+    },
+    {
+      "room": "B602",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 CH M MH G L3 13 CH M MS G L 3",
+      "code": "MG",
+      "displayName": "Mahua Ganguly"
+    },
+    {
+      "room": "B602",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13 CH M MH G L3 13 CH M MS G L 3",
+      "code": "MG",
+      "displayName": "Mahua Ganguly"
+    },
+    {
+      "room": "B602",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13 CH M MH G L3 13 CH M MS G L 3",
+      "code": "MG",
+      "displayName": "Mahua Ganguly"
+    },
+    {
+      "room": "B307",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "13 T CH A MS L 1 Y 13 T CH A MH Y L1",
+      "code": "TAY",
+      "displayName": "Pui Sze Teresa Au Yeung"
+    },
+    {
+      "room": "B307",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "13 T CH A MS L 1 Y 13 T CH A MH Y L1",
+      "code": "TAY",
+      "displayName": "Pui Sze Teresa Au Yeung"
+    },
+    {
+      "room": "B501",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "13 PH D YS L2 N 13 PH D YH N L2",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B501",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 PH D YS L2 N 13 PH D YH N L2",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "B604",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13 PH D YH N L3 13 PH D YS N L3",
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "room": "A209",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson6",
+      "occupant": "12 CL LS L2 Z Y",
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou"
+    },
+    {
+      "room": "A207",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "13F RB SL 1 K G",
+      "code": "KG",
+      "displayName": "Kouaho (guy) Gueye"
+    },
+    {
+      "room": "A207",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13F RB SL 1 K G",
+      "code": "KG",
+      "displayName": "Kouaho (guy) Gueye"
+    },
+    {
+      "room": "A207",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13F RB SL 1 K G",
+      "code": "KG",
+      "displayName": "Kouaho (guy) Gueye"
+    },
+    {
+      "room": "A207",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "13F RB SL 1 K G",
+      "code": "KG",
+      "displayName": "Kouaho (guy) Gueye"
+    },
+    {
+      "room": "A207",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "13F RB SL 1 K G",
+      "code": "KG",
+      "displayName": "Kouaho (guy) Gueye"
+    },
+    {
+      "room": "A207",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "13F RB SL 1 K G",
+      "code": "KG",
+      "displayName": "Kouaho (guy) Gueye"
+    },
+    {
+      "room": "A306",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "13 SE HS HL 1 LF",
+      "code": "LF",
+      "displayName": "Lucy Ferris"
+    },
+    {
+      "room": "A412",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "12 CL LS L2 Z Y",
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou"
+    },
+    {
+      "room": "A402",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson2",
+      "occupant": "12 CHI SL 1 Q A",
+      "code": "QA",
+      "displayName": "Ninghui Anastasia Qiu"
+    },
+    {
+      "room": "A401",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson1",
+      "occupant": "12 CHI SL 1 Q A",
+      "code": "QA",
+      "displayName": "Ninghui Anastasia Qiu"
+    },
+    {
+      "room": "A401",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "12 CHI SL 1 Q A",
+      "code": "QA",
+      "displayName": "Ninghui Anastasia Qiu"
+    },
+    {
+      "room": "A401",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "12 CHI SL 1 Q A",
+      "code": "QA",
+      "displayName": "Ninghui Anastasia Qiu"
+    },
+    {
+      "room": "A413",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "13 SE HS HL 1 LF",
+      "code": "LF",
+      "displayName": "Lucy Ferris"
+    },
+    {
+      "room": "A511",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "12 S PS V YS R L2 12 S PS V YH R L2",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A511",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson1",
+      "occupant": "12 CL LS L2 ZY",
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou"
+    },
+    {
+      "room": "A609",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 S PS V YS R L2 12 S PS V YH R L2",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A709",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson3",
+      "occupant": "13 SE HS HL 1 LF",
+      "code": "LF",
+      "displayName": "Lucy Ferris"
+    },
+    {
+      "room": "A709",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson6",
+      "occupant": "12 CHI SL 1 Q A",
+      "code": "QA",
+      "displayName": "Ninghui Anastasia Qiu"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 S PS V YS R L2 12 S PS V YH R L2",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "A804",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 S PS V YS L2 R 12 S PS V YH R L2",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "B301",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson4",
+      "occupant": "12 BIO H HL C 2 12 BIO H SL C 2",
+      "code": "HC",
+      "displayName": "Harley Cunningham"
+    },
+    {
+      "room": "B401",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "12 BIO H HL C 2 12 BIO H SL C 2",
+      "code": "HC",
+      "displayName": "Harley Cunningham"
+    },
+    {
+      "room": "B404",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "12 BIO H HL C 2 12 BIO H SL C 2",
+      "code": "HC",
+      "displayName": "Harley Cunningham"
+    },
+    {
+      "room": "B403",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "12 BIO H HL C 2 12 BIO H SL C 2",
+      "code": "HC",
+      "displayName": "Harley Cunningham"
+    },
+    {
+      "room": "B604",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 BIO H HL C 2 12 BIO H SL C 2",
+      "code": "HC",
+      "displayName": "Harley Cunningham"
+    },
+    {
+      "room": "B605",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "12 BIO H HL C 2 12 BIO H SL C 2",
+      "code": "HC",
+      "displayName": "Harley Cunningham"
+    },
+    {
+      "room": "B606",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 S PS V YS R L2 12 S PS V YH R L2",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "B607",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "12 CL LS L2 Z Y",
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou"
+    },
+    {
+      "room": "B704",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "12 CHI SL 1 Q A",
+      "code": "QA",
+      "displayName": "Ninghui Anastasia Qiu"
+    },
+    {
+      "room": "B704",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson2",
+      "occupant": "12 CL LS L2 Z Y",
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou"
+    },
+    {
+      "room": "B706",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "12 S PS V YS R L2 12 S PS V YH R L2",
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "room": "B706",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "12 CL LS L2 ZY",
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou"
+    },
+    {
+      "room": "A308",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "A307",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "A307",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "12 BU B SH D L2 12 BU B SS D L2",
+      "code": "BD",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "room": "A311",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "A302",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson3",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "A505",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson4",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "A511",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "12 BU B SH D L2 12 BU B SS D L2",
+      "code": "BD",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "room": "A606",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "12 BU B SH D L2 12 BU B SS D L2",
+      "code": "BD",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "room": "A605",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "13 EL L LS M L2 13 EL L LH M L2",
+      "code": "LM",
+      "displayName": "Lauren Minnie"
+    },
+    {
+      "room": "A605",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson2",
+      "occupant": "13 EL L LS M L2 13 EL L LH M L2",
+      "code": "LM",
+      "displayName": "Lauren Minnie"
+    },
+    {
+      "room": "A605",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson1",
+      "occupant": "13 EL L LS M L2 13 EL L LH M L2",
+      "code": "LM",
+      "displayName": "Lauren Minnie"
+    },
+    {
+      "room": "A605",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson1",
+      "occupant": "13 EL L LS M L2 13 EL L LH M L2",
+      "code": "LM",
+      "displayName": "Lauren Minnie"
+    },
+    {
+      "room": "A605",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "13 EL L LS M L2 13 EL L LH M L2",
+      "code": "LM",
+      "displayName": "Lauren Minnie"
+    },
+    {
+      "room": "A605",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson6",
+      "occupant": "13 EL L LS M L2 13 EL L LH M L2",
+      "code": "LM",
+      "displayName": "Lauren Minnie"
+    },
+    {
+      "room": "A702",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "12 BU B SH D L2 12 BU B SS D L2",
+      "code": "BD",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "room": "A801",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "12 BU B SH D L2 12 BU B SS D L2",
+      "code": "BD",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "room": "B606",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "B703",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "B704",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson6",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "B704",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson3",
+      "occupant": "12 MA AH L3 LL",
+      "code": "HY",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "room": "B707",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "12 BU B SH D L2 12 BU B SS D L2",
+      "code": "BD",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "13 AR JA TH L2 T J A T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson3",
+      "occupant": "10 AR T2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Monday",
+      "period": "lesson7",
+      "occupant": "11 AR T3 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson1",
+      "occupant": "09 AR T9 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson2",
+      "occupant": "10 AR T2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "13 AR JA TH L2 T J A T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "lesson7",
+      "occupant": "09 AR T1 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson2",
+      "occupant": "10 AR T2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson3",
+      "occupant": "09 AR T10 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson4",
+      "occupant": "13 AR JA TH L2 T J A T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson6",
+      "occupant": "11 AR T3 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Wednesday",
+      "period": "lesson7",
+      "occupant": "09 AR T5 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Thursday",
+      "period": "lesson2",
+      "occupant": "08 VA 6 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "08 VA 8 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "13 AR JA TH L2 T J A T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "09 AR T7 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "A",
+      "day": "Friday",
+      "period": "lesson4",
+      "occupant": "11 AR T3 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson2",
+      "occupant": "13 AR TH L2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Monday",
+      "period": "lesson6",
+      "occupant": "11 AR T3 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson3",
+      "occupant": "13 AR JA TH L2 T J A T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson5",
+      "occupant": "09 AR T1 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson6",
+      "occupant": "09 AR T5 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Tuesday",
+      "period": "lesson7",
+      "occupant": "10 AR T2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson1",
+      "occupant": "13 AR JA TH L2 T J A T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson2",
+      "occupant": "11 AR T3 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson6",
+      "occupant": "09 AR T10 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Wednesday",
+      "period": "lesson7",
+      "occupant": "10 AR T2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson2",
+      "occupant": "13 AR TH L2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson3",
+      "occupant": "09 AR T9 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson4",
+      "occupant": "10 AR T2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Thursday",
+      "period": "lesson6",
+      "occupant": "11 AR T3 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson1",
+      "occupant": "13 AR TH L2 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson2",
+      "occupant": "09 AR T7 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson3",
+      "occupant": "08 VA 8 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "room": "Art3",
+      "week": "B",
+      "day": "Friday",
+      "period": "lesson5",
+      "occupant": "08 VA 6 JA T",
+      "code": "JAT",
+      "displayName": "Jacques Alain Thomass"
+    }
+  ]
+}

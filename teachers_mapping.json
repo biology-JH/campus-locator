@@ -1,0 +1,778 @@
+{
+  "schemaVersion": 1,
+  "title": "Roomfinder teacher mappings and disambiguation rules",
+  "status": "Compiled from the user-confirmed instructions in this project conversation. Preserve exact cell matches and do not guess unresolved teachers.",
+  "resolutionOrder": [
+    "First apply an exact entry from server/data/manual-staff-overrides.json only when room, week, day, period, and full occupant text all match.",
+    "Then apply the explicit exclusions and contextual teacher rules in server/staff-resolution.ts.",
+    "Then use grade-and-subject disambiguation in server/data/teacher-subject-rules.json.",
+    "Use server/data/teacher-abbreviations.json as the complete staff roster and abbreviation fallback; never choose between duplicate initials without context."
+  ],
+  "sourceFiles": [
+    {
+      "path": "server/data/teacher-abbreviations.json",
+      "purpose": "Complete staff roster and abbreviation-to-name candidates (145 roster entries; repeated initials are intentionally grouped in byCode)."
+    },
+    {
+      "path": "server/data/teacher-subject-rules.json",
+      "purpose": "Grade/subject-specific mappings generated from first.xlsx; use these to disambiguate duplicate initials."
+    },
+    {
+      "path": "server/data/manual-staff-overrides.json",
+      "purpose": "Authoritative exact room/week/day/period/source-text corrections, including the individual cells listed in chat. This is the exhaustive source for all active cell-level overrides."
+    },
+    {
+      "path": "server/staff-resolution.ts",
+      "purpose": "Active resolution precedence, subject-context handling, mentor overrides, and exclusions."
+    }
+  ],
+  "contextMappings": [
+    {
+      "code": "BT",
+      "context": "Mathematics (MAT/MATA/MAA or user-described Math)",
+      "displayName": "Tao Jennifer Bian",
+      "userName": "Bian Tao"
+    },
+    {
+      "code": "BT",
+      "context": "Science or Physics (SCI/PHY)",
+      "displayName": "Brian Totman"
+    },
+    {
+      "code": "LL",
+      "context": "Mathematics",
+      "displayName": "Lily Lin"
+    },
+    {
+      "code": "LL",
+      "context": "Science or PE",
+      "displayName": "Luke Leader"
+    },
+    {
+      "code": "LK",
+      "context": "Art",
+      "displayName": "Leanne Kingston"
+    },
+    {
+      "code": "LK",
+      "context": "History",
+      "displayName": "Kelsey Lowe"
+    },
+    {
+      "code": "BB",
+      "context": "Drama/Theatre",
+      "displayName": "Brandi Burtts"
+    },
+    {
+      "code": "BB",
+      "context": "Other subjects and pastoral time",
+      "displayName": "Brandon Burtts"
+    },
+    {
+      "code": "BD",
+      "context": "Art",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "code": "BD",
+      "context": "Other subjects (including the user-described non-Art assignments)",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "code": "GP",
+      "context": "English, EAL/ELL, or Integrated English (including IE)",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "code": "GP",
+      "context": "CUG only",
+      "displayName": "Prachi Gupta"
+    },
+    {
+      "code": "HR",
+      "context": "Science or Chemistry",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "code": "HR",
+      "context": "Chinese/CLL and the other Chinese-language contexts in the workbook rules",
+      "displayName": "Runlin He"
+    },
+    {
+      "code": "MS",
+      "context": "Science or Physics",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "code": "MS",
+      "context": "Coding",
+      "displayName": "Shahzeb Mohammad"
+    },
+    {
+      "code": "JH",
+      "context": "Biology; use the full name in the staff-facing interface",
+      "displayName": "Joyce Ho"
+    },
+    {
+      "code": "YA",
+      "context": "Active staff mapping after Yvonne Au left",
+      "displayName": "Anantha Yerikalapudi",
+      "formerStaffNotToAssign": "Yvonne Au"
+    }
+  ],
+  "additionalUserConfirmedRules": [
+    {
+      "person": "Paul Gillespie",
+      "subjects": ["English", "Integrated English", "IE"],
+      "exampleSourceText": "11I E2 G P",
+      "note": "The user also wrote the surname phonetically as Gipse; the roster spelling is Gillespie."
+    },
+    {
+      "person": "Billy Grindley",
+      "subject": "Geography",
+      "code": "BG"
+    },
+    {
+      "person": "Woo Sik Byun",
+      "subject": "Year 13 Economics",
+      "code": "BW"
+    },
+    {
+      "person": "Ho Ying Amata Lo",
+      "subject": "Year 12 Art",
+      "code": "HYAL",
+      "note": "The user called her Amata Lo."
+    },
+    {
+      "person": "Deeksha Gokool Bhakarreea",
+      "subject": "Year 13 Art",
+      "code": "BD"
+    },
+    {
+      "person": "Sean Connaughton",
+      "subject": "Design Technology (DT)"
+    },
+    {
+      "person": "Vaishali Tanna",
+      "subjects": ["Computer Science"],
+      "pastoralRole": "Pastoral form"
+    },
+    {
+      "person": "Sarah Emberger",
+      "assignment": "Personal Study (PS)",
+      "sourceText": "11 PS S 2-1 E 10 PS S 4 E",
+      "locations": [
+        "A203, Week A, Monday, Lesson 1",
+        "A203, Week A, Thursday, Lesson 1",
+        "A203, Week B, Monday, Lesson 1",
+        "A203, Week B, Tuesday, Lesson 1",
+        "A203, Week B, Wednesday, Lesson 3",
+        "A203, Week B, Thursday, Lesson 1"
+      ]
+    }
+  ],
+  "pastoralAndEligibilityRules": [
+    {
+      "term": "PT",
+      "meaning": "Pastoral Time / Mentor Group"
+    },
+    {
+      "person": "Luke Leader",
+      "pastoralTime": true
+    },
+    {
+      "person": "Lily Lin",
+      "pastoralTime": false
+    },
+    {
+      "person": "Tao Jennifer Bian (Bian Tao)",
+      "pastoralTime": true
+    },
+    {
+      "person": "Brian Totman",
+      "pastoralTime": false
+    },
+    {
+      "person": "Brandon Burtts",
+      "pastoralTime": true
+    },
+    {
+      "person": "Vaishali Tanna",
+      "pastoralRole": "Pastoral form"
+    },
+    {
+      "person": "Sarah Morrison",
+      "lessonTeaching": false,
+      "code": "MS"
+    },
+    {
+      "person": "Yin Hung Sze",
+      "lessonTeaching": false,
+      "code": "YS"
+    },
+    {
+      "person": "Sunny Chan",
+      "lessonTeaching": false,
+      "note": "The user said Sunny Chan has nothing; do not assign her from an ambiguous SC token."
+    },
+    {
+      "person": "Yvonne Au",
+      "employmentStatus": "Left; do not assign",
+      "code": "YA",
+      "replacementMapping": "Anantha Yerikalapudi"
+    },
+    {
+      "person": "Steve Hackman",
+      "code": "SH",
+      "lessonAttribution": "Do not attribute to any designated Lab room; preserve room occupancy."
+    }
+  ],
+  "exactCellPatternMappings": [
+    {
+      "userText": ["13 ES B SS G L1", "13 ES B G L1"],
+      "code": "BG",
+      "displayName": "Billy Grindley",
+      "matchedCells": 5,
+      "note": "Includes one A407 cell outside the designated Lab list. The active exact source-text variations and locations are in manual-staff-overrides.json."
+    },
+    {
+      "userText": ["12 PH M YH S L3", "12 PH M S L3"],
+      "code": "MS",
+      "displayName": "Mason Stewart",
+      "matchedCells": 3,
+      "note": "Use the exact location/text override; the parsed source sometimes has YS in the second segment."
+    },
+    {
+      "userText": ["12 PH S YH KI L2", "12 PH S KI L2"],
+      "code": "SKI",
+      "displayName": "Samuel Kim",
+      "matchedCells": 5
+    },
+    {
+      "userText": ["12 S CH K MH E L5", "12 S CH K MS E L5"],
+      "code": "SKE",
+      "displayName": "Simon Kelleher",
+      "matchedCells": 6,
+      "note": "This exact context overrides the ambiguous MS abbreviation."
+    },
+    {
+      "userText": ["13 ES C SS B L2", "13 ES C B L2"],
+      "code": "CB",
+      "displayName": "Craig Billington",
+      "matchedCells": 6
+    },
+    {
+      "userText": ["13 BIO C HL M 4", "13 BIO C M 4"],
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan",
+      "matchedCells": 6
+    },
+    {
+      "userText": ["12 GE B OH G L1", "12 GE B OS G L1"],
+      "code": "BG",
+      "displayName": "Billy Grindley",
+      "subjectContext": "Geography/Year 12 Geography",
+      "note": "Use the room-specific entries in manual-staff-overrides.json; not every string in this group is a single cell pattern."
+    },
+    {
+      "userText": ["13 EC B OS W L1", "13 EC B OH W L1"],
+      "code": "BW",
+      "displayName": "Woo Sik Byun",
+      "subjectContext": "Year 13 Economics"
+    },
+    {
+      "userText": ["12 H AR Y TH AL L2", "12 H AR Y TS AL L2"],
+      "code": "HYAL",
+      "displayName": "Ho Ying Amata Lo",
+      "subjectContext": "Year 12 Art"
+    },
+    {
+      "userText": ["13 AR B TH D L1", "13 AR B TS D L1"],
+      "code": "BD",
+      "displayName": "Deeksha Gokool Bhakarreea",
+      "subjectContext": "Year 13 Art"
+    },
+    {
+      "userText": ["12 ES P M L1", "12 ES P SS M L1"],
+      "code": "PM",
+      "displayName": "Patrick Mcgovern",
+      "matchedCells": 5
+    },
+    {
+      "userText": ["13 ES C M L3", "13 ES C SS M L3"],
+      "code": "CM",
+      "displayName": "Caroline Jane Morgan",
+      "matchedCells": 5
+    },
+    {
+      "userText": ["12 SV ES C L3 C", "12 SV ES C SS L3 C"],
+      "codes": ["SV", "CC"],
+      "displayNames": ["Stephanie Visser", "Curtis Chung"],
+      "matchedCells": 2,
+      "note": "User explicitly named both; retain both names despite the general one-teacher-per-slot rule."
+    },
+    {
+      "userText": ["12 PS A YS S L3 12 PS A YH S L3"],
+      "code": "AS",
+      "displayName": "Saraswati Austin",
+      "matchedCells": 6,
+      "subjectContext": "Personal Study"
+    },
+    {
+      "userText": ["Ph oen ix5 G P"],
+      "code": "GP",
+      "displayName": "Paul Gillespie",
+      "matchedCells": 12,
+      "subjectContext": "Mentor Group / Phoenix 5"
+    },
+    {
+      "userText": [
+        "13 S PS V YS R L1 13 S PS V YH R L1",
+        "13 S PS V YS L1 R 13 S PS V YH R L1"
+      ],
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy",
+      "matchedCells": 6,
+      "subjectContext": "Personal Study"
+    },
+    {
+      "userText": [
+        "12 PH B YH T L1 12 PH B YS T L1",
+        "12 PH B YH L1 T 12 PH B YS T L1"
+      ],
+      "code": "BT",
+      "displayName": "Brian Totman",
+      "matchedCells": 5,
+      "subjectContext": "Physics"
+    },
+    {
+      "userText": [
+        "13 PH D YS K L1 13 PH D YH K L1",
+        "13 PH D YS L1 K 13 PH D YH K L1",
+        "13 PH D YS K L1 13 PH D YH L1 K"
+      ],
+      "code": "DK",
+      "displayName": "Daniel Kim",
+      "matchedCells": 6,
+      "subjectContext": "Physics"
+    },
+    {
+      "userText": ["12 ES P SS M L2 12 ES P SH M L2"],
+      "code": "PM",
+      "displayName": "Patrick Mcgovern",
+      "matchedCells": 6,
+      "subjectContext": "English"
+    },
+    {
+      "userText": ["13 PH D YH N L3 13 PH D YS L3 N"],
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi",
+      "matchedCells": 3,
+      "subjectContext": "Physics"
+    },
+    {
+      "userText": ["12 PH M YH L3 S 12 PH M YS S L3"],
+      "code": "MS",
+      "displayName": "Mason Stewart",
+      "matchedCells": 3,
+      "subjectContext": "Physics"
+    },
+    {
+      "userText": ["13 ES B SS L1 G 13 ES B SH G L1"],
+      "code": "BG",
+      "displayName": "Billy Grindley",
+      "matchedCells": 1,
+      "subjectContext": "English"
+    },
+    {
+      "userText": ["13 PH D YS N L2 13 PH D YH N L2"],
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi",
+      "matchedCells": 3,
+      "subjectContext": "Physics"
+    },
+    {
+      "userText": ["13 PH D YS N L2 13 PH D YH L2 N"],
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi",
+      "matchedCells": 1,
+      "subjectContext": "Confirmed user correction"
+    },
+    {
+      "userText": ["12 PH S YH L2 KI 12 PH S YS KI L2"],
+      "code": "SKI",
+      "displayName": "Samuel Kim",
+      "matchedCells": 1,
+      "subjectContext": "Confirmed user correction"
+    },
+    {
+      "userText": ["13 PH D YH L3 N 13 PH D YS N L3"],
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi",
+      "matchedCells": 2,
+      "subjectContext": "Confirmed user correction"
+    },
+    {
+      "userText": ["12 CO V MH L1 T 12 CO V MS T L1"],
+      "code": "VT",
+      "displayName": "Vaishali Tanna",
+      "matchedCells": 5,
+      "subjectContext": "Confirmed user correction"
+    },
+    {
+      "userText": ["13 CO E MH M L1 13 CO E MS M L1"],
+      "code": "EM",
+      "displayName": "Erwin Suguitan Manuel",
+      "matchedCells": 6,
+      "subjectContext": "Confirmed user correction"
+    },
+    {
+      "userText": ["13 CH H MH R L4 13 CH H MS R L 4"],
+      "code": "HR",
+      "displayName": "Hannah Roberts",
+      "matchedCells": 6,
+      "subjectContext": "Confirmed user correction"
+    },
+    {
+      "userText": ["12 S CH K MH E L4 12 S CH K MS E L4"],
+      "code": "SKE",
+      "displayName": "Simon Kelleher",
+      "matchedCells": 6,
+      "subjectContext": "Confirmed user correction"
+    },
+    {
+      "userText": ["13 CH M MH G L3 13 CH M MS G L 3"],
+      "code": "MG",
+      "displayName": "Mahua Ganguly",
+      "matchedCells": 6,
+      "subjectContext": "Chemistry"
+    },
+    {
+      "userText": ["13 T CH A MS L 1 Y 13 T CH A MH Y L1"],
+      "code": "TAY",
+      "displayName": "Pui Sze Teresa Au Yeung",
+      "matchedCells": 2,
+      "subjectContext": "Chinese / exact user correction"
+    },
+    {
+      "userText": ["13 PH D YS L2 N 13 PH D YH N L2"],
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi",
+      "matchedCells": 2,
+      "subjectContext": "Physics"
+    },
+    {
+      "userText": ["13 PH D YH N L3 13 PH D YS N L3"],
+      "code": "DN",
+      "displayName": "Daniel Owusu Nyantakyi",
+      "matchedCells": 1,
+      "subjectContext": "Physics"
+    },
+    {
+      "userText": ["12 BIO H HL C 2 12 BIO H SL C 2"],
+      "code": "HC",
+      "displayName": "Harley Cunningham",
+      "matchedCells": 6,
+      "subjectContext": "Latest user correction"
+    },
+    {
+      "userText": ["12 S PS V YS R L2 12 S PS V YH R L2"],
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy",
+      "matchedCells": 5,
+      "subjectContext": "Latest user correction"
+    },
+    {
+      "userText": ["12 S PS V YS L2 R 12 S PS V YH R L2"],
+      "code": "SVR",
+      "displayName": "Shanmuga Vadivu Ramasamy",
+      "matchedCells": 1,
+      "subjectContext": "Latest user correction"
+    },
+    {
+      "userText": ["13 SE HS HL 1 LF"],
+      "code": "LF",
+      "displayName": "Lucy Ferris",
+      "matchedCells": 3,
+      "subjectContext": "Latest user correction"
+    },
+    {
+      "userText": ["12 CHI SL 1 Q A"],
+      "code": "QA",
+      "displayName": "Ninghui Anastasia Qiu",
+      "matchedCells": 6,
+      "subjectContext": "Latest user correction"
+    },
+    {
+      "userText": ["12 CL LS L2 Z Y"],
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou",
+      "matchedCells": 4,
+      "subjectContext": "Latest user correction"
+    },
+    {
+      "userText": ["12 CL LS L2 ZY"],
+      "code": "ZY",
+      "displayName": "Yuyang (yosef) Zhou",
+      "matchedCells": 2,
+      "subjectContext": "Latest user correction"
+    }
+  ],
+  "roomSpecificRules": [
+    {
+      "room": "B408",
+      "teacher": "Paul Stanley",
+      "rule": "The user specified Paul Stanley for the occupied B408 cells; exact records are in manual-staff-overrides.json."
+    },
+    {
+      "room": "B513",
+      "defaultTeacher": "Peter Stapleton",
+      "exceptions": [
+        {
+          "week": "A",
+          "day": "Thursday",
+          "period": "Lesson 1",
+          "teacher": "Paul Stanley"
+        },
+        {
+          "week": "B",
+          "day": "Tuesday",
+          "period": "Lesson 3",
+          "teacher": "Paul Stanley"
+        }
+      ],
+      "note": "Exact occupied-cell text is authoritative in manual-staff-overrides.json."
+    },
+    {
+      "room": "B607",
+      "week": "A",
+      "day": "Tuesday",
+      "period": "Lesson 3",
+      "sourceText": "11I E2 G P",
+      "teacher": "Paul Gillespie",
+      "subject": "Integrated English"
+    },
+    {
+      "room": "A207",
+      "teacher": "Kouaho (guy) Gueye",
+      "sourceText": "13F RB SL 1 K G",
+      "rule": "Choose Guy over Sam Lingwood for the occupied A207 cells with the SL/KG pair."
+    }
+  ],
+  "otherProjectRulesMentionedAlongsideTeacherCorrections": {
+    "labs": [
+      "B301",
+      "B304",
+      "B303",
+      "B305",
+      "B401",
+      "B404",
+      "B403",
+      "B501",
+      "B601",
+      "B602",
+      "B604",
+      "B605"
+    ],
+    "excludedRooms": [
+      "GLC",
+      "Auditorium",
+      "LT1",
+      "LT2",
+      "GLC glassroom",
+      "A603",
+      "A708"
+    ],
+    "knownCellArtifactsToClear": [
+      "A40 7-A4 08 + GLC 4/F (12:05-12:35 V) T:B409, Week A Thursday Lesson 4",
+      "A40 7-A4 08 + GLC 4/F (12:05-12:35 P) S:B513, Week A Wednesday Lesson 4 and Week B Tuesday Lesson 4",
+      "A40 7-A4 08 + GLC 4/F (12:05-12:35 C) G:B306, Week A Friday Lesson 4 and Week B Thursday Lesson 4"
+    ]
+  },
+  "knownAmbiguities": [
+    {
+      "token": "SC",
+      "userStatements": ["SC is art", "Sean is DT", "Sunny Chan has nothing"],
+      "instruction": "These statements may refer to different people or contexts. Do not collapse them into one mapping; retain exact workbook and manual-cell rules, and ask before changing an unclear cell."
+    },
+    {
+      "code": "PS",
+      "candidateNames": ["Paul Stanley", "Peter Stapleton"],
+      "instruction": "Use the exact B408/B513 room rules and manual cell overrides."
+    },
+    {
+      "code": "MS",
+      "candidateNames": ["Mason Stewart", "Shahzeb Mohammad", "Sarah Morrison"],
+      "instruction": "Use subject context, exclude Sarah Morrison from lessons, exclude Shahzeb Mohammad from Year 12–13 lessons, and honor exact cell overrides."
+    },
+    {
+      "code": "SS",
+      "instruction": "The user provided SS-containing source-text patterns with explicit named corrections; use those exact-cell overrides, not a guessed roster expansion."
+    }
+  ],
+  "withdrawnInstructions": [
+    {
+      "sourcePattern": ["12 BIO H HL C 2", "12 BIO H C 2"],
+      "suggestedName": "Harley",
+      "status": "Withdrawn by user with 'ignore this command'; do not apply as a teacher mapping."
+    }
+  ],
+  "finalNote": "The complete roster, subject-context rules, and all active exact-cell room assignments are preserved in the three source files listed above. Treat the active files as authoritative when this summary and a cell-specific record differ.",
+  "userConfirmedContextRules": {
+    "duplicateInitialSelection": [
+      {
+        "code": "BD",
+        "rules": [
+          "09F/S and 09L map to Brendan Dunstan-Smith",
+          "08L maps to Deeksha Gokool Bhakarreea",
+          "Unicorn 1 maps to Brendan Dunstan-Smith"
+        ]
+      },
+      {
+        "code": "GP",
+        "rules": ["10I E1 and 11I E2 map to Paul Gillespie"]
+      },
+      {
+        "subject": "EN",
+        "teacher": "Denise Josiah"
+      },
+      {
+        "subject": "EL",
+        "rules": [
+          "English Literature maps to Eric Layman where the EL subject context is authoritative",
+          "English teacher context maps to James Carnaby",
+          "When EL conflicts with Charlie, choose Janet Brooks, not Charlie"
+        ]
+      },
+      {
+        "subject": "BIO",
+        "teacher": "Jacinta Lauren James"
+      },
+      {
+        "subject": "MAT",
+        "rules": [
+          "Sam Lingwood is the Math teacher",
+          "MA maps to Wesley Koekemoer where that is the source initial context",
+          "MA maps to Naveen Kumar where that is the source initial context",
+          "M A maps to Amulya Malaki"
+        ]
+      },
+      {
+        "subject": "HIS",
+        "teacher": "Kelsey Lowe"
+      },
+      {
+        "subject": "CL",
+        "rules": ["Year 12–13 CL M M C maps to Margaret Chou, not Charlie"]
+      },
+      {
+        "sourceInitials": "X F",
+        "teacher": "Xinyao (yoyo) Feng, not Charlie"
+      },
+      {
+        "sourceInitials": "ZJW",
+        "teacher": "Zhen Jane Wang"
+      },
+      {
+        "teacher": "Yuki Liang",
+        "lessonTeaching": false
+      },
+      {
+        "code": "MS",
+        "rules": [
+          "Shahzeb Mohammad does not teach Year 12–13 lessons",
+          "Use Mason Stewart for those Year 12–13 MS cells"
+        ]
+      },
+      {
+        "sourceInitials": "C W",
+        "teacher": "Catherine Wu"
+      },
+      {
+        "sourceInitials": "F G",
+        "teacher": "Gareth Flint"
+      },
+      {
+        "sourceInitials": "L F",
+        "teacher": "Lucy Ferris"
+      },
+      {
+        "sourceInitials": "V T",
+        "teacher": "Vidit Tanwar where the source initials are the teacher initials; preserve exact Vaishali exceptions"
+      },
+      {
+        "sourceInitials": "ZL U",
+        "rule": "Treat the final two alphabetic tokens as the teacher initials, not as a middle-name fragment"
+      }
+    ]
+  },
+  "selectedMultiNamePreferences": {
+    "Denise Josiah": "Choose Denise Josiah over the other candidate in the confirmed ambiguous English contexts.",
+    "Mason Stewart": "Choose Mason Stewart over Shahzeb Mohammad for the confirmed Year 12–13 MS contexts.",
+    "Paul Gillespie": "Choose Paul Gillespie for 10I E1 and 11I E2.",
+    "Eric Layman": "Choose Eric Layman in the confirmed EL context.",
+    "Jacinta Lauren James": "Choose Jacinta Lauren James in Biology contexts.",
+    "Kelsey Lowe": "Choose Kelsey Lowe in History contexts.",
+    "Margaret Chou": "Choose Margaret Chou for Year 12–13 CL M M C.",
+    "Wesley Koekemoer": "Choose Wesley Koekemoer in the confirmed MA context."
+  },
+  "latestUserConfirmedRules": {
+    "harley": "12 BIO H HL C 2 12 BIO H C 2 maps to Harley Cunningham; the active export variant is exact-mapped.",
+    "shanmuga": "12 S PS V R L2 ... maps to Shanmuga Vadivu Ramasamy, including the reordered A804 variant.",
+    "lucyFerris": "13 SE HL 1 maps to Lucy Ferris.",
+    "anastasia": "12 CHI 1 maps to Ninghui Anastasia Qiu, not Sam Lingwood.",
+    "yuyang": "12 CL L2 maps to Yuyang (yosef) Zhou, not Sihan Charlie Li.",
+    "a207": "A207 SL/KG cells map to Kouaho (guy) Gueye, not Sam Lingwood.",
+    "year12English": "Remove Steve Hackman from Year 12 ES L3.",
+    "physics": "Year 12–13 PHI cells map to Brian Liu only.",
+    "steveEligibility": "Steve Hackman teaches Years 7–9 only; remove him from Year 10–13 lessons, including 12 BU.",
+    "ysDisplay": "Suppress YS when no full name is resolved; do not display the placeholder text “No full name found in the supplied staff list”.",
+    "catherine": "13 EN L3 / 13 EN GH L3 C W maps to Catherine Wu.",
+    "jordanHallas": "07 SCI 10 JH A maps to Jordan Hallas.",
+    "sunnySun": "12 CL L3 / 12 CL LS L3 S S Y maps to Shufan (sunny) Sun.",
+    "ben": "Display as Ben O'Donnell.",
+    "joyceEligibility": "Joyce Ho teaches Years 11–13 only; Year 7–10 Joyce Ho attributions must resolve to Jordan Hallas.",
+    "07LScience": "07L S3 LL maps to Luke Leader.",
+    "jordanMaths": "07 MA T7 A, 08 MA T8 A, and 09 MA T5 A variants map to Jordan Hallas.",
+    "brendanBusiness": "12 BU B D L2 / 12 BU B SS D L2 maps to Brendan Dunstan-Smith.",
+    "chi13": "Remove Sam Lingwood from 13 CHI 2; 13 CHI 1 maps to Onki Wong.",
+    "ananthaMaths": "13 MA L2 Y A maps to Anantha Yerikalapudi.",
+    "leanne": "08L S6 LK maps to Leanne Kingston.",
+    "steveGp": "11 GP 3 maps to Steve Hackman as an explicit exception.",
+    "garethEnglish": "12 EN L1 maps to Gareth Flint.",
+    "a203": "Remove Peter Stapleton and Paul Stanley from room A203.",
+    "rb12": "Remove Sam Lingwood from 12F RB 1.",
+    "lucy12": "12 SE HL 1 maps to Lucy Ferris.",
+    "hazelMaths": "12 MA L3 maps to Hazel Yuen.",
+    "tao09": "09L S4 B T maps to Tao Jennifer Bian.",
+    "english12L1": "12 EL L1 maps to Philip Donald Chiaro; remove Sihan Charlie Li.",
+    "english13L2": "13 EL L2 maps to Lauren Minnie.",
+    "english13L3": "13 EL L3 maps to Janet Brooks; remove Sihan Charlie Li.",
+    "english12L3": "12 EL L3 removes Sihan Charlie Li.",
+    "englishHl": "12–13 EL HL 1 removes Sam Lingwood.",
+    "onki": "13 CHI 1 maps to Onki Wong.",
+    "amulya": "13 EN L1 maps to Amulya Malaki.",
+    "john": "Display as John O'Brien.",
+    "clCharlie": "Remove Sihan Charlie Li from 12 CL L1, 13 CL L2, and 13 CL L4.",
+    "chiSam": "Remove Sam Lingwood from 12 CHI L2; Sam should not teach Chinese.",
+    "englishHannah": "Remove Hannah Glendinning from 12 EN L1; Hannah G is not an English teacher.",
+    "jessika": "12 BU M J L3 variants map to Jessika Mansen.",
+    "patrickScience": "12 ES P M L1 and L2 variants map to Patrick Mcgovern.",
+    "vaishaliSabretooth": "Sabretooth 5 mentor group maps to Vaishali Tanna.",
+    "matthewBusiness": "13 BU M T L1 and L3 variants map to Matthew Trethewey.",
+    "umerBusiness": "12 BU B U L1 and 13 BU B U L2 variants map to Umer Babar.",
+    "harleyBiology": "12 BIO H ... C1 variants map to Harley Cunningham.",
+    "jordanScience": "09 SCI 6/7 A variants map to Jordan Hallas.",
+    "jordanMathsRS": "10 MA RS CI1 A maps to Jordan Hallas.",
+    "alanMaths": "12 MA IHL 1 R maps to Alan Kenneth Ramm.",
+    "saraswatiMaths": "Remove Saraswati Austin from 12 MA L1.",
+    "steveGp1": "10 GP 1 maps to Steve Hackman.",
+    "christyHigherEd": "12T HE C G1 maps to Christy Greenfeather.",
+    "brandiHigherEd": "13T HE B ... B1 variants map to Brandi Burtts.",
+    "jacquesArt3": "In Art3, replace Ashleigh Jurrius (JA) with Jacques Alain Thomass (JAT) for every matching cell.",
+    "dtSean": "12 DT S C1 and 13 DT S C2 variants map to Sean Connaughton.",
+    "dtSamRemoval": "Remove Sam Lingwood from 13 DT L1.",
+    "dtJohn": "13 DT J O1 variants map to John O'Brien.",
+    "brandiHigherEdL1": "13T HE HL 1 B B maps to Brandi Burtts."
+  }
+}

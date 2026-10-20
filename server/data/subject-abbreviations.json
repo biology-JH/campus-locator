@@ -1,0 +1,1760 @@
+{
+  "sourceFile": "backup.xlsx",
+  "sourceSheet": "Subjects",
+  "entryCount": 238,
+  "byShort": {
+    "07CAL": {
+      "short": "07CAL",
+      "grade": "07",
+      "code": "CAL",
+      "fullName": "Chinese (CAL)"
+    },
+    "07CLL": {
+      "short": "07CLL",
+      "grade": "07",
+      "code": "CLL",
+      "fullName": "Chinese (CLL)"
+    },
+    "07CS(CAL)": {
+      "short": "07CS(CAL)",
+      "grade": "07",
+      "code": "CS(CAL)",
+      "fullName": "Chinese Studies (CAL)"
+    },
+    "07CS(CLL)": {
+      "short": "07CS(CLL)",
+      "grade": "07",
+      "code": "CS(CLL)",
+      "fullName": "Chinese Studies (CLL)"
+    },
+    "07DRA": {
+      "short": "07DRA",
+      "grade": "07",
+      "code": "DRA",
+      "fullName": "Drama"
+    },
+    "07DT": {
+      "short": "07DT",
+      "grade": "07",
+      "code": "DT",
+      "fullName": "Technology (DT)"
+    },
+    "07EE": {
+      "short": "07EE",
+      "grade": "07",
+      "code": "EE",
+      "fullName": "English Enhancement"
+    },
+    "07ELL": {
+      "short": "07ELL",
+      "grade": "07",
+      "code": "ELL",
+      "fullName": "English"
+    },
+    "07ET": {
+      "short": "07ET",
+      "grade": "07",
+      "code": "ET",
+      "fullName": "Technology"
+    },
+    "07FRE": {
+      "short": "07FRE",
+      "grade": "07",
+      "code": "FRE",
+      "fullName": "French"
+    },
+    "07IE": {
+      "short": "07IE",
+      "grade": "07",
+      "code": "IE",
+      "fullName": "Integrated English"
+    },
+    "07LS": {
+      "short": "07LS",
+      "grade": "07",
+      "code": "LS",
+      "fullName": "Life Skills & Wellness"
+    },
+    "07MAT": {
+      "short": "07MAT",
+      "grade": "07",
+      "code": "MAT",
+      "fullName": "Mathematics"
+    },
+    "07MUS": {
+      "short": "07MUS",
+      "grade": "07",
+      "code": "MUS",
+      "fullName": "Music"
+    },
+    "07PE": {
+      "short": "07PE",
+      "grade": "07",
+      "code": "PE",
+      "fullName": "Physical & Health Education"
+    },
+    "07PT": {
+      "short": "07PT",
+      "grade": "07",
+      "code": "PT",
+      "fullName": "Pastoral Time"
+    },
+    "07SCI": {
+      "short": "07SCI",
+      "grade": "07",
+      "code": "SCI",
+      "fullName": "Science"
+    },
+    "07SS": {
+      "short": "07SS",
+      "grade": "07",
+      "code": "SS",
+      "fullName": "Social Studies"
+    },
+    "07VA": {
+      "short": "07VA",
+      "grade": "07",
+      "code": "VA",
+      "fullName": "Visual Arts"
+    },
+    "08CAL": {
+      "short": "08CAL",
+      "grade": "08",
+      "code": "CAL",
+      "fullName": "Chinese (CAL)"
+    },
+    "08CLL": {
+      "short": "08CLL",
+      "grade": "08",
+      "code": "CLL",
+      "fullName": "Chinese (CLL)"
+    },
+    "08CS (CAL)": {
+      "short": "08CS (CAL)",
+      "grade": "08",
+      "code": "CS (CAL)",
+      "fullName": "Chinese Studies (CAL)"
+    },
+    "08CS (CLL)": {
+      "short": "08CS (CLL)",
+      "grade": "08",
+      "code": "CS (CLL)",
+      "fullName": "Chinese Studies (CLL)"
+    },
+    "08DT": {
+      "short": "08DT",
+      "grade": "08",
+      "code": "DT",
+      "fullName": "Technology (DT)"
+    },
+    "08EE": {
+      "short": "08EE",
+      "grade": "08",
+      "code": "EE",
+      "fullName": "English Enhancement"
+    },
+    "08ELL": {
+      "short": "08ELL",
+      "grade": "08",
+      "code": "ELL",
+      "fullName": "English"
+    },
+    "08ET": {
+      "short": "08ET",
+      "grade": "08",
+      "code": "ET",
+      "fullName": "Technology"
+    },
+    "08FRE": {
+      "short": "08FRE",
+      "grade": "08",
+      "code": "FRE",
+      "fullName": "French"
+    },
+    "08IE": {
+      "short": "08IE",
+      "grade": "08",
+      "code": "IE",
+      "fullName": "Integrated English"
+    },
+    "08LS": {
+      "short": "08LS",
+      "grade": "08",
+      "code": "LS",
+      "fullName": "Life Skills & Wellness"
+    },
+    "08MAT": {
+      "short": "08MAT",
+      "grade": "08",
+      "code": "MAT",
+      "fullName": "Mathematics"
+    },
+    "08MUS": {
+      "short": "08MUS",
+      "grade": "08",
+      "code": "MUS",
+      "fullName": "Music"
+    },
+    "08PE": {
+      "short": "08PE",
+      "grade": "08",
+      "code": "PE",
+      "fullName": "Physical & Health Education"
+    },
+    "08PT": {
+      "short": "08PT",
+      "grade": "08",
+      "code": "PT",
+      "fullName": "Pastoral Time"
+    },
+    "08SCI": {
+      "short": "08SCI",
+      "grade": "08",
+      "code": "SCI",
+      "fullName": "Science"
+    },
+    "08SS": {
+      "short": "08SS",
+      "grade": "08",
+      "code": "SS",
+      "fullName": "Social Studies"
+    },
+    "08VA": {
+      "short": "08VA",
+      "grade": "08",
+      "code": "VA",
+      "fullName": "Visual Arts"
+    },
+    "09ART": {
+      "short": "09ART",
+      "grade": "09",
+      "code": "ART",
+      "fullName": "Visual Arts"
+    },
+    "09CAL": {
+      "short": "09CAL",
+      "grade": "09",
+      "code": "CAL",
+      "fullName": "Chinese (CAL)"
+    },
+    "09CLL": {
+      "short": "09CLL",
+      "grade": "09",
+      "code": "CLL",
+      "fullName": "Chinese (CLL)"
+    },
+    "09COD": {
+      "short": "09COD",
+      "grade": "09",
+      "code": "COD",
+      "fullName": "Technology (Coding)"
+    },
+    "09CS (CAL)": {
+      "short": "09CS (CAL)",
+      "grade": "09",
+      "code": "CS (CAL)",
+      "fullName": "Chinese Studies (CAL)"
+    },
+    "09CS (CLL)": {
+      "short": "09CS (CLL)",
+      "grade": "09",
+      "code": "CS (CLL)",
+      "fullName": "Chinese Studies (CLL)"
+    },
+    "09DRA": {
+      "short": "09DRA",
+      "grade": "09",
+      "code": "DRA",
+      "fullName": "Drama"
+    },
+    "09DT": {
+      "short": "09DT",
+      "grade": "09",
+      "code": "DT",
+      "fullName": "Technology (DT)"
+    },
+    "09EE": {
+      "short": "09EE",
+      "grade": "09",
+      "code": "EE",
+      "fullName": "English Enhancement"
+    },
+    "09ENG": {
+      "short": "09ENG",
+      "grade": "09",
+      "code": "ENG",
+      "fullName": "English"
+    },
+    "09FRE": {
+      "short": "09FRE",
+      "grade": "09",
+      "code": "FRE",
+      "fullName": "French"
+    },
+    "09FS": {
+      "short": "09FS",
+      "grade": "09",
+      "code": "FS",
+      "fullName": "Financial Studies"
+    },
+    "09GEO": {
+      "short": "09GEO",
+      "grade": "09",
+      "code": "GEO",
+      "fullName": "Geography"
+    },
+    "09HIS": {
+      "short": "09HIS",
+      "grade": "09",
+      "code": "HIS",
+      "fullName": "History"
+    },
+    "09LS": {
+      "short": "09LS",
+      "grade": "09",
+      "code": "LS",
+      "fullName": "Life Skills & Wellness"
+    },
+    "09MAT": {
+      "short": "09MAT",
+      "grade": "09",
+      "code": "MAT",
+      "fullName": "Mathematics"
+    },
+    "09MATA": {
+      "short": "09MATA",
+      "grade": "09",
+      "code": "MATA",
+      "fullName": "Accelerated Mathematics"
+    },
+    "09MUS": {
+      "short": "09MUS",
+      "grade": "09",
+      "code": "MUS",
+      "fullName": "Music"
+    },
+    "09PE": {
+      "short": "09PE",
+      "grade": "09",
+      "code": "PE",
+      "fullName": "Physical & Health Education"
+    },
+    "09SCI": {
+      "short": "09SCI",
+      "grade": "09",
+      "code": "SCI",
+      "fullName": "Science"
+    },
+    "10ART": {
+      "short": "10ART",
+      "grade": "10",
+      "code": "ART",
+      "fullName": "Art & Design"
+    },
+    "10BIO": {
+      "short": "10BIO",
+      "grade": "10",
+      "code": "BIO",
+      "fullName": "Biology"
+    },
+    "10BUS": {
+      "short": "10BUS",
+      "grade": "10",
+      "code": "BUS",
+      "fullName": "Business Studies"
+    },
+    "10CAL": {
+      "short": "10CAL",
+      "grade": "10",
+      "code": "CAL",
+      "fullName": "Chinese Second Language"
+    },
+    "10CHM": {
+      "short": "10CHM",
+      "grade": "10",
+      "code": "CHM",
+      "fullName": "Chemistry"
+    },
+    "10CLL": {
+      "short": "10CLL",
+      "grade": "10",
+      "code": "CLL",
+      "fullName": "Chinese First Language"
+    },
+    "10CS": {
+      "short": "10CS",
+      "grade": "10",
+      "code": "CS",
+      "fullName": "Computer Science"
+    },
+    "10CUG": {
+      "short": "10CUG",
+      "grade": "10",
+      "code": "CUG",
+      "fullName": "Career & University Guidance"
+    },
+    "10DRA": {
+      "short": "10DRA",
+      "grade": "10",
+      "code": "DRA",
+      "fullName": "Drama"
+    },
+    "10DTG": {
+      "short": "10DTG",
+      "grade": "10",
+      "code": "DTG",
+      "fullName": "Design & Technology (Graphics)"
+    },
+    "10DTR": {
+      "short": "10DTR",
+      "grade": "10",
+      "code": "DTR",
+      "fullName": "Design & Technology (RAM)"
+    },
+    "10EAL": {
+      "short": "10EAL",
+      "grade": "10",
+      "code": "EAL",
+      "fullName": "English as a Second Language"
+    },
+    "10ECO": {
+      "short": "10ECO",
+      "grade": "10",
+      "code": "ECO",
+      "fullName": "Economics"
+    },
+    "10ELL": {
+      "short": "10ELL",
+      "grade": "10",
+      "code": "ELL",
+      "fullName": "English First Language"
+    },
+    "10ENT": {
+      "short": "10ENT",
+      "grade": "10",
+      "code": "ENT",
+      "fullName": "Enterprise"
+    },
+    "10FRE": {
+      "short": "10FRE",
+      "grade": "10",
+      "code": "FRE",
+      "fullName": "French Foreign Language"
+    },
+    "10GEO": {
+      "short": "10GEO",
+      "grade": "10",
+      "code": "GEO",
+      "fullName": "Geography"
+    },
+    "10GP": {
+      "short": "10GP",
+      "grade": "10",
+      "code": "GP",
+      "fullName": "Global Perspectives"
+    },
+    "10GPC": {
+      "short": "10GPC",
+      "grade": "10",
+      "code": "GPC",
+      "fullName": "Global Perspectives (Chinese)"
+    },
+    "10HIS": {
+      "short": "10HIS",
+      "grade": "10",
+      "code": "HIS",
+      "fullName": "History"
+    },
+    "10IE": {
+      "short": "10IE",
+      "grade": "10",
+      "code": "IE",
+      "fullName": "Integrated English"
+    },
+    "10MAN": {
+      "short": "10MAN",
+      "grade": "10",
+      "code": "MAN",
+      "fullName": "Chinese (Mandarin) Foreign Language"
+    },
+    "10MARSCI": {
+      "short": "10MARSCI",
+      "grade": "10",
+      "code": "MARSCI",
+      "fullName": "Marine Science"
+    },
+    "10MAT": {
+      "short": "10MAT",
+      "grade": "10",
+      "code": "MAT",
+      "fullName": "International Mathematics"
+    },
+    "10MATA": {
+      "short": "10MATA",
+      "grade": "10",
+      "code": "MATA",
+      "fullName": "Accelerated Mathematics"
+    },
+    "10MATE": {
+      "short": "10MATE",
+      "grade": "10",
+      "code": "MATE",
+      "fullName": "Additional Mathematics"
+    },
+    "10MUS": {
+      "short": "10MUS",
+      "grade": "10",
+      "code": "MUS",
+      "fullName": "Music"
+    },
+    "10PE": {
+      "short": "10PE",
+      "grade": "10",
+      "code": "PE",
+      "fullName": "Physical Education"
+    },
+    "10PHE": {
+      "short": "10PHE",
+      "grade": "10",
+      "code": "PHE",
+      "fullName": "Physical & Health Education (SB)"
+    },
+    "10PHY": {
+      "short": "10PHY",
+      "grade": "10",
+      "code": "PHY",
+      "fullName": "Physics"
+    },
+    "10PS": {
+      "short": "10PS",
+      "grade": "10",
+      "code": "PS",
+      "fullName": "Personal Study"
+    },
+    "10PSYCH": {
+      "short": "10PSYCH",
+      "grade": "10",
+      "code": "PSYCH",
+      "fullName": "Psychology"
+    },
+    "10SOC": {
+      "short": "10SOC",
+      "grade": "10",
+      "code": "SOC",
+      "fullName": "Sociology"
+    },
+    "11ART": {
+      "short": "11ART",
+      "grade": "11",
+      "code": "ART",
+      "fullName": "Art & Design"
+    },
+    "11BIO": {
+      "short": "11BIO",
+      "grade": "11",
+      "code": "BIO",
+      "fullName": "Biology"
+    },
+    "11BUS": {
+      "short": "11BUS",
+      "grade": "11",
+      "code": "BUS",
+      "fullName": "Business Studies"
+    },
+    "11CAL": {
+      "short": "11CAL",
+      "grade": "11",
+      "code": "CAL",
+      "fullName": "Chinese Second Language"
+    },
+    "11CAS": {
+      "short": "11CAS",
+      "grade": "11",
+      "code": "CAS",
+      "fullName": "Creativity Activity Service"
+    },
+    "11CHM": {
+      "short": "11CHM",
+      "grade": "11",
+      "code": "CHM",
+      "fullName": "Chemistry"
+    },
+    "11CLL": {
+      "short": "11CLL",
+      "grade": "11",
+      "code": "CLL",
+      "fullName": "Chinese First Language"
+    },
+    "11CS": {
+      "short": "11CS",
+      "grade": "11",
+      "code": "CS",
+      "fullName": "Computer Science"
+    },
+    "11CUG": {
+      "short": "11CUG",
+      "grade": "11",
+      "code": "CUG",
+      "fullName": "Career & University Guidance"
+    },
+    "11DRA": {
+      "short": "11DRA",
+      "grade": "11",
+      "code": "DRA",
+      "fullName": "Drama"
+    },
+    "11DT": {
+      "short": "11DT",
+      "grade": "11",
+      "code": "DT",
+      "fullName": "Design & Technology"
+    },
+    "11DTG": {
+      "short": "11DTG",
+      "grade": "11",
+      "code": "DTG",
+      "fullName": "Design & Technology (Graphics)"
+    },
+    "11DTR": {
+      "short": "11DTR",
+      "grade": "11",
+      "code": "DTR",
+      "fullName": "Design & Technology (RAM)"
+    },
+    "11EAL": {
+      "short": "11EAL",
+      "grade": "11",
+      "code": "EAL",
+      "fullName": "English as a Second Language"
+    },
+    "11ECO": {
+      "short": "11ECO",
+      "grade": "11",
+      "code": "ECO",
+      "fullName": "Economics"
+    },
+    "11ELL": {
+      "short": "11ELL",
+      "grade": "11",
+      "code": "ELL",
+      "fullName": "English First Language"
+    },
+    "11ENT": {
+      "short": "11ENT",
+      "grade": "11",
+      "code": "ENT",
+      "fullName": "Enterprise"
+    },
+    "11FRE": {
+      "short": "11FRE",
+      "grade": "11",
+      "code": "FRE",
+      "fullName": "French Foreign Language"
+    },
+    "11GEO": {
+      "short": "11GEO",
+      "grade": "11",
+      "code": "GEO",
+      "fullName": "Geography"
+    },
+    "11GP": {
+      "short": "11GP",
+      "grade": "11",
+      "code": "GP",
+      "fullName": "Global Perspectives"
+    },
+    "11GPC": {
+      "short": "11GPC",
+      "grade": "11",
+      "code": "GPC",
+      "fullName": "Global Perspectives (Chinese)"
+    },
+    "11HIS": {
+      "short": "11HIS",
+      "grade": "11",
+      "code": "HIS",
+      "fullName": "History"
+    },
+    "11IE": {
+      "short": "11IE",
+      "grade": "11",
+      "code": "IE",
+      "fullName": "Integrated English"
+    },
+    "11MAN": {
+      "short": "11MAN",
+      "grade": "11",
+      "code": "MAN",
+      "fullName": "Chinese (Mandarin) Foreign Language"
+    },
+    "11MARSCI": {
+      "short": "11MARSCI",
+      "grade": "11",
+      "code": "MARSCI",
+      "fullName": "Marine Science"
+    },
+    "11MAT": {
+      "short": "11MAT",
+      "grade": "11",
+      "code": "MAT",
+      "fullName": "International Mathematics"
+    },
+    "11MATA": {
+      "short": "11MATA",
+      "grade": "11",
+      "code": "MATA",
+      "fullName": "Accelerated Mathematics"
+    },
+    "11MATE": {
+      "short": "11MATE",
+      "grade": "11",
+      "code": "MATE",
+      "fullName": "Additional Mathematics"
+    },
+    "11MUS": {
+      "short": "11MUS",
+      "grade": "11",
+      "code": "MUS",
+      "fullName": "Music"
+    },
+    "11PE": {
+      "short": "11PE",
+      "grade": "11",
+      "code": "PE",
+      "fullName": "Physical Education"
+    },
+    "11PHE": {
+      "short": "11PHE",
+      "grade": "11",
+      "code": "PHE",
+      "fullName": "Physical & Health Education (SB)"
+    },
+    "11PHY": {
+      "short": "11PHY",
+      "grade": "11",
+      "code": "PHY",
+      "fullName": "Physics"
+    },
+    "11PS": {
+      "short": "11PS",
+      "grade": "11",
+      "code": "PS",
+      "fullName": "Personal Study"
+    },
+    "11PS2": {
+      "short": "11PS2",
+      "grade": "11",
+      "code": "PS2",
+      "fullName": "Personal study2"
+    },
+    "11PSYCH": {
+      "short": "11PSYCH",
+      "grade": "11",
+      "code": "PSYCH",
+      "fullName": "Psychology"
+    },
+    "11RP": {
+      "short": "11RP",
+      "grade": "11",
+      "code": "RP",
+      "fullName": "Reflective Project"
+    },
+    "11SOC": {
+      "short": "11SOC",
+      "grade": "11",
+      "code": "SOC",
+      "fullName": "Sociology"
+    },
+    "11SS": {
+      "short": "11SS",
+      "grade": "11",
+      "code": "SS",
+      "fullName": "Social Studies"
+    },
+    "11WL": {
+      "short": "11WL",
+      "grade": "11",
+      "code": "WL",
+      "fullName": "World Literature"
+    },
+    "12ARTHL": {
+      "short": "12ARTHL",
+      "grade": "12",
+      "code": "ARTHL",
+      "fullName": "Visual Arts IB HL"
+    },
+    "12ARTSL": {
+      "short": "12ARTSL",
+      "grade": "12",
+      "code": "ARTSL",
+      "fullName": "Visual Arts IB SL"
+    },
+    "12BIOHL": {
+      "short": "12BIOHL",
+      "grade": "12",
+      "code": "BIOHL",
+      "fullName": "Biology IB HL"
+    },
+    "12BIOSL": {
+      "short": "12BIOSL",
+      "grade": "12",
+      "code": "BIOSL",
+      "fullName": "Biology IB SL"
+    },
+    "12BUSHL": {
+      "short": "12BUSHL",
+      "grade": "12",
+      "code": "BUSHL",
+      "fullName": "Business Management IB HL"
+    },
+    "12BUSSL": {
+      "short": "12BUSSL",
+      "grade": "12",
+      "code": "BUSSL",
+      "fullName": "Business Management IB SL"
+    },
+    "12CAS": {
+      "short": "12CAS",
+      "grade": "12",
+      "code": "CAS",
+      "fullName": "Creativity Activity Service IB"
+    },
+    "12CHIHL": {
+      "short": "12CHIHL",
+      "grade": "12",
+      "code": "CHIHL",
+      "fullName": "Chinese Language B IB HL"
+    },
+    "12CHISL": {
+      "short": "12CHISL",
+      "grade": "12",
+      "code": "CHISL",
+      "fullName": "Chinese Language B IB SL"
+    },
+    "12CHMHL": {
+      "short": "12CHMHL",
+      "grade": "12",
+      "code": "CHMHL",
+      "fullName": "Chemistry IB HL"
+    },
+    "12CHMSL": {
+      "short": "12CHMSL",
+      "grade": "12",
+      "code": "CHMSL",
+      "fullName": "Chemistry IB SL"
+    },
+    "12CISL": {
+      "short": "12CISL",
+      "grade": "12",
+      "code": "CISL",
+      "fullName": "Chinese Language Ab initio IB SL"
+    },
+    "12CLLHL": {
+      "short": "12CLLHL",
+      "grade": "12",
+      "code": "CLLHL",
+      "fullName": "Chinese A Language & Literature IB HL"
+    },
+    "12CLLSL": {
+      "short": "12CLLSL",
+      "grade": "12",
+      "code": "CLLSL",
+      "fullName": "Chinese A Language & Literature IB SL"
+    },
+    "12COMHL": {
+      "short": "12COMHL",
+      "grade": "12",
+      "code": "COMHL",
+      "fullName": "Computer Science IB HL"
+    },
+    "12COMSL": {
+      "short": "12COMSL",
+      "grade": "12",
+      "code": "COMSL",
+      "fullName": "Computer Science IB SL"
+    },
+    "12CUG": {
+      "short": "12CUG",
+      "grade": "12",
+      "code": "CUG",
+      "fullName": "Career & University Guidance"
+    },
+    "12DTHL": {
+      "short": "12DTHL",
+      "grade": "12",
+      "code": "DTHL",
+      "fullName": "Design Technology IB HL"
+    },
+    "12DTSL": {
+      "short": "12DTSL",
+      "grade": "12",
+      "code": "DTSL",
+      "fullName": "Design Technology IB SL"
+    },
+    "12ECOHL": {
+      "short": "12ECOHL",
+      "grade": "12",
+      "code": "ECOHL",
+      "fullName": "Economics IB HL"
+    },
+    "12ECOSL": {
+      "short": "12ECOSL",
+      "grade": "12",
+      "code": "ECOSL",
+      "fullName": "Economics IB SL"
+    },
+    "12ELHL": {
+      "short": "12ELHL",
+      "grade": "12",
+      "code": "ELHL",
+      "fullName": "English A Literature IB HL"
+    },
+    "12ELLHL": {
+      "short": "12ELLHL",
+      "grade": "12",
+      "code": "ELLHL",
+      "fullName": "English A Language & Literature IB HL"
+    },
+    "12ELLSL": {
+      "short": "12ELLSL",
+      "grade": "12",
+      "code": "ELLSL",
+      "fullName": "English A Language & Literature IB SL"
+    },
+    "12ELSL": {
+      "short": "12ELSL",
+      "grade": "12",
+      "code": "ELSL",
+      "fullName": "English A Literature IB SL"
+    },
+    "12ENGHL": {
+      "short": "12ENGHL",
+      "grade": "12",
+      "code": "ENGHL",
+      "fullName": "English Language B IB HL"
+    },
+    "12ENGSL": {
+      "short": "12ENGSL",
+      "grade": "12",
+      "code": "ENGSL",
+      "fullName": "English Language B IB SL"
+    },
+    "12ESSHL": {
+      "short": "12ESSHL",
+      "grade": "12",
+      "code": "ESSHL",
+      "fullName": "Environmental Systems & Societies IB HL"
+    },
+    "12ESSSL": {
+      "short": "12ESSSL",
+      "grade": "12",
+      "code": "ESSSL",
+      "fullName": "Environmental Systems & Societies IB SL"
+    },
+    "12FRBSL": {
+      "short": "12FRBSL",
+      "grade": "12",
+      "code": "FRBSL",
+      "fullName": "French Language B IB SL"
+    },
+    "12GEOHL": {
+      "short": "12GEOHL",
+      "grade": "12",
+      "code": "GEOHL",
+      "fullName": "Geography IB HL"
+    },
+    "12GEOSL": {
+      "short": "12GEOSL",
+      "grade": "12",
+      "code": "GEOSL",
+      "fullName": "Geography IB SL"
+    },
+    "12HISHL": {
+      "short": "12HISHL",
+      "grade": "12",
+      "code": "HISHL",
+      "fullName": "History IB HL"
+    },
+    "12HISSL": {
+      "short": "12HISSL",
+      "grade": "12",
+      "code": "HISSL",
+      "fullName": "History IB SL"
+    },
+    "12MAAHL": {
+      "short": "12MAAHL",
+      "grade": "12",
+      "code": "MAAHL",
+      "fullName": "Mathematics Analysis & Approaches IB HL"
+    },
+    "12MAASL": {
+      "short": "12MAASL",
+      "grade": "12",
+      "code": "MAASL",
+      "fullName": "Mathematics Analysis & Approaches IB SL"
+    },
+    "12MAIHL": {
+      "short": "12MAIHL",
+      "grade": "12",
+      "code": "MAIHL",
+      "fullName": "Mathematics Applications & Interpretation IB HL"
+    },
+    "12MAISL": {
+      "short": "12MAISL",
+      "grade": "12",
+      "code": "MAISL",
+      "fullName": "Mathematics Applications & Interpretation IB SL"
+    },
+    "12MUSHL": {
+      "short": "12MUSHL",
+      "grade": "12",
+      "code": "MUSHL",
+      "fullName": "Music IB HL"
+    },
+    "12MUSSL": {
+      "short": "12MUSSL",
+      "grade": "12",
+      "code": "MUSSL",
+      "fullName": "Music IB SL"
+    },
+    "12PE": {
+      "short": "12PE",
+      "grade": "12",
+      "code": "PE",
+      "fullName": "Physical & Health Education"
+    },
+    "12PHILHL": {
+      "short": "12PHILHL",
+      "grade": "12",
+      "code": "PHILHL",
+      "fullName": "Philosophy IB HL"
+    },
+    "12PHILSL": {
+      "short": "12PHILSL",
+      "grade": "12",
+      "code": "PHILSL",
+      "fullName": "Philosophy IB SL"
+    },
+    "12PHYHL": {
+      "short": "12PHYHL",
+      "grade": "12",
+      "code": "PHYHL",
+      "fullName": "Physics IB HL"
+    },
+    "12PHYSL": {
+      "short": "12PHYSL",
+      "grade": "12",
+      "code": "PHYSL",
+      "fullName": "Physics IB SL"
+    },
+    "12PSYHL": {
+      "short": "12PSYHL",
+      "grade": "12",
+      "code": "PSYHL",
+      "fullName": "Psychology IB HL"
+    },
+    "12PSYSL": {
+      "short": "12PSYSL",
+      "grade": "12",
+      "code": "PSYSL",
+      "fullName": "Psychology IB SL"
+    },
+    "12PT": {
+      "short": "12PT",
+      "grade": "12",
+      "code": "PT",
+      "fullName": "Pastoral Time"
+    },
+    "12SEHSHL": {
+      "short": "12SEHSHL",
+      "grade": "12",
+      "code": "SEHSHL",
+      "fullName": "Sports, Exerise & Health Science HL"
+    },
+    "12SEHSSL": {
+      "short": "12SEHSSL",
+      "grade": "12",
+      "code": "SEHSSL",
+      "fullName": "Sports, Exerise & Health Science SL"
+    },
+    "12THEHL": {
+      "short": "12THEHL",
+      "grade": "12",
+      "code": "THEHL",
+      "fullName": "Theatre IB HL"
+    },
+    "12THESL": {
+      "short": "12THESL",
+      "grade": "12",
+      "code": "THESL",
+      "fullName": "Theatre IB SL"
+    },
+    "12TOK": {
+      "short": "12TOK",
+      "grade": "12",
+      "code": "TOK",
+      "fullName": "Theory of Knowledge IB"
+    },
+    "12TOKC": {
+      "short": "12TOKC",
+      "grade": "12",
+      "code": "TOKC",
+      "fullName": "Theory of Knowledge IB (Chinese)"
+    },
+    "13ARTHL": {
+      "short": "13ARTHL",
+      "grade": "13",
+      "code": "ARTHL",
+      "fullName": "Visual Arts IB HL"
+    },
+    "13ARTSL": {
+      "short": "13ARTSL",
+      "grade": "13",
+      "code": "ARTSL",
+      "fullName": "Visual Arts IB SL"
+    },
+    "13BIOHL": {
+      "short": "13BIOHL",
+      "grade": "13",
+      "code": "BIOHL",
+      "fullName": "Biology IB HL"
+    },
+    "13BIOSL": {
+      "short": "13BIOSL",
+      "grade": "13",
+      "code": "BIOSL",
+      "fullName": "Biology IB SL"
+    },
+    "13BUSHL": {
+      "short": "13BUSHL",
+      "grade": "13",
+      "code": "BUSHL",
+      "fullName": "Business Management IB HL"
+    },
+    "13BUSSL": {
+      "short": "13BUSSL",
+      "grade": "13",
+      "code": "BUSSL",
+      "fullName": "Business Management IB SL"
+    },
+    "13CAS": {
+      "short": "13CAS",
+      "grade": "13",
+      "code": "CAS",
+      "fullName": "Creativity Activity Service IB"
+    },
+    "13CHIHL": {
+      "short": "13CHIHL",
+      "grade": "13",
+      "code": "CHIHL",
+      "fullName": "Chinese Language B IB HL"
+    },
+    "13CHISL": {
+      "short": "13CHISL",
+      "grade": "13",
+      "code": "CHISL",
+      "fullName": "Chinese Language B IB SL"
+    },
+    "13CHMHL": {
+      "short": "13CHMHL",
+      "grade": "13",
+      "code": "CHMHL",
+      "fullName": "Chemistry IB HL"
+    },
+    "13CHMSL": {
+      "short": "13CHMSL",
+      "grade": "13",
+      "code": "CHMSL",
+      "fullName": "Chemistry IB SL"
+    },
+    "13CISL": {
+      "short": "13CISL",
+      "grade": "13",
+      "code": "CISL",
+      "fullName": "Chinese Language Ab initio IB SL"
+    },
+    "13CLLHL": {
+      "short": "13CLLHL",
+      "grade": "13",
+      "code": "CLLHL",
+      "fullName": "Chinese A Language & Literature IB HL"
+    },
+    "13CLLSL": {
+      "short": "13CLLSL",
+      "grade": "13",
+      "code": "CLLSL",
+      "fullName": "Chinese A Language & Literature IB SL"
+    },
+    "13COMHL": {
+      "short": "13COMHL",
+      "grade": "13",
+      "code": "COMHL",
+      "fullName": "Computer Science IB HL"
+    },
+    "13COMSL": {
+      "short": "13COMSL",
+      "grade": "13",
+      "code": "COMSL",
+      "fullName": "Computer Science IB SL"
+    },
+    "13CUG": {
+      "short": "13CUG",
+      "grade": "13",
+      "code": "CUG",
+      "fullName": "Career & University Guidance"
+    },
+    "13DTHL": {
+      "short": "13DTHL",
+      "grade": "13",
+      "code": "DTHL",
+      "fullName": "Design Technology IB HL"
+    },
+    "13DTSL": {
+      "short": "13DTSL",
+      "grade": "13",
+      "code": "DTSL",
+      "fullName": "Design Technology IB SL"
+    },
+    "13ECOHL": {
+      "short": "13ECOHL",
+      "grade": "13",
+      "code": "ECOHL",
+      "fullName": "Economics IB HL"
+    },
+    "13ECOSL": {
+      "short": "13ECOSL",
+      "grade": "13",
+      "code": "ECOSL",
+      "fullName": "Economics IB SL"
+    },
+    "13ELHL": {
+      "short": "13ELHL",
+      "grade": "13",
+      "code": "ELHL",
+      "fullName": "English A Literature IB HL"
+    },
+    "13ELLHL": {
+      "short": "13ELLHL",
+      "grade": "13",
+      "code": "ELLHL",
+      "fullName": "English A Language & Literature IB HL"
+    },
+    "13ELLSL": {
+      "short": "13ELLSL",
+      "grade": "13",
+      "code": "ELLSL",
+      "fullName": "English A Language & Literature IB SL"
+    },
+    "13ELSL": {
+      "short": "13ELSL",
+      "grade": "13",
+      "code": "ELSL",
+      "fullName": "English A Literature IB SL"
+    },
+    "13ENGHL": {
+      "short": "13ENGHL",
+      "grade": "13",
+      "code": "ENGHL",
+      "fullName": "English Language B IB HL"
+    },
+    "13ENGSL": {
+      "short": "13ENGSL",
+      "grade": "13",
+      "code": "ENGSL",
+      "fullName": "English Language B IB SL"
+    },
+    "13ESSHL": {
+      "short": "13ESSHL",
+      "grade": "13",
+      "code": "ESSHL",
+      "fullName": "Environmental Systems & Societies IB HL"
+    },
+    "13ESSSL": {
+      "short": "13ESSSL",
+      "grade": "13",
+      "code": "ESSSL",
+      "fullName": "Environmental Systems & Societies IB SL"
+    },
+    "13FRBSL": {
+      "short": "13FRBSL",
+      "grade": "13",
+      "code": "FRBSL",
+      "fullName": "French Language B IB SL"
+    },
+    "13GEOHL": {
+      "short": "13GEOHL",
+      "grade": "13",
+      "code": "GEOHL",
+      "fullName": "Geography IB HL"
+    },
+    "13GEOSL": {
+      "short": "13GEOSL",
+      "grade": "13",
+      "code": "GEOSL",
+      "fullName": "Geography IB SL"
+    },
+    "13HISHL": {
+      "short": "13HISHL",
+      "grade": "13",
+      "code": "HISHL",
+      "fullName": "History IB HL"
+    },
+    "13HISSL": {
+      "short": "13HISSL",
+      "grade": "13",
+      "code": "HISSL",
+      "fullName": "History IB SL"
+    },
+    "13MAAHL": {
+      "short": "13MAAHL",
+      "grade": "13",
+      "code": "MAAHL",
+      "fullName": "Mathematics Analysis & Approaches IB HL"
+    },
+    "13MAASL": {
+      "short": "13MAASL",
+      "grade": "13",
+      "code": "MAASL",
+      "fullName": "Mathematics Analysis & Approaches IB SL"
+    },
+    "13MAIHL": {
+      "short": "13MAIHL",
+      "grade": "13",
+      "code": "MAIHL",
+      "fullName": "Mathematics Applications & Interpretation IB HL"
+    },
+    "13MAISL": {
+      "short": "13MAISL",
+      "grade": "13",
+      "code": "MAISL",
+      "fullName": "Mathematics Applications & Interpretation IB SL"
+    },
+    "13MUSHL": {
+      "short": "13MUSHL",
+      "grade": "13",
+      "code": "MUSHL",
+      "fullName": "Music IB HL"
+    },
+    "13MUSSL": {
+      "short": "13MUSSL",
+      "grade": "13",
+      "code": "MUSSL",
+      "fullName": "Music IB SL"
+    },
+    "13PE": {
+      "short": "13PE",
+      "grade": "13",
+      "code": "PE",
+      "fullName": "Physical & Health Education"
+    },
+    "13PHILHL": {
+      "short": "13PHILHL",
+      "grade": "13",
+      "code": "PHILHL",
+      "fullName": "Philosophy IB HL"
+    },
+    "13PHILSL": {
+      "short": "13PHILSL",
+      "grade": "13",
+      "code": "PHILSL",
+      "fullName": "Philosophy IB SL"
+    },
+    "13PHYHL": {
+      "short": "13PHYHL",
+      "grade": "13",
+      "code": "PHYHL",
+      "fullName": "Physics IB HL"
+    },
+    "13PHYSL": {
+      "short": "13PHYSL",
+      "grade": "13",
+      "code": "PHYSL",
+      "fullName": "Physics IB SL"
+    },
+    "13PSYHL": {
+      "short": "13PSYHL",
+      "grade": "13",
+      "code": "PSYHL",
+      "fullName": "Psychology IB HL"
+    },
+    "13PSYSL": {
+      "short": "13PSYSL",
+      "grade": "13",
+      "code": "PSYSL",
+      "fullName": "Psychology IB SL"
+    },
+    "13PT": {
+      "short": "13PT",
+      "grade": "13",
+      "code": "PT",
+      "fullName": "Pastoral Time"
+    },
+    "13SEHSHL": {
+      "short": "13SEHSHL",
+      "grade": "13",
+      "code": "SEHSHL",
+      "fullName": "Sports, Exerise & Health Science HL"
+    },
+    "13SEHSSL": {
+      "short": "13SEHSSL",
+      "grade": "13",
+      "code": "SEHSSL",
+      "fullName": "Sports, Exerise & Health Science SL"
+    },
+    "13THEHL": {
+      "short": "13THEHL",
+      "grade": "13",
+      "code": "THEHL",
+      "fullName": "Theatre IB HL"
+    },
+    "13THESL": {
+      "short": "13THESL",
+      "grade": "13",
+      "code": "THESL",
+      "fullName": "Theatre IB SL"
+    },
+    "13TOK": {
+      "short": "13TOK",
+      "grade": "13",
+      "code": "TOK",
+      "fullName": "Theory of Knowledge IB"
+    },
+    "13TOKC": {
+      "short": "13TOKC",
+      "grade": "13",
+      "code": "TOKC",
+      "fullName": "Theory of Knowledge IB (Chinese)"
+    },
+    "8DRA": {
+      "short": "8DRA",
+      "grade": "08",
+      "code": "DRA",
+      "fullName": "Drama"
+    }
+  },
+  "byRoot": {
+    "ART": [
+      "Art & Design",
+      "Visual Arts"
+    ],
+    "ARTHL": [
+      "Visual Arts IB HL"
+    ],
+    "ARTSL": [
+      "Visual Arts IB SL"
+    ],
+    "BIO": [
+      "Biology"
+    ],
+    "BIOHL": [
+      "Biology IB HL"
+    ],
+    "BIOSL": [
+      "Biology IB SL"
+    ],
+    "BUS": [
+      "Business Studies"
+    ],
+    "BUSHL": [
+      "Business Management IB HL"
+    ],
+    "BUSSL": [
+      "Business Management IB SL"
+    ],
+    "CAL": [
+      "Chinese (CAL)",
+      "Chinese Second Language"
+    ],
+    "CAS": [
+      "Creativity Activity Service",
+      "Creativity Activity Service IB"
+    ],
+    "CHIHL": [
+      "Chinese Language B IB HL"
+    ],
+    "CHISL": [
+      "Chinese Language B IB SL"
+    ],
+    "CHM": [
+      "Chemistry"
+    ],
+    "CHMHL": [
+      "Chemistry IB HL"
+    ],
+    "CHMSL": [
+      "Chemistry IB SL"
+    ],
+    "CISL": [
+      "Chinese Language Ab initio IB SL"
+    ],
+    "CLL": [
+      "Chinese (CLL)",
+      "Chinese First Language"
+    ],
+    "CLLHL": [
+      "Chinese A Language & Literature IB HL"
+    ],
+    "CLLSL": [
+      "Chinese A Language & Literature IB SL"
+    ],
+    "COD": [
+      "Technology (Coding)"
+    ],
+    "COMHL": [
+      "Computer Science IB HL"
+    ],
+    "COMSL": [
+      "Computer Science IB SL"
+    ],
+    "CS": [
+      "Computer Science"
+    ],
+    "CS (CAL)": [
+      "Chinese Studies (CAL)"
+    ],
+    "CS (CLL)": [
+      "Chinese Studies (CLL)"
+    ],
+    "CS(CAL)": [
+      "Chinese Studies (CAL)"
+    ],
+    "CS(CLL)": [
+      "Chinese Studies (CLL)"
+    ],
+    "CUG": [
+      "Career & University Guidance"
+    ],
+    "DRA": [
+      "Drama"
+    ],
+    "DT": [
+      "Design & Technology",
+      "Technology (DT)"
+    ],
+    "DTG": [
+      "Design & Technology (Graphics)"
+    ],
+    "DTHL": [
+      "Design Technology IB HL"
+    ],
+    "DTR": [
+      "Design & Technology (RAM)"
+    ],
+    "DTSL": [
+      "Design Technology IB SL"
+    ],
+    "EAL": [
+      "English as a Second Language"
+    ],
+    "ECO": [
+      "Economics"
+    ],
+    "ECOHL": [
+      "Economics IB HL"
+    ],
+    "ECOSL": [
+      "Economics IB SL"
+    ],
+    "EE": [
+      "English Enhancement"
+    ],
+    "ELHL": [
+      "English A Literature IB HL"
+    ],
+    "ELL": [
+      "English",
+      "English First Language"
+    ],
+    "ELLHL": [
+      "English A Language & Literature IB HL"
+    ],
+    "ELLSL": [
+      "English A Language & Literature IB SL"
+    ],
+    "ELSL": [
+      "English A Literature IB SL"
+    ],
+    "ENG": [
+      "English"
+    ],
+    "ENGHL": [
+      "English Language B IB HL"
+    ],
+    "ENGSL": [
+      "English Language B IB SL"
+    ],
+    "ENT": [
+      "Enterprise"
+    ],
+    "ESSHL": [
+      "Environmental Systems & Societies IB HL"
+    ],
+    "ESSSL": [
+      "Environmental Systems & Societies IB SL"
+    ],
+    "ET": [
+      "Technology"
+    ],
+    "FRBSL": [
+      "French Language B IB SL"
+    ],
+    "FRE": [
+      "French",
+      "French Foreign Language"
+    ],
+    "FS": [
+      "Financial Studies"
+    ],
+    "GEO": [
+      "Geography"
+    ],
+    "GEOHL": [
+      "Geography IB HL"
+    ],
+    "GEOSL": [
+      "Geography IB SL"
+    ],
+    "GP": [
+      "Global Perspectives"
+    ],
+    "GPC": [
+      "Global Perspectives (Chinese)"
+    ],
+    "HIS": [
+      "History"
+    ],
+    "HISHL": [
+      "History IB HL"
+    ],
+    "HISSL": [
+      "History IB SL"
+    ],
+    "IE": [
+      "Integrated English"
+    ],
+    "LS": [
+      "Life Skills & Wellness"
+    ],
+    "MAAHL": [
+      "Mathematics Analysis & Approaches IB HL"
+    ],
+    "MAASL": [
+      "Mathematics Analysis & Approaches IB SL"
+    ],
+    "MAIHL": [
+      "Mathematics Applications & Interpretation IB HL"
+    ],
+    "MAISL": [
+      "Mathematics Applications & Interpretation IB SL"
+    ],
+    "MAN": [
+      "Chinese (Mandarin) Foreign Language"
+    ],
+    "MARSCI": [
+      "Marine Science"
+    ],
+    "MAT": [
+      "International Mathematics",
+      "Mathematics"
+    ],
+    "MATA": [
+      "Accelerated Mathematics"
+    ],
+    "MATE": [
+      "Additional Mathematics"
+    ],
+    "MUS": [
+      "Music"
+    ],
+    "MUSHL": [
+      "Music IB HL"
+    ],
+    "MUSSL": [
+      "Music IB SL"
+    ],
+    "PE": [
+      "Physical & Health Education",
+      "Physical Education"
+    ],
+    "PHE": [
+      "Physical & Health Education (SB)"
+    ],
+    "PHILHL": [
+      "Philosophy IB HL"
+    ],
+    "PHILSL": [
+      "Philosophy IB SL"
+    ],
+    "PHY": [
+      "Physics"
+    ],
+    "PHYHL": [
+      "Physics IB HL"
+    ],
+    "PHYSL": [
+      "Physics IB SL"
+    ],
+    "PS": [
+      "Personal Study"
+    ],
+    "PS2": [
+      "Personal study2"
+    ],
+    "PSYCH": [
+      "Psychology"
+    ],
+    "PSYHL": [
+      "Psychology IB HL"
+    ],
+    "PSYSL": [
+      "Psychology IB SL"
+    ],
+    "PT": [
+      "Pastoral Time"
+    ],
+    "RP": [
+      "Reflective Project"
+    ],
+    "SCI": [
+      "Science"
+    ],
+    "SEHSHL": [
+      "Sports, Exerise & Health Science HL"
+    ],
+    "SEHSSL": [
+      "Sports, Exerise & Health Science SL"
+    ],
+    "SOC": [
+      "Sociology"
+    ],
+    "SS": [
+      "Social Studies"
+    ],
+    "THEHL": [
+      "Theatre IB HL"
+    ],
+    "THESL": [
+      "Theatre IB SL"
+    ],
+    "TOK": [
+      "Theory of Knowledge IB"
+    ],
+    "TOKC": [
+      "Theory of Knowledge IB (Chinese)"
+    ],
+    "VA": [
+      "Visual Arts"
+    ],
+    "WL": [
+      "World Literature"
+    ]
+  },
+  "aliases": {
+    "MATH": "Mathematics",
+    "MA": "Mathematics",
+    "SCI": "Science",
+    "ENG": "English",
+    "MARSCI": "Marine Science",
+    "MA RS CI": "Marine Science"
+  }
+}

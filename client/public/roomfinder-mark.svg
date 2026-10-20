@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Roomfinder mark">
+  <rect width="256" height="256" rx="54" fill="#12695f"/>
+  <path d="M57 113 128 61l71 52v80a12 12 0 0 1-12 12H69a12 12 0 0 1-12-12z" fill="#f5fbf8"/>
+  <path d="M43 117 128 54l85 63" fill="none" stroke="#c4f1df" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M94 205v-49a34 34 0 0 1 68 0v49" fill="#12695f"/>
+  <path d="M84 128h22m44 0h22" stroke="#9ccdc1" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="128" cy="104" r="8" fill="#f0b85f"/>
+</svg>

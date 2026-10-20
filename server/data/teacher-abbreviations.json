@@ -1,0 +1,1578 @@
+{
+  "sourceFile": "teacherabbreviation.xlsx",
+  "staffCount": 145,
+  "uniqueCodeCount": 132,
+  "staff": [
+    {
+      "code": "AK",
+      "sourceName": "ABOZAID Kaarim",
+      "displayName": "Kaarim Abozaid"
+    },
+    {
+      "code": "TAY",
+      "sourceName": "AU YEUNG Pui Sze Teresa",
+      "displayName": "Pui Sze Teresa Au Yeung"
+    },
+    {
+      "code": "AS",
+      "sourceName": "AUSTIN Saraswati",
+      "displayName": "Saraswati Austin"
+    },
+    {
+      "code": "BW",
+      "sourceName": "BYUN Woo sik",
+      "displayName": "Woo Sik Byun"
+    },
+    {
+      "code": "CB",
+      "sourceName": "BILLINGTON Craig",
+      "displayName": "Craig Billington"
+    },
+    {
+      "code": "BT",
+      "sourceName": "BIAN Tao Jennifer",
+      "displayName": "Tao Jennifer Bian"
+    },
+    {
+      "code": "PDB",
+      "sourceName": "BRADY Paul Damien",
+      "displayName": "Paul Damien Brady"
+    },
+    {
+      "code": "LJB",
+      "sourceName": "BRANNAN Liam John",
+      "displayName": "Liam John Brannan"
+    },
+    {
+      "code": "JB",
+      "sourceName": "BROOKS Janet",
+      "displayName": "Janet Brooks"
+    },
+    {
+      "code": "BB",
+      "sourceName": "BURTTS Brandi",
+      "displayName": "Brandi Burtts"
+    },
+    {
+      "code": "BB",
+      "sourceName": "BURTTS Brandon",
+      "displayName": "Brandon Burtts"
+    },
+    {
+      "code": "BU",
+      "sourceName": "BABAR Umer",
+      "displayName": "Umer Babar"
+    },
+    {
+      "code": "BJ",
+      "sourceName": "BRENNAN John",
+      "displayName": "John Brennan"
+    },
+    {
+      "code": "DB",
+      "sourceName": "BARLOW Dan",
+      "displayName": "Dan Barlow"
+    },
+    {
+      "code": "SB",
+      "sourceName": "BOUTTLE Scott",
+      "displayName": "Scott Bouttle"
+    },
+    {
+      "code": "AC",
+      "sourceName": "CUNNIFFE Anne-Marie",
+      "displayName": "Anne-Marie Cunniffe"
+    },
+    {
+      "code": "HC",
+      "sourceName": "CUNNINGHAM Harley",
+      "displayName": "Harley Cunningham"
+    },
+    {
+      "code": "MMC",
+      "sourceName": "CHOU Margaret",
+      "displayName": "Margaret Chou"
+    },
+    {
+      "code": "SC",
+      "sourceName": "CONNAUGHTON Sean",
+      "displayName": "Sean Connaughton"
+    },
+    {
+      "code": "MC",
+      "sourceName": "COOKE Matthew Charles",
+      "displayName": "Matthew Charles Cooke"
+    },
+    {
+      "code": "RC",
+      "sourceName": "CHARLES Rudolph",
+      "displayName": "Rudolph Charles"
+    },
+    {
+      "code": "PC",
+      "sourceName": "CHIARO Philip Donald",
+      "displayName": "Philip Donald Chiaro"
+    },
+    {
+      "code": "CJ",
+      "sourceName": "CARNABY James",
+      "displayName": "James Carnaby"
+    },
+    {
+      "code": "VC",
+      "sourceName": "CHENG Vivien",
+      "displayName": "Vivien Cheng"
+    },
+    {
+      "code": "CC",
+      "sourceName": "CHUNG Curtis",
+      "displayName": "Curtis Chung"
+    },
+    {
+      "code": "AD",
+      "sourceName": "DANG Anthony",
+      "displayName": "Anthony Dang"
+    },
+    {
+      "code": "GD",
+      "sourceName": "DEAN George",
+      "displayName": "George Dean"
+    },
+    {
+      "code": "BD",
+      "sourceName": "DUNSTAN-SMITH Brendan",
+      "displayName": "Brendan Dunstan-Smith"
+    },
+    {
+      "code": "SE",
+      "sourceName": "EMBERGER Sarah",
+      "displayName": "Sarah Emberger"
+    },
+    {
+      "code": "LE",
+      "sourceName": "EUN Ji Hye Leah",
+      "displayName": "Ji Hye Leah Eun"
+    },
+    {
+      "code": "XF",
+      "sourceName": "FENG Xinyao (YoYo)",
+      "displayName": "Xinyao (yoyo) Feng"
+    },
+    {
+      "code": "LF",
+      "sourceName": "FERRIS Lucy",
+      "displayName": "Lucy Ferris"
+    },
+    {
+      "code": "FG",
+      "sourceName": "FLINT Gareth",
+      "displayName": "Gareth Flint"
+    },
+    {
+      "code": "MF",
+      "sourceName": "FORREST Murray",
+      "displayName": "Murray Forrest"
+    },
+    {
+      "code": "BD",
+      "sourceName": "GOKOOL BHAKARREEA Deeksha",
+      "displayName": "Deeksha Gokool Bhakarreea"
+    },
+    {
+      "code": "BG",
+      "sourceName": "GRINDLEY Billy",
+      "displayName": "Billy Grindley"
+    },
+    {
+      "code": "MG",
+      "sourceName": "GANGULY Mahua",
+      "displayName": "Mahua Ganguly"
+    },
+    {
+      "code": "KG",
+      "sourceName": "GUEYE Kouaho (Guy)",
+      "displayName": "Kouaho (guy) Gueye"
+    },
+    {
+      "code": "CG",
+      "sourceName": "GREENFEATHER Christy",
+      "displayName": "Christy Greenfeather"
+    },
+    {
+      "code": "GP",
+      "sourceName": "GUPTA Prachi",
+      "displayName": "Prachi Gupta"
+    },
+    {
+      "code": "GP",
+      "sourceName": "GILLESPIE Paul",
+      "displayName": "Paul Gillespie"
+    },
+    {
+      "code": "GH",
+      "sourceName": "GLENDINNING Hannah",
+      "displayName": "Hannah Glendinning"
+    },
+    {
+      "code": "SH",
+      "sourceName": "HACKMAN Steve",
+      "displayName": "Steve Hackman"
+    },
+    {
+      "code": "JHA",
+      "sourceName": "HALLAS Jordan",
+      "displayName": "Jordan Hallas"
+    },
+    {
+      "code": "HA",
+      "sourceName": "HUNG Alison",
+      "displayName": "Alison Hung"
+    },
+    {
+      "code": "HS",
+      "sourceName": "HAN Suea",
+      "displayName": "Suea Han"
+    },
+    {
+      "code": "JH",
+      "sourceName": "HO Joyce",
+      "displayName": "Joyce Ho"
+    },
+    {
+      "code": "NH",
+      "sourceName": "HUI Nicholas",
+      "displayName": "Nicholas Hui"
+    },
+    {
+      "code": "HR",
+      "sourceName": "HE Runlin",
+      "displayName": "Runlin He"
+    },
+    {
+      "code": "JJ",
+      "sourceName": "JAMES Jacinta Lauren",
+      "displayName": "Jacinta Lauren James"
+    },
+    {
+      "code": "JD",
+      "sourceName": "JOSIAH Denise",
+      "displayName": "Denise Josiah"
+    },
+    {
+      "code": "EJ",
+      "sourceName": "JEFFCOTT Ellen",
+      "displayName": "Ellen Jeffcott"
+    },
+    {
+      "code": "JA",
+      "sourceName": "JURRIUS Ashleigh",
+      "displayName": "Ashleigh Jurrius"
+    },
+    {
+      "code": "AJ",
+      "sourceName": "JANJUA Aisha",
+      "displayName": "Aisha Janjua"
+    },
+    {
+      "code": "MYEK",
+      "sourceName": "KAM Ming Yuen Edmund",
+      "displayName": "Ming Yuen Edmund Kam"
+    },
+    {
+      "code": "KA",
+      "sourceName": "KNOWLES Adrian",
+      "displayName": "Adrian Knowles"
+    },
+    {
+      "code": "DK",
+      "sourceName": "KIM Daniel",
+      "displayName": "Daniel Kim"
+    },
+    {
+      "code": "NK",
+      "sourceName": "KUMAR Naveen",
+      "displayName": "Naveen Kumar"
+    },
+    {
+      "code": "KW",
+      "sourceName": "KOEKEMOER Wesley",
+      "displayName": "Wesley Koekemoer"
+    },
+    {
+      "code": "LK",
+      "sourceName": "KINGSTON Leanne",
+      "displayName": "Leanne Kingston"
+    },
+    {
+      "code": "SKI",
+      "sourceName": "KIM Samuel",
+      "displayName": "Samuel Kim"
+    },
+    {
+      "code": "SKE",
+      "sourceName": "KELLEHER Simon",
+      "displayName": "Simon Kelleher"
+    },
+    {
+      "code": "LL",
+      "sourceName": "LIN Lily",
+      "displayName": "Lily Lin"
+    },
+    {
+      "code": "EL",
+      "sourceName": "LAYMAN Eric",
+      "displayName": "Eric Layman"
+    },
+    {
+      "code": "LK",
+      "sourceName": "LOWE Kelsey",
+      "displayName": "Kelsey Lowe"
+    },
+    {
+      "code": "KL",
+      "sourceName": "LAM Kathy",
+      "displayName": "Kathy Lam"
+    },
+    {
+      "code": "LY",
+      "sourceName": "LU Yu-Ling",
+      "displayName": "Yu-Ling Lu"
+    },
+    {
+      "code": "BL",
+      "sourceName": "LIU Brian",
+      "displayName": "Brian Liu"
+    },
+    {
+      "code": "HYAL",
+      "sourceName": "LO Ho Ying Amata",
+      "displayName": "Ho Ying Amata Lo"
+    },
+    {
+      "code": "KWVL",
+      "sourceName": "LO Ko Wai Vivian",
+      "displayName": "Ko Wai Vivian Lo"
+    },
+    {
+      "code": "IVL",
+      "sourceName": "LUK VAN Ingrid Lucia",
+      "displayName": "Ingrid Lucia Luk Van"
+    },
+    {
+      "code": "SL",
+      "sourceName": "LINGWOOD Sam",
+      "displayName": "Sam Lingwood"
+    },
+    {
+      "code": "LL",
+      "sourceName": "LEADER Luke",
+      "displayName": "Luke Leader"
+    },
+    {
+      "code": "DL",
+      "sourceName": "LAMB David",
+      "displayName": "David Lamb"
+    },
+    {
+      "code": "LA",
+      "sourceName": "LUI Awing",
+      "displayName": "Awing Lui"
+    },
+    {
+      "code": "LS",
+      "sourceName": "LI Sihan Charlie",
+      "displayName": "Sihan Charlie Li"
+    },
+    {
+      "code": "JL",
+      "sourceName": "LEONARD-GILL Jack",
+      "displayName": "Jack Leonard-Gill"
+    },
+    {
+      "code": "AM",
+      "sourceName": "MARIE-FRANCOISE Adrien",
+      "displayName": "Adrien Marie-Francoise"
+    },
+    {
+      "code": "MA",
+      "sourceName": "MALAKI Amulya",
+      "displayName": "Amulya Malaki"
+    },
+    {
+      "code": "PM",
+      "sourceName": "MCGOVERN Patrick",
+      "displayName": "Patrick Mcgovern"
+    },
+    {
+      "code": "MJ",
+      "sourceName": "MANSEN Jessika",
+      "displayName": "Jessika Mansen"
+    },
+    {
+      "code": "EM",
+      "sourceName": "MANUEL Erwin Suguitan",
+      "displayName": "Erwin Suguitan Manuel"
+    },
+    {
+      "code": "CM",
+      "sourceName": "MORGAN Caroline Jane",
+      "displayName": "Caroline Jane Morgan"
+    },
+    {
+      "code": "DM",
+      "sourceName": "MCNAUGHT Douglas",
+      "displayName": "Douglas Mcnaught"
+    },
+    {
+      "code": "LM",
+      "sourceName": "MINNIE Lauren",
+      "displayName": "Lauren Minnie"
+    },
+    {
+      "code": "MM",
+      "sourceName": "MAO Manfei (Cecilia)",
+      "displayName": "Manfei (cecilia) Mao"
+    },
+    {
+      "code": "MS",
+      "sourceName": "MOHAMMAD Shahzeb",
+      "displayName": "Shahzeb Mohammad"
+    },
+    {
+      "code": "SN",
+      "sourceName": "NAGORCKA Samantha",
+      "displayName": "Samantha Nagorcka"
+    },
+    {
+      "code": "CSN",
+      "sourceName": "NI Chenxu Stella",
+      "displayName": "Chenxu Stella Ni"
+    },
+    {
+      "code": "DN",
+      "sourceName": "NYANTAKYI Daniel Owusu",
+      "displayName": "Daniel Owusu Nyantakyi"
+    },
+    {
+      "code": "OB",
+      "sourceName": "O'DONNELL Ben",
+      "displayName": "Ben O'Donnell"
+    },
+    {
+      "code": "JO",
+      "sourceName": "O'BRIEN John",
+      "displayName": "John O'Brien"
+    },
+    {
+      "code": "MP",
+      "sourceName": "PITTMAN Marianne",
+      "displayName": "Marianne Pittman"
+    },
+    {
+      "code": "GQ",
+      "sourceName": "QUAN Gordon",
+      "displayName": "Gordon Quan"
+    },
+    {
+      "code": "QA",
+      "sourceName": "QIU Ninghui Anastasia",
+      "displayName": "Ninghui Anastasia Qiu"
+    },
+    {
+      "code": "SR",
+      "sourceName": "ROGERS Sarah",
+      "displayName": "Sarah Rogers"
+    },
+    {
+      "code": "SVR",
+      "sourceName": "RAMASAMY Shanmuga Vadivu",
+      "displayName": "Shanmuga Vadivu Ramasamy"
+    },
+    {
+      "code": "AKR",
+      "sourceName": "RAMM Alan Kenneth",
+      "displayName": "Alan Kenneth Ramm"
+    },
+    {
+      "code": "HR",
+      "sourceName": "ROBERTS Hannah",
+      "displayName": "Hannah Roberts"
+    },
+    {
+      "code": "SSY",
+      "sourceName": "SUN Shufan (Sunny)",
+      "displayName": "Shufan (sunny) Sun"
+    },
+    {
+      "code": "CLS",
+      "sourceName": "SEET Chew Ling",
+      "displayName": "Chew Ling Seet"
+    },
+    {
+      "code": "ZHS",
+      "sourceName": "SHEERAN Zoe Hannah",
+      "displayName": "Zoe Hannah Sheeran"
+    },
+    {
+      "code": "BS",
+      "sourceName": "SHUM Benny",
+      "displayName": "Benny Shum"
+    },
+    {
+      "code": "PS",
+      "sourceName": "STANLEY Paul",
+      "displayName": "Paul Stanley"
+    },
+    {
+      "code": "PS",
+      "sourceName": "STAPLETON Peter",
+      "displayName": "Peter Stapleton"
+    },
+    {
+      "code": "MS",
+      "sourceName": "STEWART Mason",
+      "displayName": "Mason Stewart"
+    },
+    {
+      "code": "VT",
+      "sourceName": "TANNA Vaishali",
+      "displayName": "Vaishali Tanna"
+    },
+    {
+      "code": "MT",
+      "sourceName": "TRETHEWEY Matthew",
+      "displayName": "Matthew Trethewey"
+    },
+    {
+      "code": "FT",
+      "sourceName": "THEN Flavia",
+      "displayName": "Flavia Then"
+    },
+    {
+      "code": "BT",
+      "sourceName": "TOTMAN Brian",
+      "displayName": "Brian Totman"
+    },
+    {
+      "code": "JAT",
+      "sourceName": "THOMASS Jacques Alain",
+      "displayName": "Jacques Alain Thomass"
+    },
+    {
+      "code": "VT",
+      "sourceName": "TANWAR Vidit",
+      "displayName": "Vidit Tanwar"
+    },
+    {
+      "code": "TY",
+      "sourceName": "TANG Ying",
+      "displayName": "Ying Tang"
+    },
+    {
+      "code": "SV",
+      "sourceName": "VISSER Stephanie",
+      "displayName": "Stephanie Visser"
+    },
+    {
+      "code": "WJ",
+      "sourceName": "WEEAST Jennifer",
+      "displayName": "Jennifer Weeast"
+    },
+    {
+      "code": "WY",
+      "sourceName": "WANG Yang (Rick)",
+      "displayName": "Yang (rick) Wang"
+    },
+    {
+      "code": "WO",
+      "sourceName": "WONG Onki",
+      "displayName": "Onki Wong"
+    },
+    {
+      "code": "ZJW",
+      "sourceName": "WANG Zhen Jane",
+      "displayName": "Zhen Jane Wang"
+    },
+    {
+      "code": "WK",
+      "sourceName": "WAN Yee Kam",
+      "displayName": "Yee Kam Wan"
+    },
+    {
+      "code": "WL",
+      "sourceName": "WATSON Luke",
+      "displayName": "Luke Watson"
+    },
+    {
+      "code": "CW",
+      "sourceName": "WU Catherine",
+      "displayName": "Catherine Wu"
+    },
+    {
+      "code": "JW",
+      "sourceName": "WANG Jenny",
+      "displayName": "Jenny Wang"
+    },
+    {
+      "code": "SW",
+      "sourceName": "WAN Simon",
+      "displayName": "Simon Wan"
+    },
+    {
+      "code": "EY",
+      "sourceName": "YEUNG Emily",
+      "displayName": "Emily Yeung"
+    },
+    {
+      "code": "YA",
+      "sourceName": "YERIKALAPUDI Anantha",
+      "displayName": "Anantha Yerikalapudi"
+    },
+    {
+      "code": "HY",
+      "sourceName": "YUEN Hazel",
+      "displayName": "Hazel Yuen"
+    },
+    {
+      "code": "ZY",
+      "sourceName": "ZHOU Yuyang (Yosef)",
+      "displayName": "Yuyang (yosef) Zhou"
+    },
+    {
+      "code": "ZC",
+      "sourceName": "ZHANG Carrie",
+      "displayName": "Carrie Zhang"
+    },
+    {
+      "code": "ZD",
+      "sourceName": "ZHOU Dayan",
+      "displayName": "Dayan Zhou"
+    },
+    {
+      "code": "YZ",
+      "sourceName": "ZHU Yan",
+      "displayName": "Yan Zhu"
+    },
+    {
+      "code": "ZLU",
+      "sourceName": "ZHANG Lu (Lucy)",
+      "displayName": "Lu (lucy) Zhang"
+    },
+    {
+      "code": "YD",
+      "sourceName": "YUAN Delores",
+      "displayName": "Delores Yuan"
+    },
+    {
+      "code": "MZ",
+      "sourceName": "ZHANG Mengxue Michelle",
+      "displayName": "Mengxue Michelle Zhang"
+    },
+    {
+      "code": "YS",
+      "sourceName": "SZE Yin Hung",
+      "displayName": "Yin Hung Sze"
+    },
+    {
+      "code": "RK",
+      "sourceName": "KITLEY Robert",
+      "displayName": "Robert Kitley"
+    },
+    {
+      "code": "GM",
+      "sourceName": "MORRISON Gregg",
+      "displayName": "Gregg Morrison"
+    },
+    {
+      "code": "MS",
+      "sourceName": "MORRISON Sarah",
+      "displayName": "Sarah Morrison"
+    },
+    {
+      "code": "PL",
+      "sourceName": "LO Paul",
+      "displayName": "Paul Lo"
+    },
+    {
+      "code": "NS",
+      "sourceName": "SCOTT Nareerut",
+      "displayName": "Nareerut Scott"
+    },
+    {
+      "code": "YA",
+      "sourceName": "AU Yvonne",
+      "displayName": "Yvonne Au"
+    },
+    {
+      "code": "YL",
+      "sourceName": "LIANG Yuki",
+      "displayName": "Yuki Liang"
+    },
+    {
+      "code": "SC",
+      "sourceName": "CHAN Sunny",
+      "displayName": "Sunny Chan"
+    },
+    {
+      "code": "EH",
+      "sourceName": "HAIGH Elliot",
+      "displayName": "Elliot Haigh"
+    },
+    {
+      "code": "E1",
+      "sourceName": "EXTERNAL COVER 1",
+      "displayName": "1 External Cover"
+    },
+    {
+      "code": "E2",
+      "sourceName": "EXTERNAL COVER 2",
+      "displayName": "2 External Cover"
+    }
+  ],
+  "byCode": {
+    "AC": [
+      {
+        "displayName": "Anne-Marie Cunniffe",
+        "sourceName": "CUNNIFFE Anne-Marie"
+      }
+    ],
+    "AD": [
+      {
+        "displayName": "Anthony Dang",
+        "sourceName": "DANG Anthony"
+      }
+    ],
+    "AJ": [
+      {
+        "displayName": "Aisha Janjua",
+        "sourceName": "JANJUA Aisha"
+      }
+    ],
+    "AK": [
+      {
+        "displayName": "Kaarim Abozaid",
+        "sourceName": "ABOZAID Kaarim"
+      }
+    ],
+    "AKR": [
+      {
+        "displayName": "Alan Kenneth Ramm",
+        "sourceName": "RAMM Alan Kenneth"
+      }
+    ],
+    "AM": [
+      {
+        "displayName": "Adrien Marie-Francoise",
+        "sourceName": "MARIE-FRANCOISE Adrien"
+      }
+    ],
+    "AS": [
+      {
+        "displayName": "Saraswati Austin",
+        "sourceName": "AUSTIN Saraswati"
+      }
+    ],
+    "BB": [
+      {
+        "displayName": "Brandi Burtts",
+        "sourceName": "BURTTS Brandi"
+      },
+      {
+        "displayName": "Brandon Burtts",
+        "sourceName": "BURTTS Brandon"
+      }
+    ],
+    "BD": [
+      {
+        "displayName": "Brendan Dunstan-Smith",
+        "sourceName": "DUNSTAN-SMITH Brendan"
+      },
+      {
+        "displayName": "Deeksha Gokool Bhakarreea",
+        "sourceName": "GOKOOL BHAKARREEA Deeksha"
+      }
+    ],
+    "BG": [
+      {
+        "displayName": "Billy Grindley",
+        "sourceName": "GRINDLEY Billy"
+      }
+    ],
+    "BJ": [
+      {
+        "displayName": "John Brennan",
+        "sourceName": "BRENNAN John"
+      }
+    ],
+    "BL": [
+      {
+        "displayName": "Brian Liu",
+        "sourceName": "LIU Brian"
+      }
+    ],
+    "BS": [
+      {
+        "displayName": "Benny Shum",
+        "sourceName": "SHUM Benny"
+      }
+    ],
+    "BT": [
+      {
+        "displayName": "Tao Jennifer Bian",
+        "sourceName": "BIAN Tao Jennifer"
+      },
+      {
+        "displayName": "Brian Totman",
+        "sourceName": "TOTMAN Brian"
+      }
+    ],
+    "BU": [
+      {
+        "displayName": "Umer Babar",
+        "sourceName": "BABAR Umer"
+      }
+    ],
+    "BW": [
+      {
+        "displayName": "Woo Sik Byun",
+        "sourceName": "BYUN Woo sik"
+      }
+    ],
+    "CB": [
+      {
+        "displayName": "Craig Billington",
+        "sourceName": "BILLINGTON Craig"
+      }
+    ],
+    "CC": [
+      {
+        "displayName": "Curtis Chung",
+        "sourceName": "CHUNG Curtis"
+      }
+    ],
+    "CG": [
+      {
+        "displayName": "Christy Greenfeather",
+        "sourceName": "GREENFEATHER Christy"
+      }
+    ],
+    "CJ": [
+      {
+        "displayName": "James Carnaby",
+        "sourceName": "CARNABY James"
+      }
+    ],
+    "CLS": [
+      {
+        "displayName": "Chew Ling Seet",
+        "sourceName": "SEET Chew Ling"
+      }
+    ],
+    "CM": [
+      {
+        "displayName": "Caroline Jane Morgan",
+        "sourceName": "MORGAN Caroline Jane"
+      }
+    ],
+    "CSN": [
+      {
+        "displayName": "Chenxu Stella Ni",
+        "sourceName": "NI Chenxu Stella"
+      }
+    ],
+    "CW": [
+      {
+        "displayName": "Catherine Wu",
+        "sourceName": "WU Catherine"
+      }
+    ],
+    "DB": [
+      {
+        "displayName": "Dan Barlow",
+        "sourceName": "BARLOW Dan"
+      }
+    ],
+    "DK": [
+      {
+        "displayName": "Daniel Kim",
+        "sourceName": "KIM Daniel"
+      }
+    ],
+    "DL": [
+      {
+        "displayName": "David Lamb",
+        "sourceName": "LAMB David"
+      }
+    ],
+    "DM": [
+      {
+        "displayName": "Douglas Mcnaught",
+        "sourceName": "MCNAUGHT Douglas"
+      }
+    ],
+    "DN": [
+      {
+        "displayName": "Daniel Owusu Nyantakyi",
+        "sourceName": "NYANTAKYI Daniel Owusu"
+      }
+    ],
+    "E1": [
+      {
+        "displayName": "1 External Cover",
+        "sourceName": "EXTERNAL COVER 1"
+      }
+    ],
+    "E2": [
+      {
+        "displayName": "2 External Cover",
+        "sourceName": "EXTERNAL COVER 2"
+      }
+    ],
+    "EH": [
+      {
+        "displayName": "Elliot Haigh",
+        "sourceName": "HAIGH Elliot"
+      }
+    ],
+    "EJ": [
+      {
+        "displayName": "Ellen Jeffcott",
+        "sourceName": "JEFFCOTT Ellen"
+      }
+    ],
+    "EL": [
+      {
+        "displayName": "Eric Layman",
+        "sourceName": "LAYMAN Eric"
+      }
+    ],
+    "EM": [
+      {
+        "displayName": "Erwin Suguitan Manuel",
+        "sourceName": "MANUEL Erwin Suguitan"
+      }
+    ],
+    "EY": [
+      {
+        "displayName": "Emily Yeung",
+        "sourceName": "YEUNG Emily"
+      }
+    ],
+    "FG": [
+      {
+        "displayName": "Gareth Flint",
+        "sourceName": "FLINT Gareth"
+      }
+    ],
+    "FT": [
+      {
+        "displayName": "Flavia Then",
+        "sourceName": "THEN Flavia"
+      }
+    ],
+    "GD": [
+      {
+        "displayName": "George Dean",
+        "sourceName": "DEAN George"
+      }
+    ],
+    "GH": [
+      {
+        "displayName": "Hannah Glendinning",
+        "sourceName": "GLENDINNING Hannah"
+      }
+    ],
+    "GM": [
+      {
+        "displayName": "Gregg Morrison",
+        "sourceName": "MORRISON Gregg"
+      }
+    ],
+    "GP": [
+      {
+        "displayName": "Prachi Gupta",
+        "sourceName": "GUPTA Prachi"
+      },
+      {
+        "displayName": "Paul Gillespie",
+        "sourceName": "GILLESPIE Paul"
+      }
+    ],
+    "GQ": [
+      {
+        "displayName": "Gordon Quan",
+        "sourceName": "QUAN Gordon"
+      }
+    ],
+    "HA": [
+      {
+        "displayName": "Alison Hung",
+        "sourceName": "HUNG Alison"
+      }
+    ],
+    "HC": [
+      {
+        "displayName": "Harley Cunningham",
+        "sourceName": "CUNNINGHAM Harley"
+      }
+    ],
+    "HR": [
+      {
+        "displayName": "Runlin He",
+        "sourceName": "HE Runlin"
+      },
+      {
+        "displayName": "Hannah Roberts",
+        "sourceName": "ROBERTS Hannah"
+      }
+    ],
+    "HS": [
+      {
+        "displayName": "Suea Han",
+        "sourceName": "HAN Suea"
+      }
+    ],
+    "HY": [
+      {
+        "displayName": "Hazel Yuen",
+        "sourceName": "YUEN Hazel"
+      }
+    ],
+    "HYAL": [
+      {
+        "displayName": "Ho Ying Amata Lo",
+        "sourceName": "LO Ho Ying Amata"
+      }
+    ],
+    "IVL": [
+      {
+        "displayName": "Ingrid Lucia Luk Van",
+        "sourceName": "LUK VAN Ingrid Lucia"
+      }
+    ],
+    "JA": [
+      {
+        "displayName": "Ashleigh Jurrius",
+        "sourceName": "JURRIUS Ashleigh"
+      }
+    ],
+    "JAT": [
+      {
+        "displayName": "Jacques Alain Thomass",
+        "sourceName": "THOMASS Jacques Alain"
+      }
+    ],
+    "JB": [
+      {
+        "displayName": "Janet Brooks",
+        "sourceName": "BROOKS Janet"
+      }
+    ],
+    "JD": [
+      {
+        "displayName": "Denise Josiah",
+        "sourceName": "JOSIAH Denise"
+      }
+    ],
+    "JH": [
+      {
+        "displayName": "Joyce Ho",
+        "sourceName": "HO Joyce"
+      }
+    ],
+    "JHA": [
+      {
+        "displayName": "Jordan Hallas",
+        "sourceName": "HALLAS Jordan"
+      }
+    ],
+    "JJ": [
+      {
+        "displayName": "Jacinta Lauren James",
+        "sourceName": "JAMES Jacinta Lauren"
+      }
+    ],
+    "JL": [
+      {
+        "displayName": "Jack Leonard-Gill",
+        "sourceName": "LEONARD-GILL Jack"
+      }
+    ],
+    "JO": [
+      {
+        "displayName": "John O'Brien",
+        "sourceName": "O'BRIEN John"
+      }
+    ],
+    "JW": [
+      {
+        "displayName": "Jenny Wang",
+        "sourceName": "WANG Jenny"
+      }
+    ],
+    "KA": [
+      {
+        "displayName": "Adrian Knowles",
+        "sourceName": "KNOWLES Adrian"
+      }
+    ],
+    "KG": [
+      {
+        "displayName": "Kouaho (guy) Gueye",
+        "sourceName": "GUEYE Kouaho (Guy)"
+      }
+    ],
+    "KL": [
+      {
+        "displayName": "Kathy Lam",
+        "sourceName": "LAM Kathy"
+      }
+    ],
+    "KW": [
+      {
+        "displayName": "Wesley Koekemoer",
+        "sourceName": "KOEKEMOER Wesley"
+      }
+    ],
+    "KWVL": [
+      {
+        "displayName": "Ko Wai Vivian Lo",
+        "sourceName": "LO Ko Wai Vivian"
+      }
+    ],
+    "LA": [
+      {
+        "displayName": "Awing Lui",
+        "sourceName": "LUI Awing"
+      }
+    ],
+    "LE": [
+      {
+        "displayName": "Ji Hye Leah Eun",
+        "sourceName": "EUN Ji Hye Leah"
+      }
+    ],
+    "LF": [
+      {
+        "displayName": "Lucy Ferris",
+        "sourceName": "FERRIS Lucy"
+      }
+    ],
+    "LJB": [
+      {
+        "displayName": "Liam John Brannan",
+        "sourceName": "BRANNAN Liam John"
+      }
+    ],
+    "LK": [
+      {
+        "displayName": "Leanne Kingston",
+        "sourceName": "KINGSTON Leanne"
+      },
+      {
+        "displayName": "Kelsey Lowe",
+        "sourceName": "LOWE Kelsey"
+      }
+    ],
+    "LL": [
+      {
+        "displayName": "Lily Lin",
+        "sourceName": "LIN Lily"
+      },
+      {
+        "displayName": "Luke Leader",
+        "sourceName": "LEADER Luke"
+      }
+    ],
+    "LM": [
+      {
+        "displayName": "Lauren Minnie",
+        "sourceName": "MINNIE Lauren"
+      }
+    ],
+    "LS": [
+      {
+        "displayName": "Sihan Charlie Li",
+        "sourceName": "LI Sihan Charlie"
+      }
+    ],
+    "LY": [
+      {
+        "displayName": "Yu-Ling Lu",
+        "sourceName": "LU Yu-Ling"
+      }
+    ],
+    "MA": [
+      {
+        "displayName": "Amulya Malaki",
+        "sourceName": "MALAKI Amulya"
+      }
+    ],
+    "MC": [
+      {
+        "displayName": "Matthew Charles Cooke",
+        "sourceName": "COOKE Matthew Charles"
+      }
+    ],
+    "MF": [
+      {
+        "displayName": "Murray Forrest",
+        "sourceName": "FORREST Murray"
+      }
+    ],
+    "MG": [
+      {
+        "displayName": "Mahua Ganguly",
+        "sourceName": "GANGULY Mahua"
+      }
+    ],
+    "MJ": [
+      {
+        "displayName": "Jessika Mansen",
+        "sourceName": "MANSEN Jessika"
+      }
+    ],
+    "MM": [
+      {
+        "displayName": "Manfei (cecilia) Mao",
+        "sourceName": "MAO Manfei (Cecilia)"
+      }
+    ],
+    "MMC": [
+      {
+        "displayName": "Margaret Chou",
+        "sourceName": "CHOU Margaret"
+      }
+    ],
+    "MP": [
+      {
+        "displayName": "Marianne Pittman",
+        "sourceName": "PITTMAN Marianne"
+      }
+    ],
+    "MS": [
+      {
+        "displayName": "Shahzeb Mohammad",
+        "sourceName": "MOHAMMAD Shahzeb"
+      },
+      {
+        "displayName": "Mason Stewart",
+        "sourceName": "STEWART Mason"
+      },
+      {
+        "displayName": "Sarah Morrison",
+        "sourceName": "MORRISON Sarah"
+      }
+    ],
+    "MT": [
+      {
+        "displayName": "Matthew Trethewey",
+        "sourceName": "TRETHEWEY Matthew"
+      }
+    ],
+    "MYEK": [
+      {
+        "displayName": "Ming Yuen Edmund Kam",
+        "sourceName": "KAM Ming Yuen Edmund"
+      }
+    ],
+    "MZ": [
+      {
+        "displayName": "Mengxue Michelle Zhang",
+        "sourceName": "ZHANG Mengxue Michelle"
+      }
+    ],
+    "NH": [
+      {
+        "displayName": "Nicholas Hui",
+        "sourceName": "HUI Nicholas"
+      }
+    ],
+    "NK": [
+      {
+        "displayName": "Naveen Kumar",
+        "sourceName": "KUMAR Naveen"
+      }
+    ],
+    "NS": [
+      {
+        "displayName": "Nareerut Scott",
+        "sourceName": "SCOTT Nareerut"
+      }
+    ],
+    "OB": [
+      {
+        "displayName": "Ben O'Donnell",
+        "sourceName": "O'DONNELL Ben"
+      }
+    ],
+    "PC": [
+      {
+        "displayName": "Philip Donald Chiaro",
+        "sourceName": "CHIARO Philip Donald"
+      }
+    ],
+    "PDB": [
+      {
+        "displayName": "Paul Damien Brady",
+        "sourceName": "BRADY Paul Damien"
+      }
+    ],
+    "PL": [
+      {
+        "displayName": "Paul Lo",
+        "sourceName": "LO Paul"
+      }
+    ],
+    "PM": [
+      {
+        "displayName": "Patrick Mcgovern",
+        "sourceName": "MCGOVERN Patrick"
+      }
+    ],
+    "PS": [
+      {
+        "displayName": "Paul Stanley",
+        "sourceName": "STANLEY Paul"
+      },
+      {
+        "displayName": "Peter Stapleton",
+        "sourceName": "STAPLETON Peter"
+      }
+    ],
+    "QA": [
+      {
+        "displayName": "Ninghui Anastasia Qiu",
+        "sourceName": "QIU Ninghui Anastasia"
+      }
+    ],
+    "RC": [
+      {
+        "displayName": "Rudolph Charles",
+        "sourceName": "CHARLES Rudolph"
+      }
+    ],
+    "RK": [
+      {
+        "displayName": "Robert Kitley",
+        "sourceName": "KITLEY Robert"
+      }
+    ],
+    "SB": [
+      {
+        "displayName": "Scott Bouttle",
+        "sourceName": "BOUTTLE Scott"
+      }
+    ],
+    "SC": [
+      {
+        "displayName": "Sean Connaughton",
+        "sourceName": "CONNAUGHTON Sean"
+      },
+      {
+        "displayName": "Sunny Chan",
+        "sourceName": "CHAN Sunny"
+      }
+    ],
+    "SE": [
+      {
+        "displayName": "Sarah Emberger",
+        "sourceName": "EMBERGER Sarah"
+      }
+    ],
+    "SH": [
+      {
+        "displayName": "Steve Hackman",
+        "sourceName": "HACKMAN Steve"
+      }
+    ],
+    "SKE": [
+      {
+        "displayName": "Simon Kelleher",
+        "sourceName": "KELLEHER Simon"
+      }
+    ],
+    "SKI": [
+      {
+        "displayName": "Samuel Kim",
+        "sourceName": "KIM Samuel"
+      }
+    ],
+    "SL": [
+      {
+        "displayName": "Sam Lingwood",
+        "sourceName": "LINGWOOD Sam"
+      }
+    ],
+    "SN": [
+      {
+        "displayName": "Samantha Nagorcka",
+        "sourceName": "NAGORCKA Samantha"
+      }
+    ],
+    "SR": [
+      {
+        "displayName": "Sarah Rogers",
+        "sourceName": "ROGERS Sarah"
+      }
+    ],
+    "SSY": [
+      {
+        "displayName": "Shufan (sunny) Sun",
+        "sourceName": "SUN Shufan (Sunny)"
+      }
+    ],
+    "SV": [
+      {
+        "displayName": "Stephanie Visser",
+        "sourceName": "VISSER Stephanie"
+      }
+    ],
+    "SVR": [
+      {
+        "displayName": "Shanmuga Vadivu Ramasamy",
+        "sourceName": "RAMASAMY Shanmuga Vadivu"
+      }
+    ],
+    "SW": [
+      {
+        "displayName": "Simon Wan",
+        "sourceName": "WAN Simon"
+      }
+    ],
+    "TAY": [
+      {
+        "displayName": "Pui Sze Teresa Au Yeung",
+        "sourceName": "AU YEUNG Pui Sze Teresa"
+      }
+    ],
+    "TY": [
+      {
+        "displayName": "Ying Tang",
+        "sourceName": "TANG Ying"
+      }
+    ],
+    "VC": [
+      {
+        "displayName": "Vivien Cheng",
+        "sourceName": "CHENG Vivien"
+      }
+    ],
+    "VT": [
+      {
+        "displayName": "Vaishali Tanna",
+        "sourceName": "TANNA Vaishali"
+      },
+      {
+        "displayName": "Vidit Tanwar",
+        "sourceName": "TANWAR Vidit"
+      }
+    ],
+    "WJ": [
+      {
+        "displayName": "Jennifer Weeast",
+        "sourceName": "WEEAST Jennifer"
+      }
+    ],
+    "WK": [
+      {
+        "displayName": "Yee Kam Wan",
+        "sourceName": "WAN Yee Kam"
+      }
+    ],
+    "WL": [
+      {
+        "displayName": "Luke Watson",
+        "sourceName": "WATSON Luke"
+      }
+    ],
+    "WO": [
+      {
+        "displayName": "Onki Wong",
+        "sourceName": "WONG Onki"
+      }
+    ],
+    "WY": [
+      {
+        "displayName": "Yang (rick) Wang",
+        "sourceName": "WANG Yang (Rick)"
+      }
+    ],
+    "XF": [
+      {
+        "displayName": "Xinyao (yoyo) Feng",
+        "sourceName": "FENG Xinyao (YoYo)"
+      }
+    ],
+    "YA": [
+      {
+        "displayName": "Anantha Yerikalapudi",
+        "sourceName": "YERIKALAPUDI Anantha"
+      },
+      {
+        "displayName": "Yvonne Au",
+        "sourceName": "AU Yvonne"
+      }
+    ],
+    "YD": [
+      {
+        "displayName": "Delores Yuan",
+        "sourceName": "YUAN Delores"
+      }
+    ],
+    "YL": [
+      {
+        "displayName": "Yuki Liang",
+        "sourceName": "LIANG Yuki"
+      }
+    ],
+    "YS": [
+      {
+        "displayName": "Yin Hung Sze",
+        "sourceName": "SZE Yin Hung"
+      }
+    ],
+    "YZ": [
+      {
+        "displayName": "Yan Zhu",
+        "sourceName": "ZHU Yan"
+      }
+    ],
+    "ZC": [
+      {
+        "displayName": "Carrie Zhang",
+        "sourceName": "ZHANG Carrie"
+      }
+    ],
+    "ZD": [
+      {
+        "displayName": "Dayan Zhou",
+        "sourceName": "ZHOU Dayan"
+      }
+    ],
+    "ZHS": [
+      {
+        "displayName": "Zoe Hannah Sheeran",
+        "sourceName": "SHEERAN Zoe Hannah"
+      }
+    ],
+    "ZJW": [
+      {
+        "displayName": "Zhen Jane Wang",
+        "sourceName": "WANG Zhen Jane"
+      }
+    ],
+    "ZLU": [
+      {
+        "displayName": "Lu (lucy) Zhang",
+        "sourceName": "ZHANG Lu (Lucy)"
+      }
+    ],
+    "ZY": [
+      {
+        "displayName": "Yuyang (yosef) Zhou",
+        "sourceName": "ZHOU Yuyang (Yosef)"
+      }
+    ]
+  }
+}

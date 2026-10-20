@@ -1,0 +1,37 @@
+[
+  {
+    "room": "B409",
+    "week": "A",
+    "day": "Thursday",
+    "period": "lesson4",
+    "sourceText": "A40 7-A4 08 + GLC 4/F (12: 05-1 2:35 V ) T"
+  },
+  {
+    "room": "B513",
+    "week": "A",
+    "day": "Wednesday",
+    "period": "lesson4",
+    "sourceText": "A40 7-A4 08 + GLC 4/F (12: 05-1 2:35 P ) S"
+  },
+  {
+    "room": "B513",
+    "week": "B",
+    "day": "Tuesday",
+    "period": "lesson4",
+    "sourceText": "A40 7-A4 08 + GLC 4/F (12: 05-1 2:35 P ) S"
+  },
+  {
+    "room": "B306",
+    "week": "A",
+    "day": "Friday",
+    "period": "lesson4",
+    "sourceText": "A40 7-A4 08 + GLC 4/F (12 05-1 2:35 C ) G"
+  },
+  {
+    "room": "B306",
+    "week": "B",
+    "day": "Thursday",
+    "period": "lesson4",
+    "sourceText": "A40 7-A4 08 + GLC 4/F (12: 05-1 2:35 C ) G"
+  }
+]
