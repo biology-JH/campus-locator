@@ -44,3 +44,8 @@
 - [ ] Add a root `vercel.json` and recognized Express entrypoint so Vercel routes incoming requests to the Express app as a serverless function.
 - [ ] Identify the exact runtime environment-variable names required by this repository and explain which values the owner must add in Vercel Settings without exposing secret values.
 - [ ] Provide the exact Vercel Build Command and Output Directory settings for this Vite/Express project.
+
+
+## Vercel serverless build repair
+- [x] Resolve the reported error “no Express entrypoint in dist/public” by routing through the root Express serverless handler; keep the Vite frontend output in `dist/public`, but do not make that directory the Express entrypoint directory.
+- [x] Ensure `package.json`’s build command compiles the frontend and backend for Vercel serverless use, push the configuration to GitHub `main`, and do not run heavy local build tests.
