@@ -7,7 +7,7 @@ import { classrooms, timetableEntries } from "../drizzle/schema.js";
 import { publicProcedure, router } from "./_core/trpc.js";
 import { staffForCodes } from "./staff-resolution.js";
 import { formatSubjectDisplay } from "./subject-resolution.js";
-import teacherAbbreviations from "./data/teacher-abbreviations.json";
+import teacherAbbreviations from "./data/teacher-abbreviations.json" with { type: "json" };
 
 const weekInput = z.enum(WEEKS);
 const dayInput = z.enum(DAYS);

@@ -1,4 +1,4 @@
-import subjectDictionary from "./data/subject-abbreviations.json";
+import subjectDictionary from "./data/subject-abbreviations.json" with { type: "json" };
 
 type SubjectEntry = { grade: string; code: string; fullName: string };
 type SubjectDictionary = {

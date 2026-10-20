@@ -65,3 +65,9 @@
 - [x] Create or update the root `server.js` with an explicit `.js` extension on the import from `./server/_core/app.js`.
 - [x] Add the marker `// Vercel Deploy Fix v2` so the source change is distinct from the prior pushed commit.
 - [x] Commit and push the update to GitHub `main` without running a heavy local build; preserve existing commit history.
+
+
+## Production HTTP 500 investigation and repair
+- [x] Read Vercel production request logs and identify the root failure: Node ESM aborts during module loading because `server/data/teacher-abbreviations.json` is imported without the required JSON import attribute (`ERR_IMPORT_ATTRIBUTE_MISSING`); `/` and `/favicon.ico` return 500 before application requests are handled.
+- [x] Verify external database/network and environment metadata without revealing values: Aiven reports the MySQL service Running and its IP address allowlist “Open to all”; Vercel metadata lists a Production `DATABASE_URL` Secret and no other project variables. `ROOMFINDER_ADMIN_PASSWORD` is not configured; source uses it for admin sign-in with a fallback and does not require it to boot. The crash occurs before database access and is not caused by an IP whitelist or database timeout.
+- [ ] Add explicit JSON import attributes to every JSON file imported by the server ESM graph, commit and push the targeted fix to GitHub `main`, then confirm Vercel’s production deployment no longer returns 500 on `/` and `/api/health`.

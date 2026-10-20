@@ -1,7 +1,7 @@
 import { LAB_ROOM_NUMBERS, type PeriodId } from "../shared/timetable.js";
-import teacherAbbreviations from "./data/teacher-abbreviations.json";
-import manualStaffOverrides from "./data/manual-staff-overrides.json";
-import teacherSubjectRules from "./data/teacher-subject-rules.json";
+import teacherAbbreviations from "./data/teacher-abbreviations.json" with { type: "json" };
+import manualStaffOverrides from "./data/manual-staff-overrides.json" with { type: "json" };
+import teacherSubjectRules from "./data/teacher-subject-rules.json" with { type: "json" };
 
 type CourseRule = { grade: string; subject: string; names: string[] };
 type StaffContextRule = {
