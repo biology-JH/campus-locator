@@ -38,3 +38,9 @@
 - [x] Import the existing website files without redesigning, rewriting, or modifying application code; preserve the supplied UI, scrolling behavior and all existing teacher data, including Bian Tao, Brian and Sam Lingwood.
 - [x] Install required dependencies and run the existing build process as necessary for deployment.
 - [ ] Deploy to a permanent publicly accessible website using minimal work.
+
+
+## Vercel deployment setup
+- [ ] Add a root `vercel.json` and recognized Express entrypoint so Vercel routes incoming requests to the Express app as a serverless function.
+- [ ] Identify the exact runtime environment-variable names required by this repository and explain which values the owner must add in Vercel Settings without exposing secret values.
+- [ ] Provide the exact Vercel Build Command and Output Directory settings for this Vite/Express project.
