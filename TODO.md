@@ -59,3 +59,9 @@
 ## Vercel Node ESM import resolution
 - [x] Ensure every relative import in the deployed server module graph uses an explicit `.js` or `.ts` extension so Node ESM does not throw `ERR_MODULE_NOT_FOUND` (e.g. `/var/task/server/_core/app`); or use an equivalent compiler configuration.
 - [x] Commit and push the fix to GitHub `main` without running a heavy local build.
+
+
+## Vercel root server.js refresh
+- [x] Create or update the root `server.js` with an explicit `.js` extension on the import from `./server/_core/app.js`.
+- [x] Add the marker `// Vercel Deploy Fix v2` so the source change is distinct from the prior pushed commit.
+- [x] Commit and push the update to GitHub `main` without running a heavy local build; preserve existing commit history.
