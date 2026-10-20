@@ -2,10 +2,10 @@ import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypt
 import express, { type Request, type RequestHandler, type Response } from "express";
 import { and, asc, eq } from "drizzle-orm";
 import { z } from "zod";
-import { DAYS, PERIODS, WEEKS, type PeriodId } from "@shared/timetable";
-import { getDb } from "./db";
-import { classrooms, timetableEntries } from "../drizzle/schema";
-import { staffForCodes } from "./staff-resolution";
+import { DAYS, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
+import { getDb } from "./db.js";
+import { classrooms, timetableEntries } from "../drizzle/schema.js";
+import { staffForCodes } from "./staff-resolution.js";
 
 const ADMIN_PATH = "/api/admin";
 const SESSION_COOKIE = "roomfinder_admin_session";

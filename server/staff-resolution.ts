@@ -1,4 +1,4 @@
-import { LAB_ROOM_NUMBERS, type PeriodId } from "@shared/timetable";
+import { LAB_ROOM_NUMBERS, type PeriodId } from "../shared/timetable.js";
 import teacherAbbreviations from "./data/teacher-abbreviations.json";
 import manualStaffOverrides from "./data/manual-staff-overrides.json";
 import teacherSubjectRules from "./data/teacher-subject-rules.json";

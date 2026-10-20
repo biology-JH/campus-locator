@@ -1,12 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { and, asc, eq, notInArray } from "drizzle-orm";
 import { z } from "zod";
-import { DAYS, EXCLUDED_ROOM_NUMBERS, PERIODS, WEEKS } from "@shared/timetable";
-import { getDb } from "./db";
-import { classrooms, timetableEntries } from "../drizzle/schema";
-import { publicProcedure, router } from "./_core/trpc";
-import { staffForCodes } from "./staff-resolution";
-import { formatSubjectDisplay } from "./subject-resolution";
+import { DAYS, EXCLUDED_ROOM_NUMBERS, PERIODS, WEEKS } from "../shared/timetable.js";
+import { getDb } from "./db.js";
+import { classrooms, timetableEntries } from "../drizzle/schema.js";
+import { publicProcedure, router } from "./_core/trpc.js";
+import { staffForCodes } from "./staff-resolution.js";
+import { formatSubjectDisplay } from "./subject-resolution.js";
 import teacherAbbreviations from "./data/teacher-abbreviations.json";
 
 const weekInput = z.enum(WEEKS);

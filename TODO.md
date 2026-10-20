@@ -47,5 +47,15 @@
 
 
 ## Vercel serverless build repair
-- [ ] Resolve the reported error “no Express entrypoint in dist/public” by routing through the root Express serverless handler; keep the Vite frontend output in `dist/public`, but do not make that directory the Express entrypoint directory.
+- [x] Resolve the reported error “no Express entrypoint in dist/public” by routing through the root Express serverless handler; keep the Vite frontend output in `dist/public`, but do not make that directory the Express entrypoint directory.
 - [x] Ensure `package.json`’s build command compiles the frontend and backend for Vercel serverless use, push the configuration to GitHub `main`, and do not run heavy local build tests.
+
+
+## Vercel production function response
+- [ ] Ensure the root Express function serves `/api/health` and `/` without `FUNCTION_INVOCATION_FAILED` in production, while preserving the existing API and Vite-built frontend.
+- [ ] Do not run heavy local build tests; validate through the deployment triggered by the GitHub `main` push.
+
+
+## Vercel Node ESM import resolution
+- [x] Ensure every relative import in the deployed server module graph uses an explicit `.js` or `.ts` extension so Node ESM does not throw `ERR_MODULE_NOT_FOUND` (e.g. `/var/task/server/_core/app`); or use an equivalent compiler configuration.
+- [x] Commit and push the fix to GitHub `main` without running a heavy local build.
