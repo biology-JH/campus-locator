@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "vite build && esbuild server.ts --platform=node --target=node22 --packages=external --bundle --format=esm --outfile=dist/serverless.js && esbuild server/_core/index.ts --platform=node --target=node22 --packages=external --bundle --format=esm --outdir=dist",
+    "build": "find . -name '*.ts' -o -name '*.js' | xargs sed -i \"s|import teacherAbbreviations from '.*teacher-abbreviations.json';|import { readFileSync } from 'fs'; import { join } from 'path'; const teacherAbbreviations = JSON.parse(readFileSync(join(process.cwd(), 'server/data/teacher-abbreviations.json'), 'utf8'));|g\" 2>/dev/null || true && vite build && esbuild server.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/serverless.js && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
