@@ -123,30 +123,36 @@ export default function Home() {
 
       <main id="top" className="main-content dashboard-page">
         <section className="dashboard-hero" aria-labelledby="page-title">
-          <div>
+          <img className="hero-building" src="/assets/roomfinder/ycis-courtyard-hero.jpg" alt="YCIS courtyard and school building" />
+          <div className="hero-copy">
             <div className="eyebrow"><Sparkles size={14} /> TEACHER & ROOM AVAILABILITY</div>
             <h1 id="page-title">Campus Space<br className="mobile-break" /> <span className="headline-ampersand">&amp;</span> Staff Locator</h1>
             <p className="intro-copy">
               Integrated Room Allocation and Staff Directory.
             </p>
-          </div>
-          <figure className="hero-campus-card">
-            <img src="/assets/roomfinder/campus.jpg" alt="耀中國際學校，Yew Chung International School campus" />
-            <figcaption>
-              <span className="hero-context-icon"><MapPin size={18} /></span>
+            <div className="hero-location-chip">
+              <MapPin size={16} aria-hidden="true" />
               <span>
                 <strong>耀中國際學校 · Yew Chung International School</strong>
                 <small>Secondary · Kowloon Tong</small>
               </span>
-            </figcaption>
-          </figure>
+            </div>
+          </div>
+          <div className="hero-photo-stack" role="group" aria-label="Selected learning spaces at Yew Chung International School">
+            <figure className="hero-photo hero-photo--library">
+              <img src="/assets/roomfinder/ycis-library.jpg" alt="School library with bookshelves, study tables, and blue chairs" />
+              <figcaption>THE LIBRARY</figcaption>
+            </figure>
+            <figure className="hero-photo hero-photo--lab">
+              <img src="/assets/roomfinder/ycis-science-lab.jpg" alt="Science laboratory with student work benches" />
+              <figcaption>SCIENCE LAB</figcaption>
+            </figure>
+            <figure className="hero-photo hero-photo--studio">
+              <img src="/assets/roomfinder/ycis-learning-studio.png" alt="Contemporary collaborative learning space at YCIS" />
+              <figcaption>LEARNING STUDIO</figcaption>
+            </figure>
+          </div>
         </section>
-
-        <div className="learning-space-strip" aria-label="Learning spaces around campus">
-          <figure><img src="/assets/roomfinder/classroom.png" alt="Bright classroom with desks and presentation screen" /><figcaption>Classrooms</figcaption></figure>
-          <figure><img src="/assets/roomfinder/corridor.png" alt="School corridor with classroom doors" /><figcaption>Find your next room</figcaption></figure>
-          <figure><img src="/assets/roomfinder/science-lab.png" alt="Modern science laboratory" /><figcaption>Science labs</figcaption></figure>
-        </div>
 
         <div className="dashboard-layout">
           <aside className="filter-panel" aria-label="Availability filters">
