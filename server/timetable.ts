@@ -1,10 +1,11 @@
+import { createHash } from "node:crypto";
 import { TRPCError } from "@trpc/server";
 import { and, asc, eq, notInArray } from "drizzle-orm";
 import { z } from "zod";
 import { DAYS, EXCLUDED_ROOM_NUMBERS, PERIODS, WEEKS } from "../shared/timetable.js";
 import { getDb } from "./db.js";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
-import { publicProcedure, router } from "./_core/trpc.js";
+import { adminProcedure, publicProcedure, router } from "./_core/trpc.js";
 import { staffForCodes } from "./staff-resolution.js";
 import { formatSubjectDisplay } from "./subject-resolution.js";
 import teacherAbbreviations from "./data/teacher-abbreviations.json" with { type: "json" };
@@ -21,11 +22,21 @@ const periodInput = z.enum([
   "lesson6",
   "lesson7",
 ]);
-const HIDDEN_STAFF_TERMS = ["external cover 1", "external cover 2", "yvonne au", "yuki"];
+const HIDDEN_STAFF_TERMS = ["external cover 1", "external cover 2", "1 external cover", "2 external cover", "yvonne au", "yuki"];
 const isHiddenStaffName = (name: string) => HIDDEN_STAFF_TERMS.some(term => name.toLocaleLowerCase().includes(term));
 const visibleStaffAttributions = <T extends { names: string[] }>(staff: T[]) => staff
   .map(attribution => ({ ...attribution, names: attribution.names.filter(name => !isHiddenStaffName(name)) }))
   .filter(attribution => attribution.names.length > 0);
+
+function publicTeacherNames() {
+  const names = new Set<string>();
+  for (const people of Object.values(teacherAbbreviations.byCode)) {
+    for (const person of people) {
+      if (!isHiddenStaffName(person.displayName)) names.add(person.displayName);
+    }
+  }
+  return [...names].sort((left, right) => left.localeCompare(right));
+}
 
 async function requireDatabase() {
   const db = await getDb();
@@ -36,6 +47,49 @@ async function requireDatabase() {
     });
   }
   return db;
+}
+
+const batchSlotInput = z.object({ week: weekInput, day: dayInput, period: periodInput }).strict();
+const batchAssignmentInput = z.object({
+  roomNumber: z.string().trim().min(1).max(64),
+  sourceRoomNumber: z.string().trim().min(1).max(64),
+}).strict();
+
+type BatchSlotRow = {
+  roomNumber: string;
+  displayOrder: number;
+  occupant: string | null;
+  occupantDisplay: string | null;
+  staffCodes: string | null;
+  sourcePage: number;
+};
+
+function assembleBatchSlotRows(
+  roomRows: Array<{ roomNumber: string; displayOrder: number }>,
+  entryRows: Array<{ roomNumber: string; occupant: string | null; occupantDisplay: string | null; staffCodes: string | null; sourcePage: number }>,
+): BatchSlotRow[] {
+  const entriesByRoom = new Map(entryRows.map(entry => [entry.roomNumber, entry]));
+  if (
+    roomRows.length === 0 ||
+    entryRows.length !== roomRows.length ||
+    roomRows.some(room => !entriesByRoom.has(room.roomNumber))
+  ) {
+    throw new TRPCError({
+      code: "PRECONDITION_FAILED",
+      message: "This room slot is incomplete. Batch editing is disabled until every visible room has one schedule entry.",
+    });
+  }
+  return roomRows.map(room => ({ ...room, ...entriesByRoom.get(room.roomNumber)! }));
+}
+
+function batchSlotVersion(
+  selection: z.infer<typeof batchSlotInput>,
+  rows: BatchSlotRow[],
+): string {
+  const canonicalRows = rows.map(row => [row.roomNumber, row.occupant, row.occupantDisplay, row.staffCodes, row.sourcePage]);
+  return createHash("sha256")
+    .update(JSON.stringify({ selection, rows: canonicalRows }))
+    .digest("hex");
 }
 
 export const timetableRouter = router({
@@ -49,11 +103,184 @@ export const timetableRouter = router({
   }),
 
   teacherList: publicProcedure.query(() => {
-    const names = new Set<string>();
-    for (const people of Object.values(teacherAbbreviations.byCode)) {
-      for (const person of people) if (!isHiddenStaffName(person.displayName)) names.add(person.displayName);
-    }
-    return [...names].sort((left, right) => left.localeCompare(right));
+    return publicTeacherNames();
+  }),
+
+  batchEditSnapshot: adminProcedure
+    .input(batchSlotInput)
+    .query(async ({ input }) => {
+      const db = await requireDatabase();
+      const [roomRows, entryRows] = await Promise.all([
+        db.select({ roomNumber: classrooms.roomNumber, displayOrder: classrooms.displayOrder })
+          .from(classrooms)
+          .where(notInArray(classrooms.roomNumber, [...EXCLUDED_ROOM_NUMBERS]))
+          .orderBy(asc(classrooms.displayOrder)),
+        db.select({
+          roomNumber: timetableEntries.roomNumber,
+          occupant: timetableEntries.occupant,
+          occupantDisplay: timetableEntries.occupantDisplay,
+          staffCodes: timetableEntries.staffCodes,
+          sourcePage: timetableEntries.sourcePage,
+        })
+          .from(timetableEntries)
+          .where(and(
+            eq(timetableEntries.week, input.week),
+            eq(timetableEntries.day, input.day),
+            eq(timetableEntries.period, input.period),
+            notInArray(timetableEntries.roomNumber, [...EXCLUDED_ROOM_NUMBERS]),
+          )),
+      ]);
+      const rooms = assembleBatchSlotRows(roomRows, entryRows);
+      return { ...input, version: batchSlotVersion(input, rooms), rooms };
+    }),
+
+  saveBatchScheduleChanges: adminProcedure
+    .input(batchSlotInput.extend({
+      expectedVersion: z.string().regex(/^[a-f0-9]{64}$/),
+      assignments: z.array(batchAssignmentInput).min(1).max(500),
+    }).strict())
+    .mutation(async ({ input }) => {
+      const db = await requireDatabase();
+      const updatedRooms = await db.transaction(async tx => {
+        const entryRows = await tx.select({
+          roomNumber: timetableEntries.roomNumber,
+          occupant: timetableEntries.occupant,
+          occupantDisplay: timetableEntries.occupantDisplay,
+          staffCodes: timetableEntries.staffCodes,
+          sourcePage: timetableEntries.sourcePage,
+        })
+          .from(timetableEntries)
+          .where(and(
+            eq(timetableEntries.week, input.week),
+            eq(timetableEntries.day, input.day),
+            eq(timetableEntries.period, input.period),
+            notInArray(timetableEntries.roomNumber, [...EXCLUDED_ROOM_NUMBERS]),
+          ))
+          .orderBy(asc(timetableEntries.roomNumber))
+          .for("update");
+        const roomRows = await tx.select({ roomNumber: classrooms.roomNumber, displayOrder: classrooms.displayOrder })
+          .from(classrooms)
+          .where(notInArray(classrooms.roomNumber, [...EXCLUDED_ROOM_NUMBERS]))
+          .orderBy(asc(classrooms.displayOrder))
+          .for("update");
+        const currentRows = assembleBatchSlotRows(roomRows, entryRows);
+
+        if (batchSlotVersion({ week: input.week, day: input.day, period: input.period }, currentRows) !== input.expectedVersion) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "This timetable slot changed after editing began. Cancel, reload the current slot, and reapply the swap.",
+          });
+        }
+
+        const validRoomNumbers = new Set(currentRows.map(row => row.roomNumber));
+        const targetRoomNumbers = input.assignments.map(assignment => assignment.roomNumber);
+        const sourceRoomNumbers = input.assignments.map(assignment => assignment.sourceRoomNumber);
+        const targetSet = new Set(targetRoomNumbers);
+        const sourceSet = new Set(sourceRoomNumbers);
+        if (
+          input.assignments.length !== currentRows.length ||
+          targetSet.size !== currentRows.length ||
+          sourceSet.size !== currentRows.length ||
+          [...validRoomNumbers].some(room => !targetSet.has(room) || !sourceSet.has(room))
+        ) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Resolve all overlapping room assignments before saving. Every room and original assignment must appear exactly once.",
+          });
+        }
+
+        const rowsByRoom = new Map(currentRows.map(row => [row.roomNumber, row]));
+        const assignmentByTarget = new Map(input.assignments.map(assignment => [assignment.roomNumber, assignment.sourceRoomNumber]));
+        let changed = 0;
+        for (const target of currentRows) {
+          const sourceRoomNumber = assignmentByTarget.get(target.roomNumber)!;
+          if (sourceRoomNumber === target.roomNumber) continue;
+          const source = rowsByRoom.get(sourceRoomNumber)!;
+          await tx.update(timetableEntries)
+            .set({
+              occupant: source.occupant,
+              occupantDisplay: source.occupantDisplay,
+              staffCodes: source.staffCodes,
+              sourcePage: source.sourcePage,
+            })
+            .where(and(
+              eq(timetableEntries.roomNumber, target.roomNumber),
+              eq(timetableEntries.week, input.week),
+              eq(timetableEntries.day, input.day),
+              eq(timetableEntries.period, input.period),
+            ));
+          changed += 1;
+        }
+        return changed;
+      });
+      return { updatedRooms };
+    }),
+
+  teachersForSlot: publicProcedure
+    .input(z.object({ week: weekInput, day: dayInput, period: periodInput }))
+    .query(async ({ input }) => {
+      const db = await requireDatabase();
+      const [roomRows, entryRows] = await Promise.all([
+        db
+          .select({ roomNumber: classrooms.roomNumber, displayOrder: classrooms.displayOrder })
+          .from(classrooms)
+          .where(notInArray(classrooms.roomNumber, [...EXCLUDED_ROOM_NUMBERS]))
+          .orderBy(asc(classrooms.displayOrder)),
+        db
+          .select({
+            roomNumber: timetableEntries.roomNumber,
+            occupant: timetableEntries.occupant,
+            staffCodes: timetableEntries.staffCodes,
+          })
+          .from(timetableEntries)
+          .where(and(
+            eq(timetableEntries.week, input.week),
+            eq(timetableEntries.day, input.day),
+            eq(timetableEntries.period, input.period),
+            notInArray(timetableEntries.roomNumber, [...EXCLUDED_ROOM_NUMBERS]),
+          )),
+      ]);
+
+      const roomOrder = new Map(roomRows.map(room => [room.roomNumber, room.displayOrder]));
+      const activeByRoomAndName = new Map<string, { teacher: string; roomNumber: string; isAmbiguous: boolean }>();
+      const activeNames = new Set<string>();
+
+      for (const entry of entryRows) {
+        if (!entry.occupant) continue;
+        const attributions = visibleStaffAttributions(staffForCodes(
+          entry.staffCodes,
+          entry.occupant,
+          input.period,
+          { roomNumber: entry.roomNumber, week: input.week, day: input.day },
+        ));
+
+        for (const attribution of attributions) {
+          const names = [...new Set(attribution.names)];
+          if (!names.length) continue;
+          for (const name of names) activeNames.add(name.toLocaleLowerCase());
+          const key = JSON.stringify([entry.roomNumber, names.map(name => name.toLocaleLowerCase()).sort()]);
+          if (!activeByRoomAndName.has(key)) {
+            activeByRoomAndName.set(key, {
+              teacher: names.join(" / "),
+              roomNumber: entry.roomNumber,
+              isAmbiguous: names.length > 1,
+            });
+          }
+        }
+      }
+
+      const activeTeachers = [...activeByRoomAndName.values()].sort((left, right) =>
+        (roomOrder.get(left.roomNumber) ?? 0) - (roomOrder.get(right.roomNumber) ?? 0) ||
+        left.teacher.localeCompare(right.teacher),
+      );
+      const freeTeachers = publicTeacherNames().filter(name => !activeNames.has(name.toLocaleLowerCase()));
+
+      return {
+        selection: input,
+        periodLabel: PERIODS.find(item => item.id === input.period)?.label ?? input.period,
+        activeTeachers,
+        freeTeachers,
+      };
   }),
 
   availability: publicProcedure
