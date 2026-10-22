@@ -70,4 +70,20 @@
 ## Production HTTP 500 investigation and repair
 - [x] Read Vercel production request logs and identify the root failure: Node ESM aborts during module loading because `server/data/teacher-abbreviations.json` is imported without the required JSON import attribute (`ERR_IMPORT_ATTRIBUTE_MISSING`); `/` and `/favicon.ico` return 500 before application requests are handled.
 - [x] Verify external database/network and environment metadata without revealing values: Aiven reports the MySQL service Running and its IP address allowlist “Open to all”; Vercel metadata lists a Production `DATABASE_URL` Secret and no other project variables. `ROOMFINDER_ADMIN_PASSWORD` is not configured; source uses it for admin sign-in with a fallback and does not require it to boot. The crash occurs before database access and is not caused by an IP whitelist or database timeout.
-- [ ] Add explicit JSON import attributes to every JSON file imported by the server ESM graph, commit and push the targeted fix to GitHub `main`, then confirm Vercel’s production deployment no longer returns 500 on `/` and `/api/health`.
+- [x] Add explicit JSON import attributes to every JSON file imported by the server ESM graph, commit and push the targeted fix to GitHub `main`, then confirm Vercel’s production deployment no longer returns 500 on `/` and `/api/health`.
+
+
+## Database restoration and live API
+- [x] Apply the existing Drizzle migrations and guarded seed to the external Aiven database; 96 classrooms and 7,680 timetable rows were seeded without replacing existing rows.
+- [x] Verify the public homepage, health check, room list, and sample availability API return successfully; the room list returned 89 rooms and the sample slot returned 14 free, 75 occupied, and 0 incomplete.
+- [ ] Rotate the Aiven password and confirm the production connection negotiates TLS before reusing the migration connection; the migration session reported an empty `Ssl_cipher`.
+
+## Header redesign
+- [x] Use only the supplied YCIS building/courtyard photo as the large, prominent primary background spanning the entire header.
+- [x] Select a few of the best-quality photos from the remaining supplied pool as smaller overlay pictures; using every photo is not required.
+- [x] Arrange the selected pictures to overlap slightly on the building background with elegant layering, subtle drop shadows, and slight rotations; keep the layout stylish, premium, professional, and avoid a messy grid.
+
+
+## Header redesign preview evidence
+- [x] Confirmed in Preview that the building photo spans the hero, three selected school-space photos overlap in a polished asymmetric composition, and all four image assets return HTTP 200.
+- [x] Confirmed the full stylesheet is loaded and the rotated photo cards have nonzero dimensions at desktop preview size.

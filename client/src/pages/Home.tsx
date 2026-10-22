@@ -256,23 +256,21 @@ export default function Home() {
 
       <main id="top" className="main-content dashboard-page">
         <section className="dashboard-hero" aria-labelledby="page-title">
-          <div>
+          <img className="hero-building" src="/assets/roomfinder/ycis-courtyard-hero.jpg" alt="YCIS courtyard and school building" />
+          <div className="hero-copy">
             <div className="eyebrow"><Sparkles size={14} /> TEACHER & ROOM AVAILABILITY</div>
             <h1 id="page-title">Campus Space<br className="mobile-break" /> <span className="headline-ampersand">&amp;</span> Staff Locator</h1>
             <p className="intro-copy">
               Integrated Room Allocation and Staff Directory.
             </p>
-          </div>
-          <figure className="hero-campus-card">
-            <img src="/assets/roomfinder/campus.jpg" alt="耀中國際學校，Yew Chung International School campus" />
-            <figcaption>
-              <span className="hero-context-icon"><MapPin size={18} /></span>
+            <div className="hero-location-chip">
+              <MapPin size={16} aria-hidden="true" />
               <span>
                 <strong>耀中國際學校 · Yew Chung International School</strong>
                 <small>Secondary · Kowloon Tong</small>
               </span>
-            </figcaption>
-          </figure>
+            </div>
+          </div>
         </section>
 
         <div className="dashboard-layout">
