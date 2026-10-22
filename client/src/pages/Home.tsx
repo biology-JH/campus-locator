@@ -256,21 +256,20 @@ export default function Home() {
 
       <main id="top" className="main-content dashboard-page">
         <section className="dashboard-hero" aria-labelledby="page-title">
-          <img className="hero-building" src="/assets/roomfinder/ycis-courtyard-hero.jpg" alt="YCIS courtyard and school building" />
-          <div className="hero-copy">
+          <div>
             <div className="eyebrow"><Sparkles size={14} /> TEACHER & ROOM AVAILABILITY</div>
-            <h1 id="page-title">Campus Space<br className="mobile-break" /> <span className="headline-ampersand">&amp;</span> Staff Locator</h1>
+            <h1 id="page-title">Campus Space<br className="mobile-break" /> <span className="headline-ampersand">&amp;</span> Staff locator</h1>
             <p className="intro-copy">
               Integrated Room Allocation and Staff Directory.
             </p>
-            <div className="hero-location-chip">
-              <MapPin size={16} aria-hidden="true" />
-              <span>
-                <strong>耀中國際學校 · Yew Chung International School</strong>
-                <small>Secondary · Kowloon Tong</small>
-              </span>
-            </div>
           </div>
+          <figure className="hero-campus-card">
+            <img src="/assets/roomfinder/ycis-building-exterior-hero.jpg" alt="Yew Chung International Secondary School building; its Chinese school name is unobstructed." />
+            <figcaption className="hero-location-row">
+              <MapPin size={14} aria-hidden="true" />
+              <span>耀中國際學校 · Yew Chung International School Secondary · Kowloon Tong</span>
+            </figcaption>
+          </figure>
         </section>
 
         <div className="dashboard-layout">
@@ -872,6 +871,10 @@ export default function Home() {
       <footer className="footer">
         <div className="footer-inner">
           <span>ROOMFINDER <span className="footer-divider">/</span> TEACHER STAFF TOOL</span>
+          <div className="footer-credit">
+            <img src="/assets/roomfinder/ms-joyce-ho.gif" alt="" />
+            <span>Developed by Ms. Joyce Ho</span>
+          </div>
           <span>Schedule source: Summary timetable · 18 Oct</span>
         </div>
       </footer>
