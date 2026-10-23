@@ -1,11 +1,19 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
 import type { TrpcContext } from "./_core/context.js";
 
-const { getDbMock } = vi.hoisted(() => ({ getDbMock: vi.fn() }));
+const { getDbMock, authenticateRequestMock } = vi.hoisted(() => ({
+  getDbMock: vi.fn(),
+  authenticateRequestMock: vi.fn(),
+}));
 vi.mock("./db.js", () => ({ getDb: getDbMock }));
+vi.mock("./_core/sdk.js", () => ({ sdk: { authenticateRequest: authenticateRequestMock } }));
 
+import { ADMIN_PASSWORD_SESSION_COOKIE, createAdminPasswordSessionToken } from "./_core/admin-session.js";
+import { createContext } from "./_core/context.js";
 import { appRouter } from "./routers.js";
+
+const LOCAL_TEST_ADMIN_SECRET = "local-only-admin-secret-for-tests-2026";
 
 type EntryRow = {
   roomNumber: string;
@@ -98,7 +106,13 @@ function makeMemoryDatabase(roomCount: 3 | 4) {
 const selection = { week: "A" as const, day: "Monday" as const, period: "lesson1" as const };
 
 beforeEach(() => {
+  vi.stubEnv("ADMIN_SECRET_KEY", LOCAL_TEST_ADMIN_SECRET);
   getDbMock.mockReset();
+  authenticateRequestMock.mockReset().mockResolvedValue(null);
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
 });
 
 describe("Admin batch schedule save", () => {
@@ -145,11 +159,46 @@ describe("Admin batch schedule save", () => {
 
   it("rejects a non-Admin before it accesses the database", async () => {
     const caller = appRouter.createCaller(makeContext("user"));
+    await expect(caller.auth.adminSessionStatus()).resolves.toEqual({ isAdmin: false, passwordSession: false, verifiedRole: false });
     await expect(caller.timetable.saveBatchScheduleChanges({
       ...selection,
       expectedVersion: "0".repeat(64),
       assignments: [{ roomNumber: "A", sourceRoomNumber: "A" }],
     })).rejects.toMatchObject({ code: "FORBIDDEN" });
     expect(getDbMock).not.toHaveBeenCalled();
+  });
+
+  it("unlocks Admin status and batch saving for a verified password session without a database user", async () => {
+    const memory = makeMemoryDatabase(3);
+    getDbMock.mockResolvedValue(memory.db);
+    const token = createAdminPasswordSessionToken();
+    const req = {
+      protocol: "https",
+      headers: { cookie: `${ADMIN_PASSWORD_SESSION_COOKIE}=${token}` },
+    } as unknown as TrpcContext["req"];
+    const context = await createContext({
+      req,
+      res: {} as TrpcContext["res"],
+    });
+    expect(context.user).toBeNull();
+    expect(context.adminPasswordSession).toBe(true);
+    expect(authenticateRequestMock).toHaveBeenCalledOnce();
+    const caller = appRouter.createCaller(context);
+    await expect(caller.auth.adminSessionStatus()).resolves.toEqual({ isAdmin: true, passwordSession: true, verifiedRole: false });
+    const snapshot = await caller.timetable.batchEditSnapshot(selection);
+    const result = await caller.timetable.saveBatchScheduleChanges({
+      ...selection,
+      expectedVersion: snapshot.version,
+      assignments: [
+        { roomNumber: "A", sourceRoomNumber: "B" },
+        { roomNumber: "B", sourceRoomNumber: "C" },
+        { roomNumber: "C", sourceRoomNumber: "A" },
+      ],
+    });
+
+    expect(result.updatedRooms).toBe(3);
+    expect(memory.db.transaction).toHaveBeenCalledOnce();
+    expect(memory.entryRows.map(entry => entry.occupant)).toEqual(["Class B", "Class C", "Class A"]);
+    console.info("[Local simulation] Password session batch-save success: 3-way swap committed to in-memory mock DB; shared Aiven was not modified.");
   });
 });

@@ -85,7 +85,8 @@ export default function Home() {
   const scheduleGridScrollRef = useRef<HTMLDivElement>(null);
 
   const authQuery = trpc.auth.me.useQuery(undefined, { retry: false, staleTime: 60_000, refetchOnWindowFocus: true });
-  const isAdmin = hasAdminRole(authQuery.data?.role);
+  const adminSessionQuery = trpc.auth.adminSessionStatus.useQuery(undefined, { retry: false, staleTime: 0, refetchOnWindowFocus: true });
+  const isAdmin = hasAdminRole(authQuery.data?.role) || adminSessionQuery.data?.isAdmin === true;
   const utils = trpc.useUtils();
   const roomsQuery = trpc.timetable.roomList.useQuery(undefined, { staleTime: 60_000 });
   const teachersQuery = trpc.timetable.teacherList.useQuery(undefined, { staleTime: 300_000 });

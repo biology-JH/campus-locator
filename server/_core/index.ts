@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { createServer } from "http";
-import { createExpressApp } from "./app";
+import { createExpressApp } from "./app.js";
 import { setupVite } from "./vite";
 import { serveStatic } from "./static";
 

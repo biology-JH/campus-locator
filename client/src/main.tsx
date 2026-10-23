@@ -41,7 +41,9 @@ const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
       url: "/api/trpc",
-      transformer: superjson,
+      // The server tRPC root is configured with SuperJSON, but AppRouter currently exposes
+      // transformer:false in tRPC 11's client link type. Preserve the matching runtime codec.
+      transformer: superjson as never,
       headers() {
         // Preview auto-login fallback: when the browser blocks iframe cookies
         // (Safari ITP / private browsing / WebView), the runtime mirrors the

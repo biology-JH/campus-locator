@@ -10,6 +10,11 @@ export const appRouter = router({
   timetable: timetableRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
+    adminSessionStatus: publicProcedure.query(({ ctx }) => ({
+      isAdmin: ctx.adminPasswordSession === true || ctx.user?.role === "admin",
+      passwordSession: ctx.adminPasswordSession === true,
+      verifiedRole: ctx.user?.role === "admin",
+    })),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
       ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });

@@ -5,6 +5,14 @@ import * as XLSX from "xlsx";
 import { DAYS, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
 import { getDb } from "./db.js";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
+import {
+  clearAdminPasswordSessionCookie,
+  createAdminPasswordSessionToken,
+  hasConfiguredAdminPassword,
+  hasValidAdminPasswordSession,
+  setAdminPasswordSessionCookie,
+  verifyAdminPassword,
+} from "./_core/admin-session.js";
 import { sdk } from "./_core/sdk.js";
 import { staffForCodes } from "./staff-resolution.js";
 
@@ -20,6 +28,10 @@ const acceptedExcelContentTypes = [
   "application/octet-stream",
   "text/csv",
 ];
+const LOGIN_ATTEMPT_WINDOW_MS = 15 * 60 * 1000;
+const MAX_LOGIN_ATTEMPTS_PER_WINDOW = 8;
+const MAX_TRACKED_LOGIN_CLIENTS = 4096;
+const loginAttempts = new Map<string, { count: number; windowStartedAt: number }>();
 
 const roomSchema = z.object({
   room: z.string().trim().min(1).max(64),
@@ -50,6 +62,28 @@ type ExportSchedule = {
   teachers: string[];
 };
 type ExportRoom = { room: string; page: number; schedule: ExportSchedule[] };
+
+function consumeLoginAttempt(clientKey: string, now = Date.now()): boolean {
+  for (const [key, attempt] of loginAttempts) {
+    if (now - attempt.windowStartedAt >= LOGIN_ATTEMPT_WINDOW_MS) loginAttempts.delete(key);
+  }
+  const existing = loginAttempts.get(clientKey);
+  if (!existing || now - existing.windowStartedAt >= LOGIN_ATTEMPT_WINDOW_MS) {
+    loginAttempts.set(clientKey, { count: 1, windowStartedAt: now });
+    return true;
+  }
+  if (existing.count >= MAX_LOGIN_ATTEMPTS_PER_WINDOW) return false;
+  existing.count += 1;
+  return true;
+}
+
+function makeRoomForLoginClient(): void {
+  while (loginAttempts.size >= MAX_TRACKED_LOGIN_CLIENTS) {
+    const oldestKey = loginAttempts.keys().next().value as string | undefined;
+    if (!oldestKey) return;
+    loginAttempts.delete(oldestKey);
+  }
+}
 
 function normalizeHeader(value: unknown): string {
   return String(value ?? "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
@@ -248,8 +282,12 @@ async function readCurrentTimetable(): Promise<ExportRoom[]> {
 }
 
 const requireAdmin: RequestHandler = (req, res, next) => {
+  if (hasValidAdminPasswordSession(req)) {
+    next();
+    return;
+  }
   void sdk.authenticateRequest(req).then(user => {
-    if (user.role !== "admin") {
+    if (user?.role !== "admin") {
       res.status(403).json({ message: "A verified Admin account is required for this action." });
       return;
     }
@@ -268,6 +306,37 @@ const requireAdminPageRequest: RequestHandler = (req, res, next) => {
 };
 
 export function registerAdminRoutes(app: express.Express) {
+  app.post(`${ADMIN_PATH}/login`, express.json({ limit: "2kb" }), (req, res) => {
+    res.set("Cache-Control", "no-store, private");
+    if (!hasConfiguredAdminPassword()) {
+      console.error("[Admin Auth] Password login is unavailable; configure ADMIN_SECRET_KEY with at least 20 characters.");
+      res.status(503).json({ message: "Admin password login is not configured for this deployment." });
+      return;
+    }
+
+    const clientKey = req.ip || "unknown";
+    if (!loginAttempts.has(clientKey)) makeRoomForLoginClient();
+    if (!consumeLoginAttempt(clientKey)) {
+      res.set("Retry-After", String(Math.ceil(LOGIN_ATTEMPT_WINDOW_MS / 1000)));
+      res.status(429).json({ message: "Too many Admin login attempts. Please wait and try again." });
+      return;
+    }
+
+    if (!verifyAdminPassword(req.body?.password)) {
+      res.status(401).json({ message: "The Admin password was not accepted." });
+      return;
+    }
+
+    loginAttempts.delete(clientKey);
+    setAdminPasswordSessionCookie(res, createAdminPasswordSessionToken());
+    res.status(200).json({ authenticated: true });
+  });
+
+  app.post(`${ADMIN_PATH}/logout`, (_req, res) => {
+    clearAdminPasswordSessionCookie(res);
+    res.set("Cache-Control", "no-store, private").json({ authenticated: false });
+  });
+
   app.get(`${ADMIN_PATH}/session`, requireAdmin, (_req, res) => {
     res.set("Cache-Control", "no-store").json({ authenticated: true });
   });
