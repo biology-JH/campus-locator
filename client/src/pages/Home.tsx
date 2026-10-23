@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowUpRight,
   Building2,
   CalendarDays,
   Check,
+  ChevronLeft,
+  ChevronRight,
   Clock3,
   Gauge,
   LoaderCircle,
@@ -19,8 +21,10 @@ import {
 } from "lucide-react";
 import { DAYS, isLabRoom, PERIODS, WEEKS, type Day, type PeriodId, type Week } from "@shared/timetable";
 import { trpc } from "@/lib/trpc";
+import { hasAdminRole } from "@/lib/admin-access";
+import { stageBatchAssignment, validateBatchDraft } from "@/lib/batch-schedule";
 
-type View = "vacancy" | "room";
+type View = "vacancy" | "room" | "teacher";
 const PERIOD_TIME_RANGES: Record<PeriodId, string> = {
   mentor: "8:00 – 8:10",
   lesson1: "8:10 – 9:10",
@@ -78,9 +82,10 @@ export default function Home() {
   const [batchRoomSearch, setBatchRoomSearch] = useState("");
   const [showBatchSaveConfirmation, setShowBatchSaveConfirmation] = useState(false);
   const [batchSaveNotice, setBatchSaveNotice] = useState("");
+  const scheduleGridScrollRef = useRef<HTMLDivElement>(null);
 
   const authQuery = trpc.auth.me.useQuery(undefined, { retry: false, staleTime: 60_000, refetchOnWindowFocus: true });
-  const isAdmin = authQuery.data?.role === "admin";
+  const isAdmin = hasAdminRole(authQuery.data?.role);
   const utils = trpc.useUtils();
   const roomsQuery = trpc.timetable.roomList.useQuery(undefined, { staleTime: 60_000 });
   const teachersQuery = trpc.timetable.teacherList.useQuery(undefined, { staleTime: 300_000 });
@@ -101,11 +106,11 @@ export default function Home() {
   const activeWeekSchedule = masterQuery.data?.weeks.find(schedule => schedule.week === week);
   const teacherLocationsQuery = trpc.timetable.teacherLocations.useQuery(
     { teacher: teacherInput.trim(), week, day, period },
-    { enabled: teacherInput.trim().length >= 2, staleTime: 15_000 },
+    { enabled: view === "teacher" && teacherInput.trim().length >= 2, staleTime: 15_000 },
   );
   const teachersForSlotQuery = trpc.timetable.teachersForSlot.useQuery(
     { week, day, period },
-    { staleTime: 30_000 },
+    { enabled: view === "teacher", staleTime: 30_000 },
   );
   const batchEditQuery = trpc.timetable.batchEditSnapshot.useQuery(
     { week, day, period },
@@ -126,6 +131,14 @@ export default function Home() {
     },
   });
   const selectedPeriod = PERIODS.find(item => item.id === period)?.label ?? "Lesson 1";
+  const scrollWeekdays = (direction: -1 | 1) => {
+    const container = scheduleGridScrollRef.current;
+    if (!container) return;
+    container.scrollBy({
+      left: direction * Math.max(240, Math.round(container.clientWidth * 0.75)),
+      behavior: "smooth",
+    });
+  };
   const filteredFreeRooms = useMemo(() => {
     const query = roomFilter.trim().toLowerCase();
     if (!query) return availability?.freeRooms ?? [];
@@ -155,27 +168,14 @@ export default function Home() {
   }, [isModifySchedule, batchEditQuery.data?.version]);
 
   const batchEditorRooms = batchEditQuery.data?.rooms ?? [];
-  const validBatchRooms = new Set(batchEditorRooms.map(room => room.roomNumber));
-  const batchSourceCounts = new Map<string, number>();
-  for (const room of batchEditorRooms) {
-    const sourceRoom = batchDraft[room.roomNumber];
-    if (sourceRoom) batchSourceCounts.set(sourceRoom, (batchSourceCounts.get(sourceRoom) ?? 0) + 1);
-  }
-  const duplicatedBatchSources = new Set(
-    [...batchSourceCounts].filter(([, count]) => count > 1).map(([room]) => room),
+  const batchValidation = useMemo(
+    () => validateBatchDraft(batchEditorRooms.map(room => room.roomNumber), batchDraft),
+    [batchEditorRooms, batchDraft],
   );
-  const usedBatchSources = new Set(batchSourceCounts.keys());
-  const missingBatchSources = new Set(batchEditorRooms.map(room => room.roomNumber).filter(room => !usedBatchSources.has(room)));
-  const batchDraftReady = batchEditorRooms.length > 0 && batchEditorRooms.every(room => validBatchRooms.has(batchDraft[room.roomNumber]));
-  const batchConflictRows = new Set<string>();
-  for (const room of batchEditorRooms) {
-    const sourceRoom = batchDraft[room.roomNumber];
-    if (!sourceRoom || !validBatchRooms.has(sourceRoom) || duplicatedBatchSources.has(sourceRoom) || missingBatchSources.has(room.roomNumber)) {
-      batchConflictRows.add(room.roomNumber);
-    }
-  }
-  const batchHasConflicts = !batchDraftReady || duplicatedBatchSources.size > 0 || missingBatchSources.size > 0;
-  const batchHasChanges = batchDraftReady && batchEditorRooms.some(room => batchDraft[room.roomNumber] !== room.roomNumber);
+  const batchDraftReady = batchValidation.ready;
+  const batchHasConflicts = batchValidation.hasConflicts;
+  const batchHasChanges = batchValidation.hasChanges;
+  const batchConflictRows = batchValidation.conflictRows;
   const batchRoomSearchTerm = batchRoomSearch.trim().toLocaleLowerCase();
   const filteredBatchEditorRooms = batchEditorRooms.filter(room => {
     if (!batchRoomSearchTerm) return true;
@@ -194,6 +194,7 @@ export default function Home() {
     setDay("Monday");
     setPeriod("lesson1");
     setRoomFilter("");
+    setTeacherInput("");
   };
 
   const cancelBatchEditing = () => {
@@ -247,9 +248,11 @@ export default function Home() {
               <span className="live-dot" />
               <span>Live timetable</span>
             </div>
-            <a className="topbar-admin" href="/admin" aria-label="Open timetable administration">
-              <ShieldCheck size={15} /> Admin
-            </a>
+            {isAdmin ? (
+              <a className="topbar-admin" href="/admin" aria-label="Open timetable administration">
+                <ShieldCheck size={15} /> Admin
+              </a>
+            ) : null}
           </div>
         </div>
       </header>
@@ -278,8 +281,8 @@ export default function Home() {
               <div className="filter-panel-icon"><SlidersHorizontal size={18} /></div>
               <div>
                 <span className="panel-kicker">CONTROL PANEL</span>
-                <h2>Find a room</h2>
-                <p>Set the moment, then scan the room board.</p>
+                <h2>{view === "teacher" ? "Find a teacher" : "Find a room"}</h2>
+                <p>{view === "teacher" ? "Search staff and check who is teaching or free." : "Set the moment, then scan the room board."}</p>
               </div>
             </div>
 
@@ -290,7 +293,7 @@ export default function Home() {
                 className={view === "vacancy" ? "view-tab active" : "view-tab"}
                 onClick={() => setView("vacancy")}
               >
-                <Gauge size={16} /> Availability
+                <Gauge size={15} /><span>Availability</span>
               </button>
               <button
                 role="tab"
@@ -298,30 +301,40 @@ export default function Home() {
                 className={view === "room" ? "view-tab active" : "view-tab"}
                 onClick={() => setView("room")}
               >
-                <CalendarDays size={16} /> Room schedule
+                <CalendarDays size={15} /><span>Room Schedule</span>
+              </button>
+              <button
+                role="tab"
+                aria-selected={view === "teacher"}
+                className={view === "teacher" ? "view-tab active" : "view-tab"}
+                onClick={() => setView("teacher")}
+              >
+                <UserRound size={15} /><span>Teacher Finder</span>
               </button>
             </div>
 
-            <div className="filter-block">
-              <label className="filter-label" htmlFor="room-filter">
-                <Search size={14} /> {view === "vacancy" ? "Search open rooms" : "Search a room"}
-              </label>
-              <div className="dashboard-search-field">
-                <Search size={17} aria-hidden="true" />
-                <input
-                  id="room-filter"
-                  type="search"
-                  list="room-options"
-                  value={view === "vacancy" ? roomFilter : roomInput}
-                  onChange={event => view === "vacancy" ? setRoomFilter(event.target.value) : setRoomInput(event.target.value)}
-                  placeholder={view === "vacancy" ? "Room number, e.g. A209" : "Enter a room number"}
-                  autoComplete="off"
-                />
-                <datalist id="room-options">
-                  {rooms.map(room => <option key={room.roomNumber} value={room.roomNumber} />)}
-                </datalist>
+            {view !== "teacher" ? (
+              <div className="filter-block">
+                <label className="filter-label" htmlFor="room-filter">
+                  <Search size={14} /> {view === "vacancy" ? "Search open rooms" : "Search a room"}
+                </label>
+                <div className="dashboard-search-field">
+                  <Search size={17} aria-hidden="true" />
+                  <input
+                    id="room-filter"
+                    type="search"
+                    list="room-options"
+                    value={view === "vacancy" ? roomFilter : roomInput}
+                    onChange={event => view === "vacancy" ? setRoomFilter(event.target.value) : setRoomInput(event.target.value)}
+                    placeholder={view === "vacancy" ? "Room number, e.g. A209" : "Enter a room number"}
+                    autoComplete="off"
+                  />
+                  <datalist id="room-options">
+                    {rooms.map(room => <option key={room.roomNumber} value={room.roomNumber} />)}
+                  </datalist>
+                </div>
               </div>
-            </div>
+            ) : null}
 
             {view === "room" ? (
               <div className="filter-block">
@@ -333,18 +346,20 @@ export default function Home() {
               </div>
             ) : null}
 
-            <div className="filter-block">
-              <label className="filter-label" htmlFor="teacher-filter"><UserRound size={14} /> Search a teacher</label>
-              <div className="dashboard-search-field">
-                <UserRound size={17} aria-hidden="true" />
-                <input id="teacher-filter" type="search" value={teacherInput} onChange={event => setTeacherInput(event.target.value)} placeholder="e.g. Joyce Ho" autoComplete="off" />
+            {view === "teacher" ? (
+              <div className="filter-block">
+                <label className="filter-label" htmlFor="teacher-filter"><UserRound size={14} /> Search a teacher</label>
+                <div className="dashboard-search-field">
+                  <UserRound size={17} aria-hidden="true" />
+                  <input id="teacher-filter" type="search" value={teacherInput} onChange={event => setTeacherInput(event.target.value)} placeholder="e.g. Joyce Ho" autoComplete="off" />
+                </div>
+                <select id="teacher-picker" className="dashboard-room-select teacher-picker" value={teachersQuery.data?.includes(teacherInput) ? teacherInput : ""} onChange={event => setTeacherInput(event.target.value)}>
+                  <option value="">Select a staff member…</option>
+                  {(teachersQuery.data ?? []).map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
+                </select>
+                <p className="filter-help">Searches the selected week, day, and period.</p>
               </div>
-              <select id="teacher-picker" className="dashboard-room-select teacher-picker" value={teachersQuery.data?.includes(teacherInput) ? teacherInput : ""} onChange={event => setTeacherInput(event.target.value)}>
-                <option value="">Select a staff member…</option>
-                {(teachersQuery.data ?? []).map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
-              </select>
-              <p className="filter-help">Searches the selected week, day, and period.</p>
-            </div>
+            ) : null}
 
             <div className="filter-divider" />
 
@@ -370,9 +385,10 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="filter-divider teacher-slot-divider" />
-
-            <section className="teacher-slot-panel" aria-labelledby="teacher-slot-title">
+            {view === "teacher" ? (
+              <>
+              <div className="filter-divider teacher-slot-divider" />
+              <section className="teacher-slot-panel" aria-labelledby="teacher-slot-title">
               <header className="teacher-slot-heading">
                 <div>
                   <span className="panel-kicker">TEACHER FINDER</span>
@@ -428,7 +444,9 @@ export default function Home() {
                   </section>
                 </div>
               ) : null}
-            </section>
+              </section>
+              </>
+            ) : null}
 
             <button className="reset-filters" type="button" onClick={resetFilters} disabled={isModifySchedule}>
               <RotateCcw size={14} /> Reset filters
@@ -514,7 +532,7 @@ export default function Home() {
                                   onChange={event => {
                                     saveBatchMutation.reset();
                                     setShowBatchSaveConfirmation(false);
-                                    setBatchDraft(previous => ({ ...previous, [room.roomNumber]: event.target.value }));
+                                    setBatchDraft(previous => stageBatchAssignment(previous, room.roomNumber, event.target.value));
                                   }}
                                 >
                                   {batchEditorRooms.map(source => (
@@ -577,7 +595,7 @@ export default function Home() {
           </aside>
 
           <section className="dashboard-results" aria-live="polite">
-            {teacherInput.trim().length >= 2 ? (
+            {view === "teacher" && teacherInput.trim().length >= 2 ? (
               <section className="teacher-location-panel" aria-live="polite">
                 <div className="teacher-location-heading"><div><span className="panel-kicker">TEACHER LOCATION</span><h3>{teacherInput.trim()} · {day} · {selectedPeriod} · Week {week}</h3></div><UserRound size={20} /></div>
                 {teacherLocationsQuery.isLoading ? <LoadingBlock message="Checking the teacher timetable…" /> : teacherLocationsQuery.isError ? <div className="error-panel" role="alert"><strong>Teacher search is unavailable.</strong><span>Try again after the timetable has loaded.</span></div> : teacherLocationsQuery.data?.matches.length ? <div className="teacher-location-list">{teacherLocationsQuery.data.matches.map(match => <article className="teacher-location-card" key={`${match.roomNumber}-${match.week}-${match.day}-${match.period}`}><div className="teacher-location-room"><span>ROOM</span><Building2 size={21} /><strong>{match.roomNumber}</strong></div><div className="teacher-location-details"><strong>{match.teacher}</strong><span>{match.day} · {match.periodLabel} · Week {match.week}</span><small><b>Subject</b>{match.occupantDisplay ?? match.occupant ?? "Occupied timetable entry"}</small></div></article>)}</div> : <div className="teacher-location-empty"><UserRound size={18} /><span>{teacherInput.trim()} has no resolved room assignment for this selected time.</span></div>}
@@ -686,7 +704,7 @@ export default function Home() {
                   </div>
                 ) : null}
               </>
-            ) : (
+            ) : view === "room" ? (
               <section className="master-section dashboard-master-section" aria-labelledby="master-title">
                 <div className="results-toolbar master-toolbar">
                   <div>
@@ -770,9 +788,34 @@ export default function Home() {
                             <h3>Week {week}</h3>
                             <span>Monday – Friday · Mentor Group + 7 lessons</span>
                           </div>
+                          <div className="schedule-scroll-toolbar">
+                            <div className="schedule-scroll-instruction">
+                              <strong>Scroll through Monday–Friday</strong>
+                              <span>Swipe, use a trackpad, or select an arrow to view every weekday.</span>
+                            </div>
+                            <div className="schedule-scroll-actions" role="group" aria-label="Weekday scroll controls">
+                              <button
+                                aria-label="Scroll to earlier weekdays"
+                                onClick={() => scrollWeekdays(-1)}
+                                title="Scroll to earlier weekdays"
+                                type="button"
+                              >
+                                <ChevronLeft size={17} aria-hidden="true" />
+                              </button>
+                              <button
+                                aria-label="Scroll to later weekdays"
+                                onClick={() => scrollWeekdays(1)}
+                                title="Scroll to later weekdays"
+                                type="button"
+                              >
+                                <ChevronRight size={17} aria-hidden="true" />
+                              </button>
+                            </div>
+                          </div>
                           <div
                             aria-label={`Week ${week} timetable. Scroll horizontally to view all weekdays.`}
                             className="schedule-grid-scroll"
+                            ref={scheduleGridScrollRef}
                             role="region"
                             tabIndex={0}
                           >
@@ -863,7 +906,14 @@ export default function Home() {
                   </>
                 ) : null}
               </section>
-            )}
+            ) : teacherInput.trim().length < 2 ? (
+              <section className="teacher-finder-prompt" aria-labelledby="teacher-finder-prompt-title">
+                <div className="teacher-finder-prompt-icon"><UserRound size={24} /></div>
+                <span className="panel-kicker">TEACHER FINDER</span>
+                <h2 id="teacher-finder-prompt-title">Find a teacher’s current room</h2>
+                <p>Search by name or choose a staff member in the left panel. Select a week, day, and period to view their timetable location and who is free.</p>
+              </section>
+            ) : null}
           </section>
         </div>
       </main>
