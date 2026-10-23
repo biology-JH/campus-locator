@@ -1,28 +1,26 @@
-import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
-import express, { type Request, type RequestHandler, type Response } from "express";
-import { and, asc, eq } from "drizzle-orm";
+import express, { type Request, type RequestHandler } from "express";
+import { asc, notInArray, sql } from "drizzle-orm";
 import { z } from "zod";
+import * as XLSX from "xlsx";
 import { DAYS, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
 import { getDb } from "./db.js";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
+import { sdk } from "./_core/sdk.js";
 import { staffForCodes } from "./staff-resolution.js";
 
 const ADMIN_PATH = "/api/admin";
-const SESSION_COOKIE = "roomfinder_admin_session";
-const SESSION_LIFETIME_SECONDS = 12 * 60 * 60;
-const SESSION_COOKIE_PATH = ADMIN_PATH;
-const MAX_EXCEL_JSON_BYTES = 20 * 1024 * 1024;
+const MAX_EXCEL_FILE_BYTES = 20 * 1024 * 1024;
 const MAX_ROOMS = 500;
-const LOGIN_WINDOW_MS = 15 * 60 * 1000;
-const MAX_LOGIN_ATTEMPTS = 5;
-const PASSWORD_SALT = "roomfinder-admin-password-v1";
-const SESSION_SALT = "roomfinder-admin-session-v1";
-const ADMIN_PASSWORD = process.env.ROOMFINDER_ADMIN_PASSWORD ?? "Admin9988!";
-const passwordDigest = ADMIN_PASSWORD ? scryptSync(ADMIN_PASSWORD, PASSWORD_SALT, 32) : null;
-const sessionKey = ADMIN_PASSWORD ? scryptSync(ADMIN_PASSWORD, SESSION_SALT, 32) : null;
-
-const loginAttempts = new Map<string, { count: number; windowStart: number; blockedUntil: number }>();
+const SCHEDULE_ROWS_PER_ROOM = WEEKS.length * DAYS.length * PERIODS.length;
+const MAX_WORKSHEET_ROWS = MAX_ROOMS * SCHEDULE_ROWS_PER_ROOM + 1;
 const periodIds = PERIODS.map(period => period.id) as [PeriodId, ...PeriodId[]];
+const acceptedExcelContentTypes = [
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel",
+  "application/octet-stream",
+  "text/csv",
+];
+
 const roomSchema = z.object({
   room: z.string().trim().min(1).max(64),
   page: z.number().int().positive().max(100000),
@@ -35,14 +33,13 @@ const roomSchema = z.object({
       occupantDisplay: z.string().max(2000).nullable(),
       staffCodes: z.array(z.string().trim().min(1).max(32)).max(32),
     }),
-  ).length(80),
+  ).length(SCHEDULE_ROWS_PER_ROOM),
 });
 const timetablePayloadSchema = z.object({
   rooms: z.array(roomSchema).min(1).max(MAX_ROOMS),
 });
 
 type ParsedTimetable = z.infer<typeof timetablePayloadSchema>;
-
 type ExportSchedule = {
   week: (typeof WEEKS)[number];
   day: (typeof DAYS)[number];
@@ -52,140 +49,116 @@ type ExportSchedule = {
   staffCodes: string[];
   teachers: string[];
 };
-
 type ExportRoom = { room: string; page: number; schedule: ExportSchedule[] };
 
-function getCookie(req: Request, name: string): string | undefined {
-  const prefix = `${name}=`;
-  const pair = req.headers.cookie?.split(";").map(value => value.trim()).find(value => value.startsWith(prefix));
-  return pair ? pair.slice(prefix.length) : undefined;
+function normalizeHeader(value: unknown): string {
+  return String(value ?? "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
-function createSessionToken(): string {
-  const payload = Buffer.from(JSON.stringify({
-    expiresAt: Math.floor(Date.now() / 1000) + SESSION_LIFETIME_SECONDS,
-    nonce: randomBytes(24).toString("base64url"),
-  })).toString("base64url");
-  const signature = createHmac("sha256", sessionKey!).update(payload).digest("base64url");
-  return `${payload}.${signature}`;
+function textValue(value: unknown): string | null {
+  const text = String(value ?? "").trim();
+  return text || null;
 }
 
-function isValidSession(req: Request): boolean {
-  if (!sessionKey) return false;
-  const token = getCookie(req, SESSION_COOKIE);
-  if (!token || token.length > 512) return false;
-  const [payload, suppliedSignature, extra] = token.split(".");
-  if (!payload || !suppliedSignature || extra !== undefined) return false;
-
-  const expected = createHmac("sha256", sessionKey).update(payload).digest();
-  let received: Buffer;
-  try {
-    received = Buffer.from(suppliedSignature, "base64url");
-  } catch {
-    return false;
+function valueFrom(row: Record<string, unknown>, aliases: string[]): unknown {
+  for (const alias of aliases) {
+    const key = Object.keys(row).find(candidate => normalizeHeader(candidate) === alias);
+    if (key) return row[key];
   }
-  if (received.length !== expected.length || !timingSafeEqual(received, expected)) return false;
+  return undefined;
+}
 
-  try {
-    const decoded = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { expiresAt?: unknown; nonce?: unknown };
-    return typeof decoded.expiresAt === "number"
-      && decoded.expiresAt > Math.floor(Date.now() / 1000)
-      && typeof decoded.nonce === "string"
-      && decoded.nonce.length >= 16;
-  } catch {
-    return false;
+function parsePeriod(value: unknown): PeriodId {
+  const normalized = String(value ?? "").trim().toLowerCase().replace(/\s+/g, "");
+  if (normalized === "mentorgroup" || normalized === "mentor") return "mentor";
+  const match = normalized.match(/^(?:lesson|l|p)([1-7])$/);
+  if (match) return `lesson${match[1]}` as PeriodId;
+  if (periodIds.includes(normalized as PeriodId)) return normalized as PeriodId;
+  throw new Error(`Invalid period “${String(value)}”. Use Mentor Group or Lesson 1–7.`);
+}
+
+function parseWorkbookBuffer(buffer: Buffer): ParsedTimetable {
+  if (!buffer.length) throw new Error("The uploaded workbook is empty.");
+  const workbook = XLSX.read(buffer, { type: "buffer", cellDates: false });
+  const sheetName = workbook.SheetNames.find(name => normalizeHeader(name) === "schedule") ?? workbook.SheetNames[0];
+  if (!sheetName) throw new Error("The workbook does not contain a schedule sheet.");
+  const sheet = workbook.Sheets[sheetName];
+  if (!sheet || !sheet["!ref"]) throw new Error("The schedule sheet is empty.");
+
+  const range = XLSX.utils.decode_range(sheet["!ref"]);
+  if (range.e.r - range.s.r + 1 > MAX_WORKSHEET_ROWS || range.e.c - range.s.c > 99) {
+    throw new Error(`The schedule sheet exceeds the supported limit of ${MAX_ROOMS} rooms and ${MAX_WORKSHEET_ROWS - 1} schedule rows.`);
   }
-}
+  const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: null, raw: false });
+  if (!rows.length) throw new Error("The schedule sheet is empty.");
 
-function setSessionCookie(req: Request, res: Response, token: string) {
-  const forwardedProtocol = req.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
-  const localHost = ["localhost", "127.0.0.1", "::1"].includes(req.hostname);
-  const plainHttpLocal = localHost && forwardedProtocol !== "https";
-  res.cookie(SESSION_COOKIE, token, {
-    httpOnly: true,
-    secure: !plainHttpLocal,
-    sameSite: plainHttpLocal ? "lax" : "none",
-    path: SESSION_COOKIE_PATH,
-    maxAge: SESSION_LIFETIME_SECONDS * 1000,
-  });
-}
+  const roomMap = new Map<string, { room: string; page: number; schedule: ParsedTimetable["rooms"][number]["schedule"] }>();
+  for (const row of rows) {
+    const room = textValue(valueFrom(row, ["room", "roomnumber"]))?.toUpperCase();
+    const week = textValue(valueFrom(row, ["week"]))?.toUpperCase();
+    const rawDay = textValue(valueFrom(row, ["day"]));
+    const day = DAYS.find(candidate => candidate.toLowerCase() === rawDay?.toLowerCase());
+    if (!room || !week || !day) throw new Error("Every schedule row must include a valid Room, Week, and Day.");
+    if (!WEEKS.includes(week as (typeof WEEKS)[number])) throw new Error(`Invalid week “${week}”.`);
+    const period = parsePeriod(valueFrom(row, ["period", "periodid", "periodlabel"]));
+    const occupant = textValue(valueFrom(row, ["occupant", "rawoccupant", "sourceoccupant"]));
+    const occupantDisplay = textValue(valueFrom(row, ["occupantdisplay", "subject", "display"])) ?? occupant;
+    const staffCodes = (textValue(valueFrom(row, ["staffcodes", "teachercodes"])) ?? "")
+      .split(",").map(code => code.trim()).filter(Boolean);
+    if (staffCodes.length > 32 || staffCodes.some(code => code.length > 32)) {
+      throw new Error(`The teacher codes for ${room} exceed the supported limit.`);
+    }
+    const rawPage = valueFrom(row, ["sourcepage", "page"]);
+    const page = rawPage === null || rawPage === undefined || rawPage === "" ? 1 : Number(rawPage);
+    if (!Number.isInteger(page) || page < 1 || page > 100000) throw new Error(`Invalid source page for room ${room}.`);
 
-function clearSessionCookie(req: Request, res: Response) {
-  const forwardedProtocol = req.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
-  const localHost = ["localhost", "127.0.0.1", "::1"].includes(req.hostname);
-  const plainHttpLocal = localHost && forwardedProtocol !== "https";
-  res.clearCookie(SESSION_COOKIE, {
-    httpOnly: true,
-    secure: !plainHttpLocal,
-    sameSite: plainHttpLocal ? "lax" : "none",
-    path: SESSION_COOKIE_PATH,
-  });
-}
-
-const requireAdmin: RequestHandler = (req, res, next) => {
-  if (!isValidSession(req)) {
-    res.status(401).json({ message: "Admin sign-in required." });
-    return;
+    const current = roomMap.get(room) ?? { room, page, schedule: [] };
+    current.schedule.push({
+      week: week as (typeof WEEKS)[number],
+      day,
+      period,
+      occupant,
+      occupantDisplay,
+      staffCodes,
+    });
+    roomMap.set(room, current);
   }
-  next();
-};
 
-function requireAdminRequestHeader(req: Request, res: Response): boolean {
-  if (req.get("x-requested-with") === "RoomfinderAdmin") return true;
-  res.status(403).json({ message: "This admin action must be submitted from the admin page." });
-  return false;
-}
-
-function loginKey(req: Request): string {
-  return req.ip || req.socket.remoteAddress || "unknown";
-}
-
-function loginIsBlocked(key: string): boolean {
-  const current = loginAttempts.get(key);
-  if (!current) return false;
-  const now = Date.now();
-  if (current.blockedUntil > now) return true;
-  if (now - current.windowStart >= LOGIN_WINDOW_MS) {
-    loginAttempts.delete(key);
-    return false;
-  }
-  return false;
-}
-
-function recordFailedLogin(key: string) {
-  const now = Date.now();
-  const previous = loginAttempts.get(key);
-  const current = previous && now - previous.windowStart < LOGIN_WINDOW_MS
-    ? previous
-    : { count: 0, windowStart: now, blockedUntil: 0 };
-  current.count += 1;
-  if (current.count >= MAX_LOGIN_ATTEMPTS) current.blockedUntil = now + LOGIN_WINDOW_MS;
-  loginAttempts.set(key, current);
-}
-
-function passwordMatches(candidate: unknown): boolean {
-  if (!passwordDigest || typeof candidate !== "string" || candidate.length < 1 || candidate.length > 256) return false;
-  const candidateDigest = scryptSync(candidate, PASSWORD_SALT, 32);
-  return timingSafeEqual(candidateDigest, passwordDigest);
-}
-
-function validateTimetable(timetable: ParsedTimetable): ParsedTimetable {
+  const timetable = timetablePayloadSchema.parse({ rooms: [...roomMap.values()] });
   const seenRooms = new Set<string>();
-  const seenSlots = new Set<string>();
   for (const room of timetable.rooms) {
     const normalizedRoom = room.room.toUpperCase();
-    if (seenRooms.has(normalizedRoom)) throw new Error("The workbook contains duplicate room labels.");
+    if (seenRooms.has(normalizedRoom)) throw new Error(`The workbook contains duplicate room “${room.room}”.`);
     seenRooms.add(normalizedRoom);
-    for (const slot of room.schedule) {
-      const key = `${normalizedRoom}|${slot.week}|${slot.day}|${slot.period}`;
-      if (seenSlots.has(key)) throw new Error("The workbook contains duplicate room schedule slots.");
-      seenSlots.add(key);
-    }
+    const slots = new Set(room.schedule.map(slot => `${slot.week}|${slot.day}|${slot.period}`));
+    if (slots.size !== SCHEDULE_ROWS_PER_ROOM) throw new Error(`${room.room} contains duplicate schedule slots.`);
   }
   return timetable;
 }
 
-async function replaceTimetable(timetable: ParsedTimetable) {
+function errorDetails(error: unknown) {
+  if (!error || typeof error !== "object") {
+    return { message: String(error).slice(0, 1600) };
+  }
+  const value = error as {
+    name?: unknown;
+    message?: unknown;
+    code?: unknown;
+    errno?: unknown;
+    sqlState?: unknown;
+    stack?: unknown;
+  };
+  return {
+    name: typeof value.name === "string" ? value.name : "Error",
+    code: typeof value.code === "string" || typeof value.code === "number" ? value.code : undefined,
+    errno: typeof value.errno === "number" ? value.errno : undefined,
+    sqlState: typeof value.sqlState === "string" ? value.sqlState : undefined,
+    message: typeof value.message === "string" ? value.message.slice(0, 1600) : "Unknown error",
+    stack: typeof value.stack === "string" ? value.stack.split("\n").slice(0, 7).join("\n") : undefined,
+  };
+}
+
+async function upsertTimetable(timetable: ParsedTimetable) {
   const db = await getDb();
   if (!db) throw new Error("The timetable database is not available.");
 
@@ -204,17 +177,35 @@ async function replaceTimetable(timetable: ParsedTimetable) {
     staffCodes: slot.staffCodes.join(",") || null,
     sourcePage: room.page,
   })));
+  const roomNumbers = roomRows.map(room => room.roomNumber);
 
   await db.transaction(async tx => {
-    await tx.delete(timetableEntries);
-    await tx.delete(classrooms);
     for (let index = 0; index < roomRows.length; index += 200) {
-      await tx.insert(classrooms).values(roomRows.slice(index, index + 200));
+      await tx.insert(classrooms).values(roomRows.slice(index, index + 200)).onDuplicateKeyUpdate({
+        set: {
+          sourcePage: sql`VALUES(${classrooms.sourcePage})`,
+          displayOrder: sql`VALUES(${classrooms.displayOrder})`,
+        },
+      });
     }
     for (let index = 0; index < entries.length; index += 200) {
-      await tx.insert(timetableEntries).values(entries.slice(index, index + 200));
+      await tx.insert(timetableEntries).values(entries.slice(index, index + 200)).onDuplicateKeyUpdate({
+        set: {
+          occupant: sql`VALUES(${timetableEntries.occupant})`,
+          occupantDisplay: sql`VALUES(${timetableEntries.occupantDisplay})`,
+          staffCodes: sql`VALUES(${timetableEntries.staffCodes})`,
+          sourcePage: sql`VALUES(${timetableEntries.sourcePage})`,
+        },
+      });
     }
+
+    // An upload represents the complete schedule: upsert current records first, then remove rows
+    // for rooms no longer present so foreign-key cascade and the transaction remain consistent.
+    await tx.delete(timetableEntries).where(notInArray(timetableEntries.roomNumber, roomNumbers));
+    await tx.delete(classrooms).where(notInArray(classrooms.roomNumber, roomNumbers));
   });
+
+  return { roomsProcessed: roomRows.length, entriesProcessed: entries.length };
 }
 
 async function readCurrentTimetable(): Promise<ExportRoom[]> {
@@ -256,70 +247,70 @@ async function readCurrentTimetable(): Promise<ExportRoom[]> {
   return roomRows.map(room => ({ room: room.room, page: room.page, schedule: entriesByRoom.get(room.room) ?? [] }));
 }
 
-export function registerAdminRoutes(app: express.Express) {
-  app.get(`${ADMIN_PATH}/session`, (req, res) => {
-    res.set("Cache-Control", "no-store").json({ authenticated: isValidSession(req) });
+const requireAdmin: RequestHandler = (req, res, next) => {
+  void sdk.authenticateRequest(req).then(user => {
+    if (user.role !== "admin") {
+      res.status(403).json({ message: "A verified Admin account is required for this action." });
+      return;
+    }
+    next();
+  }).catch(() => {
+    res.status(403).json({ message: "A verified Admin account is required for this action." });
   });
+};
 
-  app.post(`${ADMIN_PATH}/login`, (req, res) => {
-    if (!requireAdminRequestHeader(req, res)) return;
-    if (!passwordDigest || !sessionKey) {
-      res.status(503).json({ message: "Admin sign-in is not configured on this server." });
-      return;
-    }
-    const key = loginKey(req);
-    if (loginIsBlocked(key)) {
-      res.status(429).json({ message: "Too many sign-in attempts. Wait 15 minutes and try again." });
-      return;
-    }
-    if (!passwordMatches(req.body?.password)) {
-      recordFailedLogin(key);
-      res.status(401).json({ message: "Password not recognized." });
-      return;
-    }
-    loginAttempts.delete(key);
-    setSessionCookie(req, res, createSessionToken());
+const requireAdminPageRequest: RequestHandler = (req, res, next) => {
+  if (req.get("x-requested-with") !== "RoomfinderAdmin") {
+    res.status(403).json({ message: "This admin action must be submitted from the admin page." });
+    return;
+  }
+  next();
+};
+
+export function registerAdminRoutes(app: express.Express) {
+  app.get(`${ADMIN_PATH}/session`, requireAdmin, (_req, res) => {
     res.set("Cache-Control", "no-store").json({ authenticated: true });
   });
 
-  app.post(`${ADMIN_PATH}/logout`, requireAdmin, (req, res) => {
-    if (!requireAdminRequestHeader(req, res)) return;
-    clearSessionCookie(req, res);
-    res.set("Cache-Control", "no-store").json({ authenticated: false });
-  });
-
-  app.get(`${ADMIN_PATH}/timetable/export`, requireAdmin, async (req, res) => {
-    if (!requireAdminRequestHeader(req, res)) return;
+  app.get(`${ADMIN_PATH}/timetable/export`, requireAdmin, requireAdminPageRequest, async (_req, res) => {
     try {
       const rooms = await readCurrentTimetable();
       res.set("Cache-Control", "no-store").json({ rooms, exportedAt: new Date().toISOString() });
-    } catch {
+    } catch (error) {
+      console.error("[Admin] Timetable export failed.", errorDetails(error));
       res.status(500).json({ message: "The current timetable could not be read from the database." });
     }
   });
 
-  app.post(`${ADMIN_PATH}/timetable/excel`, requireAdmin, express.json({ limit: MAX_EXCEL_JSON_BYTES }), async (req, res) => {
-    if (!requireAdminRequestHeader(req, res)) return;
-    let timetable: ParsedTimetable;
-    try {
-      timetable = validateTimetable(timetablePayloadSchema.parse(req.body));
-    } catch (error) {
-      console.error("[Admin] Excel validation failed", error instanceof Error ? error.message : "unknown error");
-      res.status(422).json({ message: "This Excel schedule is incomplete or invalid. The existing timetable was not changed." });
-      return;
-    }
-    try {
-      await replaceTimetable(timetable);
-    } catch (error) {
-      console.error("[Admin] Excel timetable replacement failed; database transaction rolled back.", error instanceof Error ? error.name : "unknown error");
-      res.status(500).json({ message: "The new timetable could not be saved. The existing timetable was not changed." });
-      return;
-    }
-    res.set("Cache-Control", "no-store").json({
-      roomsProcessed: timetable.rooms.length,
-      message: `Database updated successfully! ${timetable.rooms.length} rooms processed.`,
-    });
-  });
+  app.post(
+    `${ADMIN_PATH}/timetable/excel`,
+    requireAdmin,
+    requireAdminPageRequest,
+    express.raw({ type: acceptedExcelContentTypes, limit: MAX_EXCEL_FILE_BYTES }),
+    async (req, res) => {
+      let timetable: ParsedTimetable;
+      try {
+        if (!Buffer.isBuffer(req.body)) throw new Error("Upload the original Excel or CSV file as the request body.");
+        timetable = parseWorkbookBuffer(req.body);
+      } catch (error) {
+        console.error("[Admin] Excel workbook parsing/validation failed.", errorDetails(error));
+        res.status(422).json({ message: "This Excel schedule is incomplete or invalid. The existing timetable was not changed." });
+        return;
+      }
+
+      try {
+        const result = await upsertTimetable(timetable);
+        console.info(`[Admin] Excel schedule UPSERT committed: rooms=${result.roomsProcessed}, entries=${result.entriesProcessed}.`);
+        res.set("Cache-Control", "no-store").json({
+          ...result,
+          message: `Database updated successfully! ${result.roomsProcessed} rooms processed.`,
+        });
+      } catch (error) {
+        console.error("[Admin] Excel timetable transaction failed; the database transaction was rolled back.", errorDetails(error));
+        res.status(500).json({ message: "The new timetable could not be saved. The existing timetable was not changed." });
+      }
+    },
+  );
 }
 
 export function adminUploadErrorHandler(): express.ErrorRequestHandler {
@@ -333,6 +324,7 @@ export function adminUploadErrorHandler(): express.ErrorRequestHandler {
       res.status(413).json({ message: "The Excel schedule is larger than the 20 MB upload limit. The existing timetable was not changed." });
       return;
     }
+    console.error("[Admin] Excel upload request parsing failed.", errorDetails(error));
     res.status(400).json({ message: "The Excel schedule could not be read. The existing timetable was not changed." });
   };
 }

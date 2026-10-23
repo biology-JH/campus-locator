@@ -248,11 +248,9 @@ export default function Home() {
               <span className="live-dot" />
               <span>Live timetable</span>
             </div>
-            {isAdmin ? (
-              <a className="topbar-admin" href="/admin" aria-label="Open timetable administration">
-                <ShieldCheck size={15} /> Admin
-              </a>
-            ) : null}
+            <a className="topbar-admin" href="/admin" aria-label="Open Admin Login">
+              <ShieldCheck size={15} /> <span>Admin Login</span>
+            </a>
           </div>
         </div>
       </header>
