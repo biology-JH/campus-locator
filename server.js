@@ -1,4 +1,4 @@
-// Vercel Deploy Fix v2
+// Vercel Deploy Fix v3
 import "dotenv/config";
 import { createExpressApp } from "./server/_core/app.js";
 import { serveStatic } from "./server/_core/static.js";
@@ -7,7 +7,7 @@ import { serveStatic } from "./server/_core/static.js";
 const app = createExpressApp();
 
 // 2. Structural Password Protection Middleware
-app.use((req, res, next) => {
+const passwordProtection = (req, res, next) => {
   const sitePassword = process.env.SITE_PASSWORD;
 
   // Let visitors pass if no environment variable password is set on Vercel
@@ -15,9 +15,13 @@ app.use((req, res, next) => {
     return next();
   }
 
-  // TARGET LOCK: Only request passwords on the main page entry path (/).
-  // If a visitor requests backend APIs or static assets, skip the lock.
-  if (req.path !== '/') {
+  // BYPASS: Never block background API data routes or technical asset folders
+  if (
+    req.path.startsWith('/api') || 
+    req.path.startsWith('/data') || 
+    req.path.startsWith('/db') ||
+    req.path.startsWith('/_next')
+  ) {
     return next();
   }
 
@@ -42,9 +46,17 @@ app.use((req, res, next) => {
   // Present the browser's built-in login prompt if unauthorized
   res.setHeader('WWW-Authenticate', 'Basic realm="Secure Site"');
   return res.status(401).send('Authentication Required');
-});
+};
 
-// 3. Serve your static frontend files through Manus's internal server layer
+// 3. CRITICAL INTERCEPTION: Force the password gate on the root page (/) 
+// BEFORE Manus can statically serve it out.
+app.get('/', passwordProtection);
+app.get('/index.html', passwordProtection);
+
+// 4. Inject the password check for all generic routes safely
+app.use(passwordProtection);
+
+// 5. Serve your static frontend files through Manus's internal server layer
 serveStatic(app);
 
 export default app;
