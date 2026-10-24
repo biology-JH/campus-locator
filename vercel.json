@@ -1,18 +1,1 @@
-{
-  "version": 2,
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/(api|data|db|_next)(.*)",
-      "destination": "/server.js"
-    },
-    {
-      "source": "/((?!api|data|db|_next).*\\..*)",
-      "destination": "/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/server.js"
-    }
-  ]
-}
+{}
