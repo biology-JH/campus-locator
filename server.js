@@ -15,12 +15,9 @@ app.use((req, res, next) => {
     return next();
   }
 
-  // 3. TARGET LOCK: Only request passwords on entry locations. 
-  // If the path request looks like a file asset or an explicit data fetch hook, let it slide.
-  const isBackendRoute = req.path.startsWith('/api') || req.path.startsWith('/data') || req.path.startsWith('/db');
-  const isAssetFile = req.path.includes('.') || req.path.startsWith('/_next');
-
-  if (isBackendRoute || isAssetFile) {
+  // TARGET LOCK: Only request passwords on the main page entry path (/).
+  // If a visitor requests backend APIs or static assets, skip the lock.
+  if (req.path !== '/') {
     return next();
   }
 
@@ -47,7 +44,7 @@ app.use((req, res, next) => {
   return res.status(401).send('Authentication Required');
 });
 
-// 4. Serve your static frontend files through Manus's internal server layer
+// 3. Serve your static frontend files through Manus's internal server layer
 serveStatic(app);
 
 export default app;
