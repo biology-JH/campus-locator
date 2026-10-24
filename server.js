@@ -1,53 +1,53 @@
 // Vercel Deploy Fix v2
 import "dotenv/config";
-import express from "express";
 import { createExpressApp } from "./server/_core/app.js";
 import { serveStatic } from "./server/_core/static.js";
 
-const app = express();
-// Middleware to protect the website using SITE_PASSWORD
+// 1. Initialize Manus's pre-configured application engine
+const app = createExpressApp();
+
+// 2. Inject your Password Protection Middleware directly into the core app loop
 app.use((req, res, next) => {
   const sitePassword = process.env.SITE_PASSWORD;
 
-  // 1. If no password environment variable is set on Vercel, let visitors through
+  // Let visitors pass if no environment variable password is set on Vercel
   if (!sitePassword) {
     return next();
   }
 
-  // 2. CRITICAL FIX: Bypass password requirements for ALL database/API requests and internal assets
+  // CRITICAL BYPASS: Ensure core database endpoints and assets bypass the login wall
   if (
     req.path.startsWith('/api') || 
     req.path.startsWith('/data') || 
     req.path.startsWith('/db') ||
-    req.path.includes('.') // Let CSS, JS, and image elements load natively
+    req.path.includes('.') // Allows static bundle pieces, CSS files, and images
   ) {
     return next();
   }
 
   const authHeader = req.headers['authorization'];
 
-  // 3. Authenticate visitors using the Basic Login prompt
   if (authHeader && authHeader.startsWith('Basic ')) {
     try {
       const token = authHeader.split(' ')[1];
       const decoded = Buffer.from(token, 'base64').toString('utf8');
       const parts = decoded.split(':');
-      const password = parts[1]; // Correctly isolates the input password text
+      const password = parts[1]; 
 
       if (password === sitePassword) {
-        return next(); // Correct password given, unlock site
+        return next(); // Password matches perfectly, unlock the session
       }
     } catch (err) {
       console.error("Auth decoding error:", err);
     }
   }
 
-  // 4. Trigger the browser's built-in login prompt if unauthorized
+  // Present the browser's built-in login prompt if unauthorized
   res.setHeader('WWW-Authenticate', 'Basic realm="Secure Site"');
   return res.status(401).send('Authentication Required');
 });
 
-// app.use(createExpressApp());
+// 3. Serve your static frontend files through Manus's internal server layer
 serveStatic(app);
 
 export default app;
