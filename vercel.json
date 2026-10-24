@@ -1,10 +1,20 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "express",
-  "buildCommand": "pnpm build",
-  "functions": {
-    "server.ts": {
-      "includeFiles": "dist/public/**"
+  "version": 2,
+  "crons": [],
+  "cleanUrls": true,
+  "routes": [
+    {
+      "src": "/(api|data|db|_next)(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)\\.(js|css|png|jpg|svg|ico)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "middleware": "password-protect",
+      "dest": "server.js"
     }
-  }
+  ]
 }
