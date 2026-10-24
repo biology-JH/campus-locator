@@ -15,8 +15,8 @@ app.use((req, res, next) => {
   }
 
   // Bypass authentication specifically for internal API calls or assets if needed
-  if (req.path.startsWith('/api')) {
-    return next();
+  if (req.path.startsWith('/api') || req.path.startsWith('/data')) {
+  return next();
   }
 
   const authHeader = req.headers['authorization'];
