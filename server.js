@@ -1,19 +1,27 @@
-// Middleware to protect the website using SITE_PASSWORD
+// Vercel Deploy Fix v2
+import "dotenv/config";
+import { createExpressApp } from "./server/_core/app.js";
+import { serveStatic } from "./server/_core/static.js";
+
+// 1. Initialize Manus's core pre-configured database application engine
+const app = createExpressApp();
+
+// 2. Clear, fixed Password Protection Middleware
 app.use((req, res, next) => {
   const sitePassword = process.env.SITE_PASSWORD;
 
-  // If no password environment variable is set on Vercel, let visitors through
+  // Let visitors pass if no environment variable password is set on Vercel
   if (!sitePassword) {
     return next();
   }
 
-  // FORCE BYPASS: Ensure core background database routes and public files skip the prompt
+  // CRITICAL BYPASS: Ensure core background database routes and asset paths bypass the login wall
   if (
     req.path.startsWith('/api') || 
     req.path.startsWith('/data') || 
     req.path.startsWith('/db') ||
     req.path.startsWith('/_next') ||
-    req.path.includes('.') // Allows static bundle files, stylesheets, and images to download
+    req.path.includes('.') // Allows static script bundles, stylesheets, and asset files to pass
   ) {
     return next();
   }
@@ -27,7 +35,8 @@ app.use((req, res, next) => {
       const decoded = Buffer.from(token, 'base64').toString('utf8');
       const parts = decoded.split(':');
       
-      const password = parts[1]; // Correctly pull the password index
+      // FIXED ENGINE: Pull out array index 1 for the literal password value
+      const password = parts[1]; 
 
       if (password === sitePassword) {
         return next(); // Password matches perfectly, unlock the session!
@@ -37,7 +46,12 @@ app.use((req, res, next) => {
     }
   }
 
-  // Trigger the browser's built-in login prompt if unauthorized
+  // Present the browser's built-in login prompt if unauthorized
   res.setHeader('WWW-Authenticate', 'Basic realm="Secure Site"');
   return res.status(401).send('Authentication Required');
 });
+
+// 3. Serve your static frontend files through Manus's internal server layer
+serveStatic(app);
+
+export default app;
