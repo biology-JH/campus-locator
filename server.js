@@ -15,12 +15,18 @@ app.use((req, res, next) => {
     return next();
   }
 
-  // CRITICAL BYPASS: Ensure core database endpoints and asset routes bypass the login wall
+  // CRITICAL BYPASS: Lock the entry page, but allow background APIs and assets through
   if (
     req.path.startsWith('/api') || 
     req.path.startsWith('/data') || 
     req.path.startsWith('/db') ||
-    req.path.includes('.') // Allows JS chunks, CSS files, and database assets
+    req.path.startsWith('/_next') ||  // For structural framework files
+    req.path.endsWith('.js') ||       // Allow script bundles
+    req.path.endsWith('.css') ||      // Allow styling sheets
+    req.path.endsWith('.png') ||      // Allow images
+    req.path.endsWith('.jpg') ||
+    req.path.endsWith('.svg') ||
+    req.path.endsWith('.ico')
   ) {
     return next();
   }
