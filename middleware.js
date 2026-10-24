@@ -1,39 +1,50 @@
 import { NextResponse } from 'next/server';
 
 export const config = {
-  // Run this check on the main entry pages, but ignore images, scripts, and api folders
+  // Enforce password verification on the root page views
   matcher: ['/', '/index.html'],
 };
 
 export function middleware(req) {
   const sitePassword = process.env.SITE_PASSWORD;
 
-  // If no password environment variable is set on Vercel, let visitors through
+  // If no password variable is configured on Vercel, let visitors pass
   if (!sitePassword) {
     return NextResponse.next();
   }
 
   const basicAuth = req.headers.get('authorization');
 
-  if (basicAuth) {
+  if (basicAuth && basicAuth.startsWith('Basic ')) {
     try {
-      // Decode Basic Auth header (Format: Basic base64(username:password))
-      const authValue = basicAuth.split(' ')[1];
-      const [_, password] = atob(authValue).split(':');
+      // Isolate the base64 string snippet
+      const token = basicAuth.split(' ')[1];
+      
+      // EDGE ENVIRONMENT SAFE: Use standard text decoding instead of native atob
+      const decoded = stringFromBase64(token);
+      const parts = decoded.split(':');
+      const password = parts[1]; // Extract the literal password text input
 
       if (password === sitePassword) {
-        return NextResponse.next(); // Password matches perfectly, let them in!
+        return NextResponse.next(); // Password matches perfectly, unlock the web session!
       }
     } catch (err) {
-      console.error('Middleware auth parsing error', err);
+      console.error('Middleware decryption error:', err);
     }
   }
 
-  // Trigger the browser's built-in login prompt if unauthorized
+  // Present the browser's built-in login prompt if unauthorized
   return new NextResponse('Authentication Required', {
     status: 401,
     headers: {
       'WWW-Authenticate': 'Basic realm="Secure Site"',
     },
   });
+}
+
+// Helper utility to safely convert base64 inside Vercel's Edge Environment
+function stringFromBase64(base64) {
+  const binString = atob(base64);
+  const bytes = Uint8Array.from(binString, (m) => m.codePointAt(0));
+  return new TextDecoder().decode(bytes);
 }
