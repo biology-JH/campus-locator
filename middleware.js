@@ -17,13 +17,15 @@ export function middleware(req) {
 
   if (basicAuth && basicAuth.startsWith('Basic ')) {
     try {
-      // Isolate the base64 string snippet
+      // Isolate the base64 token
       const token = basicAuth.split(' ')[1];
       
-      // EDGE ENVIRONMENT SAFE: Use standard text decoding instead of native atob
-      const decoded = stringFromBase64(token);
+      // Decode Base64 safely without using 'atob' or Node buffers
+      const decoded = customBase64Decode(token);
       const parts = decoded.split(':');
-      const password = parts[1]; // Extract the literal password text input
+      
+      // Pull out the password string value (Format is username:password)
+      const password = parts[1]; 
 
       if (password === sitePassword) {
         return NextResponse.next(); // Password matches perfectly, unlock the web session!
@@ -42,9 +44,25 @@ export function middleware(req) {
   });
 }
 
-// Helper utility to safely convert base64 inside Vercel's Edge Environment
-function stringFromBase64(base64) {
-  const binString = atob(base64);
-  const bytes = Uint8Array.from(binString, (m) => m.codePointAt(0));
-  return new TextDecoder().decode(bytes);
+// A pure JavaScript Base64 decoder that works flawlessly inside Vercel Edge
+function customBase64Decode(str) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  let raw = str.replace(/=+$/, '');
+  let output = '';
+  let buffer = 0;
+  let bits = 0;
+
+  for (let i = 0; i < raw.length; i++) {
+    const idx = chars.indexOf(raw[i]);
+    if (idx === -1) continue;
+    
+    buffer = (buffer << 6) | idx;
+    bits += 6;
+
+    if (bits >= 8) {
+      bits -= 8;
+      output += String.fromCharCode((buffer >> bits) & 0xff);
+    }
+  }
+  return output;
 }
