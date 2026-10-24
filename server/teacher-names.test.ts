@@ -13,6 +13,11 @@ describe("teacher name normalization", () => {
       .toBe("Staff (École) Name");
   });
 
+  it("preserves nullish values for unoccupied timetable slots", () => {
+    expect(capitalizeBracketedNames(null)).toBeNull();
+    expect(capitalizeBracketedNames(undefined)).toBeUndefined();
+  });
+
   it("recognizes requested names and the canonical source spellings", () => {
     for (const name of [
       "Greg Morrison",

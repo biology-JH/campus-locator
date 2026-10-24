@@ -12,7 +12,12 @@ const EXCLUDED_TEACHER_NAMES = new Set([
 ]);
 
 /** Capitalizes the first Unicode letter within each parenthetical segment. */
-export function capitalizeBracketedNames(value: string): string {
+export function capitalizeBracketedNames(value: string): string;
+export function capitalizeBracketedNames(value: null): null;
+export function capitalizeBracketedNames(value: undefined): undefined;
+export function capitalizeBracketedNames(value: string | null | undefined): string | null | undefined;
+export function capitalizeBracketedNames(value: string | null | undefined): string | null | undefined {
+  if (value === null || value === undefined) return value;
   return value.replace(/\(([^()]*)\)/gu, (_match, contents: string) =>
     `(${contents.replace(/\p{L}/u, letter => letter.toUpperCase())})`
   );

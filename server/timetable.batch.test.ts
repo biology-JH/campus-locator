@@ -48,7 +48,7 @@ function makeContext(role: "admin" | "user"): TrpcContext {
   };
 }
 
-function makeMemoryDatabase(roomCount: 3 | 4) {
+function makeMemoryDatabase(roomCount: number) {
   const roomRows: RoomRow[] = Array.from({ length: roomCount }, (_, index) => ({
     roomNumber: String.fromCharCode(65 + index),
     displayOrder: index + 1,
@@ -71,11 +71,13 @@ function makeMemoryDatabase(roomCount: 3 | 4) {
     const query: {
       where: (...args: unknown[]) => typeof query;
       orderBy: (...args: unknown[]) => typeof query;
+      limit: (...args: unknown[]) => typeof query;
       for: (...args: unknown[]) => Promise<unknown[]>;
       then: (resolve: (value: unknown[]) => unknown, reject?: (reason: unknown) => unknown) => Promise<unknown>;
     } = {
       where: () => query,
       orderBy: () => query,
+      limit: () => query,
       for: () => Promise.resolve(rows),
       then: (resolve, reject) => Promise.resolve(rows).then(resolve, reject),
     };
@@ -201,6 +203,24 @@ describe("Admin batch schedule save", () => {
     expect(memory.db.transaction).toHaveBeenCalledOnce();
     expect(memory.entryRows.map(entry => entry.occupant)).toEqual(["Class B", "Class C", "Class A"]);
     console.info("[Local simulation] Password session batch-save success: 3-way swap committed to in-memory mock DB; shared Aiven was not modified.");
+  });
+});
+
+describe("Room master schedule query", () => {
+  it("returns both weeks and free slots when a slot has no subject display text", async () => {
+    const memory = makeMemoryDatabase(1);
+    getDbMock.mockResolvedValue(memory.db);
+    const caller = appRouter.createCaller(makeContext("user"));
+
+    const result = await caller.timetable.masterSchedule({ roomNumber: "A" });
+    const weekA = result.weeks.find(week => week.week === "A");
+    const monday = weekA?.days.find(day => day.day === "Monday");
+    const freeSlot = monday?.slots.find(slot => slot.period === "lesson2");
+
+    expect(result.weeks.map(week => week.week)).toEqual(["A", "B"]);
+    expect(result.weeks.every(week => week.days.length === 5 && week.days.every(day => day.slots.length === 8))).toBe(true);
+    expect(freeSlot).toMatchObject({ occupant: null, occupantDisplay: null, hasRecord: false, isOccupied: false });
+    console.info("[Local simulation] Room Schedule query success: both weeks and 160 room slots rendered with free slots; mock DB only.");
   });
 });
 
