@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
 import type { TrpcContext } from "./_core/context.js";
+import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 
 const { getDbMock, authenticateRequestMock } = vi.hoisted(() => ({
   getDbMock: vi.fn(),
@@ -182,6 +183,7 @@ describe("Admin batch schedule save", () => {
     const context = await createContext({
       req,
       res: {} as TrpcContext["res"],
+      info: {} as CreateExpressContextOptions["info"],
     });
     expect(context.user).toBeNull();
     expect(context.adminPasswordSession).toBe(true);
@@ -220,7 +222,7 @@ describe("Room master schedule query", () => {
     expect(result.weeks.map(week => week.week)).toEqual(["A", "B"]);
     expect(result.weeks.every(week => week.days.length === 5 && week.days.every(day => day.slots.length === 8))).toBe(true);
     expect(freeSlot).toMatchObject({ occupant: null, occupantDisplay: null, hasRecord: false, isOccupied: false });
-    console.info("[Local simulation] Room Schedule query success: both weeks and 160 room slots rendered with free slots; mock DB only.");
+    console.info("[Local simulation] Room Schedule query success: both weeks and all 80 room slots rendered with free slots; mock DB only.");
   });
 });
 
