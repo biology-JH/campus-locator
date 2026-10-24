@@ -20,6 +20,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { DAYS, isLabRoom, PERIODS, WEEKS, type Day, type PeriodId, type Week } from "@shared/timetable";
+import { capitalizeBracketedNames, isExcludedTeacherName } from "@shared/teacher-names";
 import { trpc } from "@/lib/trpc";
 import { hasAdminRole } from "@/lib/admin-access";
 import { stageBatchAssignment, validateBatchDraft } from "@/lib/batch-schedule";
@@ -66,7 +67,15 @@ function LoadingBlock({ message }: { message: string }) {
 
 function conciseRoomContent(occupantDisplay: string | null, occupant: string | null): string {
   const content = (occupantDisplay?.trim() || occupant?.trim() || "Free / no lesson").replace(/\s+/g, " ");
-  return content.length > 42 ? `${content.slice(0, 39)}…` : content;
+  const normalized = capitalizeBracketedNames(content);
+  return normalized.length > 42 ? `${normalized.slice(0, 39)}…` : normalized;
+}
+
+function displayTeacherNames(value: string): string {
+  return value.split(" / ")
+    .map(capitalizeBracketedNames)
+    .filter(name => !isExcludedTeacherName(name))
+    .join(" / ");
 }
 
 export default function Home() {
@@ -112,6 +121,22 @@ export default function Home() {
   const teachersForSlotQuery = trpc.timetable.teachersForSlot.useQuery(
     { week, day, period },
     { enabled: view === "teacher", staleTime: 30_000 },
+  );
+  const teacherOptions = useMemo(
+    () => [...new Set((teachersQuery.data ?? []).map(capitalizeBracketedNames).filter(name => !isExcludedTeacherName(name)))],
+    [teachersQuery.data],
+  );
+  const activeTeacherAssignments = useMemo(
+    () => (teachersForSlotQuery.data?.activeTeachers ?? []).filter(assignment => displayTeacherNames(assignment.teacher)),
+    [teachersForSlotQuery.data?.activeTeachers],
+  );
+  const freeTeacherNames = useMemo(
+    () => (teachersForSlotQuery.data?.freeTeachers ?? []).map(capitalizeBracketedNames).filter(name => !isExcludedTeacherName(name)),
+    [teachersForSlotQuery.data?.freeTeachers],
+  );
+  const teacherLocationMatches = useMemo(
+    () => (teacherLocationsQuery.data?.matches ?? []).filter(match => displayTeacherNames(match.teacher)),
+    [teacherLocationsQuery.data?.matches],
   );
   const batchEditQuery = trpc.timetable.batchEditSnapshot.useQuery(
     { week, day, period },
@@ -312,6 +337,19 @@ export default function Home() {
               </button>
             </div>
 
+            {view === "teacher" ? (
+              <section className="teacher-slot-panel" aria-labelledby="teacher-slot-title">
+                <header className="teacher-slot-heading">
+                  <div>
+                    <span className="panel-kicker">TEACHER FINDER</span>
+                    <h3 id="teacher-slot-title">Teachers for this slot</h3>
+                    <p>{day} · {selectedPeriod} · Week {week}</p>
+                  </div>
+                  <span className="teacher-slot-icon" aria-hidden="true"><Users size={15} /></span>
+                </header>
+              </section>
+            ) : null}
+
             {view !== "teacher" ? (
               <div className="filter-block">
                 <label className="filter-label" htmlFor="room-filter">
@@ -352,9 +390,9 @@ export default function Home() {
                   <UserRound size={17} aria-hidden="true" />
                   <input id="teacher-filter" type="search" value={teacherInput} onChange={event => setTeacherInput(event.target.value)} placeholder="e.g. Joyce Ho" autoComplete="off" />
                 </div>
-                <select id="teacher-picker" className="dashboard-room-select teacher-picker" value={teachersQuery.data?.includes(teacherInput) ? teacherInput : ""} onChange={event => setTeacherInput(event.target.value)}>
+                <select id="teacher-picker" className="dashboard-room-select teacher-picker" value={teacherOptions.includes(capitalizeBracketedNames(teacherInput)) ? capitalizeBracketedNames(teacherInput) : ""} onChange={event => setTeacherInput(event.target.value)}>
                   <option value="">Select a staff member…</option>
-                  {(teachersQuery.data ?? []).map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
+                  {teacherOptions.map(teacher => <option key={teacher} value={teacher}>{teacher}</option>)}
                 </select>
                 <p className="filter-help">Searches the selected week, day, and period.</p>
               </div>
@@ -383,69 +421,6 @@ export default function Home() {
                 </select>
               </label>
             </div>
-
-            {view === "teacher" ? (
-              <>
-              <div className="filter-divider teacher-slot-divider" />
-              <section className="teacher-slot-panel" aria-labelledby="teacher-slot-title">
-              <header className="teacher-slot-heading">
-                <div>
-                  <span className="panel-kicker">TEACHER FINDER</span>
-                  <h3 id="teacher-slot-title">Teachers for this slot</h3>
-                  <p>{day} · {selectedPeriod} · Week {week}</p>
-                </div>
-                <span className="teacher-slot-icon" aria-hidden="true"><Users size={15} /></span>
-              </header>
-
-              {teachersForSlotQuery.isLoading && !teachersForSlotQuery.data ? (
-                <div className="teacher-slot-state" role="status"><LoaderCircle className="spin" size={14} /> Loading teacher lists…</div>
-              ) : null}
-
-              {teachersForSlotQuery.isError && !teachersForSlotQuery.data ? (
-                <div className="teacher-slot-state teacher-slot-error" role="alert">
-                  <span>Teacher availability could not be loaded.</span>
-                  <button type="button" onClick={() => { void teachersForSlotQuery.refetch(); }}>Retry</button>
-                </div>
-              ) : null}
-
-              {teachersForSlotQuery.data ? (
-                <div className="teacher-slot-groups">
-                  <section className="teacher-slot-group" aria-labelledby="active-teacher-list-title">
-                    <div className="teacher-slot-group-heading">
-                      <h4 id="active-teacher-list-title">Active teachers</h4>
-                      <span className="teacher-slot-count">{teachersForSlotQuery.data.activeTeachers.length}</span>
-                    </div>
-                    <ul className="teacher-slot-list" aria-label={`Active teachers for ${day}, ${selectedPeriod}, Week ${week}`}>
-                      {teachersForSlotQuery.data.activeTeachers.length ? teachersForSlotQuery.data.activeTeachers.map((assignment, index) => (
-                        <li className="teacher-slot-row" key={`${assignment.roomNumber}-${assignment.teacher}-${index}`}>
-                          <span className="teacher-slot-name" title={assignment.teacher}>
-                            {assignment.isAmbiguous ? `Possible: ${assignment.teacher}` : assignment.teacher}
-                          </span>
-                          <span className="teacher-slot-chip teacher-slot-room" title={`Assigned room ${assignment.roomNumber}`}>{assignment.roomNumber}</span>
-                        </li>
-                      )) : <li className="teacher-slot-empty">No resolved teacher assignments for this slot.</li>}
-                    </ul>
-                  </section>
-
-                  <section className="teacher-slot-group" aria-labelledby="free-teacher-list-title">
-                    <div className="teacher-slot-group-heading">
-                      <h4 id="free-teacher-list-title">Free teachers</h4>
-                      <span className="teacher-slot-count teacher-slot-count-free">{teachersForSlotQuery.data.freeTeachers.length}</span>
-                    </div>
-                    <ul className="teacher-slot-list" aria-label={`Free teachers for ${day}, ${selectedPeriod}, Week ${week}`}>
-                      {teachersForSlotQuery.data.freeTeachers.length ? teachersForSlotQuery.data.freeTeachers.map(teacher => (
-                        <li className="teacher-slot-row" key={teacher}>
-                          <span className="teacher-slot-name" title={teacher}>{teacher}</span>
-                          <span className="teacher-slot-chip teacher-slot-free-chip">Free</span>
-                        </li>
-                      )) : <li className="teacher-slot-empty">No free teachers listed for this slot.</li>}
-                    </ul>
-                  </section>
-                </div>
-              ) : null}
-              </section>
-              </>
-            ) : null}
 
             <button className="reset-filters" type="button" onClick={resetFilters} disabled={isModifySchedule}>
               <RotateCcw size={14} /> Reset filters
@@ -596,10 +571,114 @@ export default function Home() {
           <section className="dashboard-results" aria-live="polite">
             {view === "teacher" && teacherInput.trim().length >= 2 ? (
               <section className="teacher-location-panel" aria-live="polite">
-                <div className="teacher-location-heading"><div><span className="panel-kicker">TEACHER LOCATION</span><h3>{teacherInput.trim()} · {day} · {selectedPeriod} · Week {week}</h3></div><UserRound size={20} /></div>
-                {teacherLocationsQuery.isLoading ? <LoadingBlock message="Checking the teacher timetable…" /> : teacherLocationsQuery.isError ? <div className="error-panel" role="alert"><strong>Teacher search is unavailable.</strong><span>Try again after the timetable has loaded.</span></div> : teacherLocationsQuery.data?.matches.length ? <div className="teacher-location-list">{teacherLocationsQuery.data.matches.map(match => <article className="teacher-location-card" key={`${match.roomNumber}-${match.week}-${match.day}-${match.period}`}><div className="teacher-location-room"><span>ROOM</span><Building2 size={21} /><strong>{match.roomNumber}</strong></div><div className="teacher-location-details"><strong>{match.teacher}</strong><span>{match.day} · {match.periodLabel} · Week {match.week}</span><small><b>Subject</b>{match.occupantDisplay ?? match.occupant ?? "Occupied timetable entry"}</small></div></article>)}</div> : <div className="teacher-location-empty"><UserRound size={18} /><span>{teacherInput.trim()} has no resolved room assignment for this selected time.</span></div>}
+                <div className="teacher-location-heading">
+                  <div>
+                    <span className="panel-kicker">TEACHER LOCATION</span>
+                    <h3>{capitalizeBracketedNames(teacherInput.trim())} · {day} · {selectedPeriod} · Week {week}</h3>
+                  </div>
+                  <UserRound size={20} />
+                </div>
+                {teacherLocationsQuery.isLoading ? <LoadingBlock message="Checking the teacher timetable…" /> : null}
+                {teacherLocationsQuery.isError ? (
+                  <div className="error-panel" role="alert">
+                    <strong>Teacher search is unavailable.</strong>
+                    <span>Try again after the timetable has loaded.</span>
+                  </div>
+                ) : null}
+                {teacherLocationMatches.length ? (
+                  <div className="teacher-location-list">
+                    {teacherLocationMatches.map(match => (
+                      <article className="teacher-location-card" key={`${match.roomNumber}-${match.week}-${match.day}-${match.period}`}>
+                        <div className="teacher-location-room-box" role="group" aria-label={`Room ${match.roomNumber}`}>
+                          <span>ROOM</span>
+                          <Building2 size={20} aria-hidden="true" />
+                          <strong>{match.roomNumber}</strong>
+                        </div>
+                        <div className="teacher-location-details">
+                          <strong title={displayTeacherNames(match.teacher)}>{displayTeacherNames(match.teacher)}</strong>
+                          <span
+                            className="teacher-location-slot-inline"
+                            title={`${match.day} - ${match.periodLabel} - Week ${match.week}`}
+                          >
+                            {match.day} - {match.periodLabel} - Week {match.week}
+                          </span>
+                          <small className="teacher-location-subject">
+                            <b>Subject</b>
+                            <span title={match.occupantDisplay ?? match.occupant ?? "Occupied timetable entry"}>
+                              {capitalizeBracketedNames(match.occupantDisplay ?? match.occupant ?? "Occupied timetable entry")}
+                            </span>
+                          </small>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                ) : null}
+                {!teacherLocationsQuery.isLoading && !teacherLocationsQuery.isError && !teacherLocationsQuery.data?.matches.length ? (
+                  <div className="teacher-location-empty"><UserRound size={18} /><span>{teacherInput.trim()} has no resolved room assignment for this selected time.</span></div>
+                ) : null}
               </section>
             ) : null}
+
+            {view === "teacher" ? (
+              <section className="teacher-roster-panel" aria-labelledby="teacher-roster-title">
+                <header className="teacher-roster-heading">
+                  <div>
+                    <span className="panel-kicker">TEACHER FINDER</span>
+                    <h2 id="teacher-roster-title">Find a teacher's current room</h2>
+                    <p>{day} · {selectedPeriod} · Week {week} · active and free staff</p>
+                  </div>
+                  <span className="teacher-roster-icon" aria-hidden="true"><Users size={20} /></span>
+                </header>
+
+                {teachersForSlotQuery.isLoading && !teachersForSlotQuery.data ? (
+                  <div className="teacher-slot-state" role="status"><LoaderCircle className="spin" size={16} /> Loading teacher lists…</div>
+                ) : null}
+
+                {teachersForSlotQuery.isError && !teachersForSlotQuery.data ? (
+                  <div className="teacher-slot-state teacher-slot-error" role="alert">
+                    <span>Teacher availability could not be loaded.</span>
+                    <button type="button" onClick={() => { void teachersForSlotQuery.refetch(); }}>Retry</button>
+                  </div>
+                ) : null}
+
+                {teachersForSlotQuery.data ? (
+                  <div className="teacher-slot-groups">
+                    <section className="teacher-slot-group" aria-labelledby="active-teacher-list-title">
+                      <div className="teacher-slot-group-heading">
+                        <h3 id="active-teacher-list-title">Active Teachers</h3>
+                        <span className="teacher-slot-count">{activeTeacherAssignments.length}</span>
+                      </div>
+                      <ul className="teacher-slot-list" aria-label={`Active teachers for ${day}, ${selectedPeriod}, Week ${week}`}>
+                        {activeTeacherAssignments.length ? activeTeacherAssignments.map((assignment, index) => (
+                          <li className="teacher-slot-row" key={`${assignment.roomNumber}-${assignment.teacher}-${index}`}>
+                            <span className="teacher-slot-name" title={displayTeacherNames(assignment.teacher)}>
+                              {assignment.isAmbiguous ? `Possible: ${displayTeacherNames(assignment.teacher)}` : displayTeacherNames(assignment.teacher)}
+                            </span>
+                            <span className="teacher-slot-chip teacher-slot-room" title={`Assigned room ${assignment.roomNumber}`}>{assignment.roomNumber}</span>
+                          </li>
+                        )) : <li className="teacher-slot-empty">No resolved teacher assignments for this slot.</li>}
+                      </ul>
+                    </section>
+
+                    <section className="teacher-slot-group" aria-labelledby="free-teacher-list-title">
+                      <div className="teacher-slot-group-heading">
+                        <h3 id="free-teacher-list-title">Free Teachers</h3>
+                        <span className="teacher-slot-count teacher-slot-count-free">{freeTeacherNames.length}</span>
+                      </div>
+                      <ul className="teacher-slot-list" aria-label={`Free teachers for ${day}, ${selectedPeriod}, Week ${week}`}>
+                        {freeTeacherNames.length ? freeTeacherNames.map(teacher => (
+                          <li className="teacher-slot-row" key={teacher}>
+                            <span className="teacher-slot-name" title={displayTeacherNames(teacher)}>{displayTeacherNames(teacher)}</span>
+                            <span className="teacher-slot-chip teacher-slot-free-chip">Free</span>
+                          </li>
+                        )) : <li className="teacher-slot-empty">No free teachers listed for this slot.</li>}
+                      </ul>
+                    </section>
+                  </div>
+                ) : null}
+              </section>
+            ) : null}
+
             {view === "vacancy" ? (
               <>
                 <div className="results-toolbar">
@@ -834,7 +913,11 @@ export default function Home() {
                                     const slotStatus = !slot || !slot.hasRecord
                                       ? "unknown"
                                       : slot.isOccupied ? "occupied" : "free";
-                                    const occupant = slot?.occupantDisplay ?? slot?.occupant ?? "Occupied timetable entry";
+                                    const occupant = capitalizeBracketedNames(slot?.occupantDisplay ?? slot?.occupant ?? "Occupied timetable entry");
+                                    const staffAttributions = (slot?.staff ?? []).map(staff => ({
+                                      ...staff,
+                                      names: [...new Set(staff.names.map(capitalizeBracketedNames))].filter(name => !isExcludedTeacherName(name)),
+                                    })).filter(staff => staff.names.length > 0);
 
                                     return (
                                       <article
@@ -851,24 +934,24 @@ export default function Home() {
                                             <p className="occupant-code" title={occupant}>
                                               <span className="subject-label">Subject</span>{occupant}
                                             </p>
-                                            {slot.staff.length ? (
+                                            {staffAttributions.length ? (
                                               <div className="staff-attribution">
                                                 <span className="staff-attribution-label">Teacher</span>
                                                 <ul>
-                                                  {slot.staff.map(staff => (
+                                                  {staffAttributions.map(staff => (
                                                     <li
                                                       className={staff.names.length === 1 ? "staff-chip" : "staff-chip staff-chip-ambiguous"}
                                                       key={`${periodInfo.id}-${staff.code}`}
                                                       title={`${staff.code}: ${staff.names.length ? staff.names.join(" / ") : "No full name found"}`}
                                                     >
                                                       {staff.names.length === 1 ? (
-                                                        staff.names[0]
+                                                        displayTeacherNames(staff.names[0])
                                                       ) : (
                                                         <>
                                                           <strong>{staff.code}</strong>
                                                           <span>
                                                             {staff.names.length
-                                                              ? `Possible matches: ${staff.names.join(" / ")}`
+                                                              ? `Possible matches: ${displayTeacherNames(staff.names.join(" / "))}`
                                                               : "No full name found in the supplied staff list"}
                                                           </span>
                                                         </>
@@ -905,13 +988,6 @@ export default function Home() {
                   </>
                 ) : null}
               </section>
-            ) : teacherInput.trim().length < 2 ? (
-              <section className="teacher-finder-prompt" aria-labelledby="teacher-finder-prompt-title">
-                <div className="teacher-finder-prompt-icon"><UserRound size={24} /></div>
-                <span className="panel-kicker">TEACHER FINDER</span>
-                <h2 id="teacher-finder-prompt-title">Find a teacher’s current room</h2>
-                <p>Search by name or choose a staff member in the left panel. Select a week, day, and period to view their timetable location and who is free.</p>
-              </section>
             ) : null}
           </section>
         </div>
@@ -922,7 +998,7 @@ export default function Home() {
           <span>ROOMFINDER <span className="footer-divider">/</span> TEACHER STAFF TOOL</span>
           <div className="footer-credit">
             <img src="/assets/roomfinder/ms-joyce-ho.gif" alt="" />
-            <span>Developed by Ms. Joyce Ho</span>
+            <span>Created by Ms. Joyce Ho</span>
           </div>
           <span>Schedule source: Summary timetable · 18 Oct</span>
         </div>

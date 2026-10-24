@@ -2,6 +2,7 @@ import { LAB_ROOM_NUMBERS, type PeriodId } from "../shared/timetable.js";
 import teacherAbbreviations from "./data/teacher-abbreviations.json" with { type: "json" };
 import manualStaffOverrides from "./data/manual-staff-overrides.json" with { type: "json" };
 import teacherSubjectRules from "./data/teacher-subject-rules.json" with { type: "json" };
+import { capitalizeBracketedNames, isExcludedTeacherCode, isExcludedTeacherName } from "../shared/teacher-names.js";
 
 type CourseRule = { grade: string; subject: string; names: string[] };
 type StaffContextRule = {
@@ -26,11 +27,24 @@ type ManualStaffOverride = {
 
 export type StaffAttribution = { code: string; names: string[] };
 
+function normalizeStaffAttributions(attributions: StaffAttribution[]): StaffAttribution[] {
+  return attributions.flatMap(attribution => {
+    if (isExcludedTeacherCode(attribution.code)) return [];
+    const names = [...new Set(attribution.names
+      .map(capitalizeBracketedNames)
+      .filter(name => !isExcludedTeacherName(name)))];
+    return names.length ? [{ ...attribution, names }] : [];
+  });
+}
+
 const staffByCode = new Map(
-  Object.entries(teacherAbbreviations.byCode).map(([code, people]) => [
-    code,
-    people.map(person => person.displayName),
-  ])
+  Object.entries(teacherAbbreviations.byCode)
+    .filter(([code]) => !isExcludedTeacherCode(code))
+    .map(([code, people]) => [
+      code,
+      people.map(person => capitalizeBracketedNames(person.displayName))
+        .filter(name => !isExcludedTeacherName(name)),
+    ])
 );
 const coursesByCode = teacherSubjectRules.byCode as Record<
   string,
@@ -407,7 +421,7 @@ function applyUserContextPreferences(
     has("L2") &&
     resolved.some(item => item.code === "ZY")
   ) {
-    return choose("ZY", "Yuyang (yosef) Zhou");
+    return choose("ZY", "Yuyang (Yosef) Zhou");
   }
   if (
     hasGrade("13") &&
@@ -430,7 +444,7 @@ function applyUserContextPreferences(
     has("L3") &&
     resolved.some(item => item.code === "SSY")
   ) {
-    return choose("SSY", "Shufan (sunny) Sun");
+    return choose("SSY", "Shufan (Sunny) Sun");
   }
 
   if (
@@ -467,7 +481,7 @@ function applyUserContextPreferences(
     tokens.includes("F") &&
     resolved.some(item => item.code === "XF")
   )
-    return choose("XF", "Xinyao (yoyo) Feng");
+    return choose("XF", "Xinyao (Yoyo) Feng");
   if (
     (hasGrade("12") || hasGrade("13")) &&
     resolved.some(item => item.code === "MS")
@@ -566,14 +580,14 @@ export function staffForCodes(
         (override.code && override.displayName
           ? [{ code: override.code, displayName: override.displayName }]
           : []);
-      return assignments
+      return normalizeStaffAttributions(assignments
         .filter(
-          assignment => !isCodeExcludedFromRoom(assignment.code, location)
+          assignment => !isCodeExcludedFromRoom(assignment.code, location) && !isExcludedTeacherCode(assignment.code)
         )
         .map(assignment => ({
           code: assignment.code,
           names: [assignment.displayName],
-      }));
+        })));
     }
   }
 
@@ -582,17 +596,17 @@ export function staffForCodes(
     /\b13\s+BIO\s+C\b/i.test(occupant) &&
     /\bHL\b/i.test(occupant)
   ) {
-    return [{ code: "CM", names: ["Caroline Jane Morgan"] }];
+    return normalizeStaffAttributions([{ code: "CM", names: ["Caroline Jane Morgan"] }]);
   }
 
   const resolved = (codes ?? "")
     .split(",")
-    .filter(code => Boolean(code) && !isCodeExcludedFromRoom(code, location))
+    .filter(code => Boolean(code) && !isCodeExcludedFromRoom(code, location) && !isExcludedTeacherCode(code))
     .map(code => ({ code, names: namesForCode(code, occupant, period) }));
-  return removeBiologySamLingwood(
+  return normalizeStaffAttributions(removeBiologySamLingwood(
     occupant,
     applyUserContextPreferences(occupant, resolved).filter(
       attribution => attribution.names.length > 0
     )
-  );
+  ));
 }

@@ -64,7 +64,7 @@ function makeDbHarness(failOnTimetableUpsert = false): DbHarness {
   return { db, operations, wasRolledBack: () => rolledBack };
 }
 
-function createWorkbook(): Buffer {
+function createWorkbook(overrides: Partial<{ occupant: string; occupantDisplay: string; staffCodes: string }> = {}): Buffer {
   const rows = WEEKS.flatMap(week => DAYS.flatMap(day => PERIODS.map(period => ({
     Room: "A101",
     "Source Page": 1,
@@ -72,9 +72,9 @@ function createWorkbook(): Buffer {
     Day: day,
     Period: period.id,
     "Period Label": period.label,
-    Occupant: week === "A" && day === "Monday" && period.id === "lesson1" ? "12 BIO" : "",
-    "Occupant Display": week === "A" && day === "Monday" && period.id === "lesson1" ? "12 BIO" : "",
-    "Teacher Codes": "",
+    Occupant: week === "A" && day === "Monday" && period.id === "lesson1" ? overrides.occupant ?? "12 BIO" : "",
+    "Occupant Display": week === "A" && day === "Monday" && period.id === "lesson1" ? overrides.occupantDisplay ?? "12 BIO" : "",
+    "Teacher Codes": week === "A" && day === "Monday" && period.id === "lesson1" ? overrides.staffCodes ?? "" : "",
   }))));
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(rows), "Schedule");
@@ -248,6 +248,36 @@ describe("Admin Excel upload route", () => {
     expect(harness.operations.filter(operation => operation.kind === "delete")).toHaveLength(2);
     expect(harness.wasRolledBack()).toBe(false);
     console.info("[Local simulation] Excel upload success: server parsed Schedule.xlsx; UPSERT committed to mocked DB (1 room, 80 entries); shared Aiven was not modified.");
+  });
+
+  it("normalizes bracketed teacher text and filters excluded codes in an isolated Excel upload", async () => {
+    authenticateRequestMock.mockResolvedValue({ role: "admin" });
+    const harness = makeDbHarness();
+    getDbMock.mockResolvedValue(harness.db);
+    const response = await fetch(`${baseUrl}/api/admin/timetable/excel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "X-Requested-With": "RoomfinderAdmin",
+      },
+      body: new Uint8Array(createWorkbook({
+        occupant: "Kouaho (guy) Gueye",
+        occupantDisplay: "Xinyao (yoyo) Feng",
+        staffCodes: "KG,XF,GM,YS,RK",
+      })),
+    });
+    const entries = harness.operations.find(operation => operation.table === "timetable_entries" && operation.kind === "upsert")?.rows as Array<{
+      week: string; day: string; period: string; occupant: string; occupantDisplay: string; staffCodes: string | null;
+    }>;
+    const imported = entries.find(entry => entry.week === "A" && entry.day === "Monday" && entry.period === "lesson1");
+
+    expect(response.status).toBe(200);
+    expect(imported).toMatchObject({
+      occupant: "Kouaho (Guy) Gueye",
+      occupantDisplay: "Xinyao (Yoyo) Feng",
+      staffCodes: "KG,XF",
+    });
+    console.info("[Local simulation] Name-normalized Excel upload success: bracketed names canonicalized and excluded codes removed in mock-only UPSERT; shared Aiven was not modified.");
   });
 
   it("accepts a valid password session for Excel sync while keeping all database calls mocked", async () => {

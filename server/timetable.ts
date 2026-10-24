@@ -9,6 +9,7 @@ import { adminProcedure, publicProcedure, router } from "./_core/trpc.js";
 import { staffForCodes } from "./staff-resolution.js";
 import { formatSubjectDisplay } from "./subject-resolution.js";
 import teacherAbbreviations from "./data/teacher-abbreviations.json" with { type: "json" };
+import { capitalizeBracketedNames, isExcludedTeacherName } from "../shared/teacher-names.js";
 
 const weekInput = z.enum(WEEKS);
 const dayInput = z.enum(DAYS);
@@ -23,16 +24,23 @@ const periodInput = z.enum([
   "lesson7",
 ]);
 const HIDDEN_STAFF_TERMS = ["external cover 1", "external cover 2", "1 external cover", "2 external cover", "yvonne au", "yuki"];
-const isHiddenStaffName = (name: string) => HIDDEN_STAFF_TERMS.some(term => name.toLocaleLowerCase().includes(term));
+const isHiddenStaffName = (name: string) => {
+  const normalized = capitalizeBracketedNames(name);
+  return isExcludedTeacherName(normalized) || HIDDEN_STAFF_TERMS.some(term => normalized.toLocaleLowerCase().includes(term));
+};
 const visibleStaffAttributions = <T extends { names: string[] }>(staff: T[]) => staff
-  .map(attribution => ({ ...attribution, names: attribution.names.filter(name => !isHiddenStaffName(name)) }))
+  .map(attribution => ({
+    ...attribution,
+    names: [...new Set(attribution.names.map(capitalizeBracketedNames))].filter(name => !isHiddenStaffName(name)),
+  }))
   .filter(attribution => attribution.names.length > 0);
 
 function publicTeacherNames() {
   const names = new Set<string>();
   for (const people of Object.values(teacherAbbreviations.byCode)) {
     for (const person of people) {
-      if (!isHiddenStaffName(person.displayName)) names.add(person.displayName);
+      const name = capitalizeBracketedNames(person.displayName);
+      if (!isHiddenStaffName(name)) names.add(name);
     }
   }
   return [...names].sort((left, right) => left.localeCompare(right));
@@ -374,7 +382,7 @@ export const timetableRouter = router({
             period: input.period,
             periodLabel: PERIODS.find(period => period.id === input.period)?.label ?? input.period,
             occupant: entry.occupant,
-            occupantDisplay: formatSubjectDisplay(entry.occupantDisplay ?? entry.occupant),
+            occupantDisplay: capitalizeBracketedNames(formatSubjectDisplay(entry.occupantDisplay ?? entry.occupant)),
           }));
       }).sort((left, right) => (roomOrder.get(left.roomNumber) ?? 0) - (roomOrder.get(right.roomNumber) ?? 0));
       return { selection: input, matches };
@@ -425,7 +433,7 @@ export const timetableRouter = router({
                 period: period.id,
                 label: period.label,
                 occupant: entry?.occupant ?? null,
-                occupantDisplay: formatSubjectDisplay(entry?.occupantDisplay ?? entry?.occupant ?? null),
+                occupantDisplay: capitalizeBracketedNames(formatSubjectDisplay(entry?.occupantDisplay ?? entry?.occupant ?? null)),
                 staff: visibleStaffAttributions(staffForCodes(entry?.staffCodes ?? null, entry?.occupant ?? null, period.id, {
                   roomNumber: room.roomNumber,
                   week,

@@ -12,6 +12,7 @@ vi.mock("./_core/sdk.js", () => ({ sdk: { authenticateRequest: authenticateReque
 import { ADMIN_PASSWORD_SESSION_COOKIE, createAdminPasswordSessionToken } from "./_core/admin-session.js";
 import { createContext } from "./_core/context.js";
 import { appRouter } from "./routers.js";
+import { isExcludedTeacherName } from "../shared/teacher-names.js";
 
 const LOCAL_TEST_ADMIN_SECRET = "local-only-admin-secret-for-tests-2026";
 
@@ -200,5 +201,33 @@ describe("Admin batch schedule save", () => {
     expect(memory.db.transaction).toHaveBeenCalledOnce();
     expect(memory.entryRows.map(entry => entry.occupant)).toEqual(["Class B", "Class C", "Class A"]);
     console.info("[Local simulation] Password session batch-save success: 3-way swap committed to in-memory mock DB; shared Aiven was not modified.");
+  });
+});
+
+describe("Teacher Finder directory exclusions and name formatting", () => {
+  it("returns canonical bracket capitalization and excludes removed identities from autocomplete", async () => {
+    const caller = appRouter.createCaller(makeContext("user"));
+    const names = await caller.timetable.teacherList();
+
+    expect(names).toContain("Kouaho (Guy) Gueye");
+    expect(names).toContain("Xinyao (Yoyo) Feng");
+    expect(names.some(isExcludedTeacherName)).toBe(false);
+    expect(names).not.toEqual(expect.arrayContaining(["Gregg Morrison", "Yin Hung Sze", "Robert Kitley"]));
+  });
+
+  it("omits removed staff from active and free lists using only the in-memory database mock", async () => {
+    const memory = makeMemoryDatabase(3);
+    memory.entryRows.forEach(entry => { entry.staffCodes = "GM,YS,RK,KG"; });
+    getDbMock.mockResolvedValue(memory.db);
+    const caller = appRouter.createCaller(makeContext("user"));
+    const result = await caller.timetable.teachersForSlot(selection);
+    const names = [
+      ...result.activeTeachers.flatMap(assignment => assignment.teacher.split(" / ")),
+      ...result.freeTeachers,
+    ];
+
+    expect(result.activeTeachers.some(assignment => assignment.teacher.includes("Kouaho (Guy) Gueye"))).toBe(true);
+    expect(names.some(isExcludedTeacherName)).toBe(false);
+    console.info("[Local simulation] Teacher Finder list success: active/free API results omit all excluded names; database access used an in-memory mock only.");
   });
 });

@@ -82,7 +82,7 @@ describe("staffForCodes", () => {
     expect(names("VT", "Mentor VT", "mentor")).toEqual(["Vaishali Tanna"]);
   });
 
-  it("replaces departed Yvonne with Anantha and excludes Sarah and Sze Yin Hung from lessons", () => {
+  it("replaces departed Yvonne with Anantha and hides excluded staff from all slots", () => {
     expect(names("YA", "08 MAT T2 YA", "lesson1")).toEqual([
       "Anantha Yerikalapudi",
     ]);
@@ -91,7 +91,9 @@ describe("staffForCodes", () => {
       "Shahzeb Mohammad",
     ]);
     expect(names("YS", "09 MU 5 YS", "lesson1")).toEqual([]);
-    expect(names("YS", "Mentor YS", "mentor")).toEqual(["Yin Hung Sze"]);
+    expect(names("YS", "Mentor YS", "mentor")).toEqual([]);
+    expect(names("GM", "Mentor GM", "mentor")).toEqual([]);
+    expect(names("RK", "Mentor RK", "mentor")).toEqual([]);
   });
 
   it("applies the Year 12–13 MS exclusion and Yuki's no-lesson rule", () => {
@@ -140,12 +142,14 @@ describe("staffForCodes", () => {
   });
 
   it("applies the latest English, Science, Chinese, and name corrections", () => {
+    expect(names("KG", "Mentor KG", "mentor")).toEqual(["Kouaho (Guy) Gueye"]);
+    expect(names("XF", "Mentor XF", "mentor")).toEqual(["Xinyao (Yoyo) Feng"]);
     expect(names("GH,CW", "13 EN GH L3 C W", "lesson1")).toEqual([
       "Catherine Wu",
     ]);
     expect(names("JH", "07 SCI 10 JH A", "lesson1")).toEqual(["Jordan Hallas"]);
     expect(names("LS,SSY", "12 CL LS L3 S S Y", "lesson1")).toEqual([
-      "Shufan (sunny) Sun",
+      "Shufan (Sunny) Sun",
     ]);
     expect(names("JH", "12 BIO HL JH 3 J H", "lesson1")).toEqual(["Joyce Ho"]);
     expect(names("OB", "12 BU OB", "lesson1")).toEqual(["Ben O'Donnell"]);
@@ -174,7 +178,7 @@ describe("staffForCodes", () => {
     ]);
     expect(names("SL,WO", "13 CHI SL 1 W O", "lesson1")).toEqual(["Onki Wong"]);
     expect(names("SL,WY", "13 CHI SL 2 W Y", "lesson1")).toEqual([
-      "Yang (rick) Wang",
+      "Yang (Rick) Wang",
     ]);
     expect(names("SL,AM", "12F RB SL 1 A M", "lesson1")).toEqual([
       "Adrien Marie-Francoise",
@@ -206,7 +210,7 @@ describe("staffForCodes", () => {
     ]);
     expect(names("LS,HS", "13 CL LS L 2 H S", "lesson1")).toEqual(["Suea Han"]);
     expect(names("SL,ZLU", "12 CHI SL 2 ZL U", "lesson1")).toEqual([
-      "Lu (lucy) Zhang",
+      "Lu (Lucy) Zhang",
     ]);
     expect(names("GH,FG", "12 EN GH L1 F G", "lesson1")).toEqual([
       "Gareth Flint",

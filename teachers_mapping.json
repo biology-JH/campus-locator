@@ -123,7 +123,11 @@
   "additionalUserConfirmedRules": [
     {
       "person": "Paul Gillespie",
-      "subjects": ["English", "Integrated English", "IE"],
+      "subjects": [
+        "English",
+        "Integrated English",
+        "IE"
+      ],
       "exampleSourceText": "11I E2 G P",
       "note": "The user also wrote the surname phonetically as Gipse; the roster spelling is Gillespie."
     },
@@ -154,7 +158,9 @@
     },
     {
       "person": "Vaishali Tanna",
-      "subjects": ["Computer Science"],
+      "subjects": [
+        "Computer Science"
+      ],
       "pastoralRole": "Pastoral form"
     },
     {
@@ -206,11 +212,6 @@
       "code": "MS"
     },
     {
-      "person": "Yin Hung Sze",
-      "lessonTeaching": false,
-      "code": "YS"
-    },
-    {
       "person": "Sunny Chan",
       "lessonTeaching": false,
       "note": "The user said Sunny Chan has nothing; do not assign her from an ambiguous SC token."
@@ -229,97 +230,146 @@
   ],
   "exactCellPatternMappings": [
     {
-      "userText": ["13 ES B SS G L1", "13 ES B G L1"],
+      "userText": [
+        "13 ES B SS G L1",
+        "13 ES B G L1"
+      ],
       "code": "BG",
       "displayName": "Billy Grindley",
       "matchedCells": 5,
       "note": "Includes one A407 cell outside the designated Lab list. The active exact source-text variations and locations are in manual-staff-overrides.json."
     },
     {
-      "userText": ["12 PH M YH S L3", "12 PH M S L3"],
+      "userText": [
+        "12 PH M YH S L3",
+        "12 PH M S L3"
+      ],
       "code": "MS",
       "displayName": "Mason Stewart",
       "matchedCells": 3,
       "note": "Use the exact location/text override; the parsed source sometimes has YS in the second segment."
     },
     {
-      "userText": ["12 PH S YH KI L2", "12 PH S KI L2"],
+      "userText": [
+        "12 PH S YH KI L2",
+        "12 PH S KI L2"
+      ],
       "code": "SKI",
       "displayName": "Samuel Kim",
       "matchedCells": 5
     },
     {
-      "userText": ["12 S CH K MH E L5", "12 S CH K MS E L5"],
+      "userText": [
+        "12 S CH K MH E L5",
+        "12 S CH K MS E L5"
+      ],
       "code": "SKE",
       "displayName": "Simon Kelleher",
       "matchedCells": 6,
       "note": "This exact context overrides the ambiguous MS abbreviation."
     },
     {
-      "userText": ["13 ES C SS B L2", "13 ES C B L2"],
+      "userText": [
+        "13 ES C SS B L2",
+        "13 ES C B L2"
+      ],
       "code": "CB",
       "displayName": "Craig Billington",
       "matchedCells": 6
     },
     {
-      "userText": ["13 BIO C HL M 4", "13 BIO C M 4"],
+      "userText": [
+        "13 BIO C HL M 4",
+        "13 BIO C M 4"
+      ],
       "code": "CM",
       "displayName": "Caroline Jane Morgan",
       "matchedCells": 6
     },
     {
-      "userText": ["12 GE B OH G L1", "12 GE B OS G L1"],
+      "userText": [
+        "12 GE B OH G L1",
+        "12 GE B OS G L1"
+      ],
       "code": "BG",
       "displayName": "Billy Grindley",
       "subjectContext": "Geography/Year 12 Geography",
       "note": "Use the room-specific entries in manual-staff-overrides.json; not every string in this group is a single cell pattern."
     },
     {
-      "userText": ["13 EC B OS W L1", "13 EC B OH W L1"],
+      "userText": [
+        "13 EC B OS W L1",
+        "13 EC B OH W L1"
+      ],
       "code": "BW",
       "displayName": "Woo Sik Byun",
       "subjectContext": "Year 13 Economics"
     },
     {
-      "userText": ["12 H AR Y TH AL L2", "12 H AR Y TS AL L2"],
+      "userText": [
+        "12 H AR Y TH AL L2",
+        "12 H AR Y TS AL L2"
+      ],
       "code": "HYAL",
       "displayName": "Ho Ying Amata Lo",
       "subjectContext": "Year 12 Art"
     },
     {
-      "userText": ["13 AR B TH D L1", "13 AR B TS D L1"],
+      "userText": [
+        "13 AR B TH D L1",
+        "13 AR B TS D L1"
+      ],
       "code": "BD",
       "displayName": "Deeksha Gokool Bhakarreea",
       "subjectContext": "Year 13 Art"
     },
     {
-      "userText": ["12 ES P M L1", "12 ES P SS M L1"],
+      "userText": [
+        "12 ES P M L1",
+        "12 ES P SS M L1"
+      ],
       "code": "PM",
       "displayName": "Patrick Mcgovern",
       "matchedCells": 5
     },
     {
-      "userText": ["13 ES C M L3", "13 ES C SS M L3"],
+      "userText": [
+        "13 ES C M L3",
+        "13 ES C SS M L3"
+      ],
       "code": "CM",
       "displayName": "Caroline Jane Morgan",
       "matchedCells": 5
     },
     {
-      "userText": ["12 SV ES C L3 C", "12 SV ES C SS L3 C"],
-      "codes": ["SV", "CC"],
-      "displayNames": ["Stephanie Visser", "Curtis Chung"],
+      "userText": [
+        "12 SV ES C L3 C",
+        "12 SV ES C SS L3 C"
+      ],
+      "codes": [
+        "SV",
+        "CC"
+      ],
+      "displayNames": [
+        "Stephanie Visser",
+        "Curtis Chung"
+      ],
       "matchedCells": 2,
       "note": "User explicitly named both; retain both names despite the general one-teacher-per-slot rule."
     },
     {
-      "userText": ["12 PS A YS S L3 12 PS A YH S L3"],
+      "userText": [
+        "12 PS A YS S L3 12 PS A YH S L3"
+      ],
       "code": "AS",
       "displayName": "Saraswati Austin",
       "matchedCells": 6,
       "subjectContext": "Personal Study"
     },
     {
-      "userText": ["Ph oen ix5 G P"],
+      "userText": [
+        "Ph oen ix5 G P"
+      ],
       "code": "GP",
       "displayName": "Paul Gillespie",
       "matchedCells": 12,
@@ -357,163 +407,209 @@
       "subjectContext": "Physics"
     },
     {
-      "userText": ["12 ES P SS M L2 12 ES P SH M L2"],
+      "userText": [
+        "12 ES P SS M L2 12 ES P SH M L2"
+      ],
       "code": "PM",
       "displayName": "Patrick Mcgovern",
       "matchedCells": 6,
       "subjectContext": "English"
     },
     {
-      "userText": ["13 PH D YH N L3 13 PH D YS L3 N"],
+      "userText": [
+        "13 PH D YH N L3 13 PH D YS L3 N"
+      ],
       "code": "DN",
       "displayName": "Daniel Owusu Nyantakyi",
       "matchedCells": 3,
       "subjectContext": "Physics"
     },
     {
-      "userText": ["12 PH M YH L3 S 12 PH M YS S L3"],
+      "userText": [
+        "12 PH M YH L3 S 12 PH M YS S L3"
+      ],
       "code": "MS",
       "displayName": "Mason Stewart",
       "matchedCells": 3,
       "subjectContext": "Physics"
     },
     {
-      "userText": ["13 ES B SS L1 G 13 ES B SH G L1"],
+      "userText": [
+        "13 ES B SS L1 G 13 ES B SH G L1"
+      ],
       "code": "BG",
       "displayName": "Billy Grindley",
       "matchedCells": 1,
       "subjectContext": "English"
     },
     {
-      "userText": ["13 PH D YS N L2 13 PH D YH N L2"],
+      "userText": [
+        "13 PH D YS N L2 13 PH D YH N L2"
+      ],
       "code": "DN",
       "displayName": "Daniel Owusu Nyantakyi",
       "matchedCells": 3,
       "subjectContext": "Physics"
     },
     {
-      "userText": ["13 PH D YS N L2 13 PH D YH L2 N"],
+      "userText": [
+        "13 PH D YS N L2 13 PH D YH L2 N"
+      ],
       "code": "DN",
       "displayName": "Daniel Owusu Nyantakyi",
       "matchedCells": 1,
       "subjectContext": "Confirmed user correction"
     },
     {
-      "userText": ["12 PH S YH L2 KI 12 PH S YS KI L2"],
+      "userText": [
+        "12 PH S YH L2 KI 12 PH S YS KI L2"
+      ],
       "code": "SKI",
       "displayName": "Samuel Kim",
       "matchedCells": 1,
       "subjectContext": "Confirmed user correction"
     },
     {
-      "userText": ["13 PH D YH L3 N 13 PH D YS N L3"],
+      "userText": [
+        "13 PH D YH L3 N 13 PH D YS N L3"
+      ],
       "code": "DN",
       "displayName": "Daniel Owusu Nyantakyi",
       "matchedCells": 2,
       "subjectContext": "Confirmed user correction"
     },
     {
-      "userText": ["12 CO V MH L1 T 12 CO V MS T L1"],
+      "userText": [
+        "12 CO V MH L1 T 12 CO V MS T L1"
+      ],
       "code": "VT",
       "displayName": "Vaishali Tanna",
       "matchedCells": 5,
       "subjectContext": "Confirmed user correction"
     },
     {
-      "userText": ["13 CO E MH M L1 13 CO E MS M L1"],
+      "userText": [
+        "13 CO E MH M L1 13 CO E MS M L1"
+      ],
       "code": "EM",
       "displayName": "Erwin Suguitan Manuel",
       "matchedCells": 6,
       "subjectContext": "Confirmed user correction"
     },
     {
-      "userText": ["13 CH H MH R L4 13 CH H MS R L 4"],
+      "userText": [
+        "13 CH H MH R L4 13 CH H MS R L 4"
+      ],
       "code": "HR",
       "displayName": "Hannah Roberts",
       "matchedCells": 6,
       "subjectContext": "Confirmed user correction"
     },
     {
-      "userText": ["12 S CH K MH E L4 12 S CH K MS E L4"],
+      "userText": [
+        "12 S CH K MH E L4 12 S CH K MS E L4"
+      ],
       "code": "SKE",
       "displayName": "Simon Kelleher",
       "matchedCells": 6,
       "subjectContext": "Confirmed user correction"
     },
     {
-      "userText": ["13 CH M MH G L3 13 CH M MS G L 3"],
+      "userText": [
+        "13 CH M MH G L3 13 CH M MS G L 3"
+      ],
       "code": "MG",
       "displayName": "Mahua Ganguly",
       "matchedCells": 6,
       "subjectContext": "Chemistry"
     },
     {
-      "userText": ["13 T CH A MS L 1 Y 13 T CH A MH Y L1"],
+      "userText": [
+        "13 T CH A MS L 1 Y 13 T CH A MH Y L1"
+      ],
       "code": "TAY",
       "displayName": "Pui Sze Teresa Au Yeung",
       "matchedCells": 2,
       "subjectContext": "Chinese / exact user correction"
     },
     {
-      "userText": ["13 PH D YS L2 N 13 PH D YH N L2"],
+      "userText": [
+        "13 PH D YS L2 N 13 PH D YH N L2"
+      ],
       "code": "DN",
       "displayName": "Daniel Owusu Nyantakyi",
       "matchedCells": 2,
       "subjectContext": "Physics"
     },
     {
-      "userText": ["13 PH D YH N L3 13 PH D YS N L3"],
+      "userText": [
+        "13 PH D YH N L3 13 PH D YS N L3"
+      ],
       "code": "DN",
       "displayName": "Daniel Owusu Nyantakyi",
       "matchedCells": 1,
       "subjectContext": "Physics"
     },
     {
-      "userText": ["12 BIO H HL C 2 12 BIO H SL C 2"],
+      "userText": [
+        "12 BIO H HL C 2 12 BIO H SL C 2"
+      ],
       "code": "HC",
       "displayName": "Harley Cunningham",
       "matchedCells": 6,
       "subjectContext": "Latest user correction"
     },
     {
-      "userText": ["12 S PS V YS R L2 12 S PS V YH R L2"],
+      "userText": [
+        "12 S PS V YS R L2 12 S PS V YH R L2"
+      ],
       "code": "SVR",
       "displayName": "Shanmuga Vadivu Ramasamy",
       "matchedCells": 5,
       "subjectContext": "Latest user correction"
     },
     {
-      "userText": ["12 S PS V YS L2 R 12 S PS V YH R L2"],
+      "userText": [
+        "12 S PS V YS L2 R 12 S PS V YH R L2"
+      ],
       "code": "SVR",
       "displayName": "Shanmuga Vadivu Ramasamy",
       "matchedCells": 1,
       "subjectContext": "Latest user correction"
     },
     {
-      "userText": ["13 SE HS HL 1 LF"],
+      "userText": [
+        "13 SE HS HL 1 LF"
+      ],
       "code": "LF",
       "displayName": "Lucy Ferris",
       "matchedCells": 3,
       "subjectContext": "Latest user correction"
     },
     {
-      "userText": ["12 CHI SL 1 Q A"],
+      "userText": [
+        "12 CHI SL 1 Q A"
+      ],
       "code": "QA",
       "displayName": "Ninghui Anastasia Qiu",
       "matchedCells": 6,
       "subjectContext": "Latest user correction"
     },
     {
-      "userText": ["12 CL LS L2 Z Y"],
+      "userText": [
+        "12 CL LS L2 Z Y"
+      ],
       "code": "ZY",
-      "displayName": "Yuyang (yosef) Zhou",
+      "displayName": "Yuyang (Yosef) Zhou",
       "matchedCells": 4,
       "subjectContext": "Latest user correction"
     },
     {
-      "userText": ["12 CL LS L2 ZY"],
+      "userText": [
+        "12 CL LS L2 ZY"
+      ],
       "code": "ZY",
-      "displayName": "Yuyang (yosef) Zhou",
+      "displayName": "Yuyang (Yosef) Zhou",
       "matchedCells": 2,
       "subjectContext": "Latest user correction"
     }
@@ -554,7 +650,7 @@
     },
     {
       "room": "A207",
-      "teacher": "Kouaho (guy) Gueye",
+      "teacher": "Kouaho (Guy) Gueye",
       "sourceText": "13F RB SL 1 K G",
       "rule": "Choose Guy over Sam Lingwood for the occupied A207 cells with the SL/KG pair."
     }
@@ -592,17 +688,28 @@
   "knownAmbiguities": [
     {
       "token": "SC",
-      "userStatements": ["SC is art", "Sean is DT", "Sunny Chan has nothing"],
+      "userStatements": [
+        "SC is art",
+        "Sean is DT",
+        "Sunny Chan has nothing"
+      ],
       "instruction": "These statements may refer to different people or contexts. Do not collapse them into one mapping; retain exact workbook and manual-cell rules, and ask before changing an unclear cell."
     },
     {
       "code": "PS",
-      "candidateNames": ["Paul Stanley", "Peter Stapleton"],
+      "candidateNames": [
+        "Paul Stanley",
+        "Peter Stapleton"
+      ],
       "instruction": "Use the exact B408/B513 room rules and manual cell overrides."
     },
     {
       "code": "MS",
-      "candidateNames": ["Mason Stewart", "Shahzeb Mohammad", "Sarah Morrison"],
+      "candidateNames": [
+        "Mason Stewart",
+        "Shahzeb Mohammad",
+        "Sarah Morrison"
+      ],
       "instruction": "Use subject context, exclude Sarah Morrison from lessons, exclude Shahzeb Mohammad from Year 12–13 lessons, and honor exact cell overrides."
     },
     {
@@ -612,7 +719,10 @@
   ],
   "withdrawnInstructions": [
     {
-      "sourcePattern": ["12 BIO H HL C 2", "12 BIO H C 2"],
+      "sourcePattern": [
+        "12 BIO H HL C 2",
+        "12 BIO H C 2"
+      ],
       "suggestedName": "Harley",
       "status": "Withdrawn by user with 'ignore this command'; do not apply as a teacher mapping."
     }
@@ -630,7 +740,9 @@
       },
       {
         "code": "GP",
-        "rules": ["10I E1 and 11I E2 map to Paul Gillespie"]
+        "rules": [
+          "10I E1 and 11I E2 map to Paul Gillespie"
+        ]
       },
       {
         "subject": "EN",
@@ -663,11 +775,13 @@
       },
       {
         "subject": "CL",
-        "rules": ["Year 12–13 CL M M C maps to Margaret Chou, not Charlie"]
+        "rules": [
+          "Year 12–13 CL M M C maps to Margaret Chou, not Charlie"
+        ]
       },
       {
         "sourceInitials": "X F",
-        "teacher": "Xinyao (yoyo) Feng, not Charlie"
+        "teacher": "Xinyao (Yoyo) Feng, not Charlie"
       },
       {
         "sourceInitials": "ZJW",

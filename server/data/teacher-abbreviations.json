@@ -1,7 +1,7 @@
 {
   "sourceFile": "teacherabbreviation.xlsx",
-  "staffCount": 145,
-  "uniqueCodeCount": 132,
+  "staffCount": 142,
+  "uniqueCodeCount": 129,
   "staff": [
     {
       "code": "AK",
@@ -156,7 +156,7 @@
     {
       "code": "XF",
       "sourceName": "FENG Xinyao (YoYo)",
-      "displayName": "Xinyao (yoyo) Feng"
+      "displayName": "Xinyao (Yoyo) Feng"
     },
     {
       "code": "LF",
@@ -191,7 +191,7 @@
     {
       "code": "KG",
       "sourceName": "GUEYE Kouaho (Guy)",
-      "displayName": "Kouaho (guy) Gueye"
+      "displayName": "Kouaho (Guy) Gueye"
     },
     {
       "code": "CG",
@@ -431,7 +431,7 @@
     {
       "code": "MM",
       "sourceName": "MAO Manfei (Cecilia)",
-      "displayName": "Manfei (cecilia) Mao"
+      "displayName": "Manfei (Cecilia) Mao"
     },
     {
       "code": "MS",
@@ -501,7 +501,7 @@
     {
       "code": "SSY",
       "sourceName": "SUN Shufan (Sunny)",
-      "displayName": "Shufan (sunny) Sun"
+      "displayName": "Shufan (Sunny) Sun"
     },
     {
       "code": "CLS",
@@ -581,7 +581,7 @@
     {
       "code": "WY",
       "sourceName": "WANG Yang (Rick)",
-      "displayName": "Yang (rick) Wang"
+      "displayName": "Yang (Rick) Wang"
     },
     {
       "code": "WO",
@@ -636,7 +636,7 @@
     {
       "code": "ZY",
       "sourceName": "ZHOU Yuyang (Yosef)",
-      "displayName": "Yuyang (yosef) Zhou"
+      "displayName": "Yuyang (Yosef) Zhou"
     },
     {
       "code": "ZC",
@@ -656,7 +656,7 @@
     {
       "code": "ZLU",
       "sourceName": "ZHANG Lu (Lucy)",
-      "displayName": "Lu (lucy) Zhang"
+      "displayName": "Lu (Lucy) Zhang"
     },
     {
       "code": "YD",
@@ -667,21 +667,6 @@
       "code": "MZ",
       "sourceName": "ZHANG Mengxue Michelle",
       "displayName": "Mengxue Michelle Zhang"
-    },
-    {
-      "code": "YS",
-      "sourceName": "SZE Yin Hung",
-      "displayName": "Yin Hung Sze"
-    },
-    {
-      "code": "RK",
-      "sourceName": "KITLEY Robert",
-      "displayName": "Robert Kitley"
-    },
-    {
-      "code": "GM",
-      "sourceName": "MORRISON Gregg",
-      "displayName": "Gregg Morrison"
     },
     {
       "code": "MS",
@@ -982,12 +967,6 @@
         "sourceName": "GLENDINNING Hannah"
       }
     ],
-    "GM": [
-      {
-        "displayName": "Gregg Morrison",
-        "sourceName": "MORRISON Gregg"
-      }
-    ],
     "GP": [
       {
         "displayName": "Prachi Gupta",
@@ -1118,7 +1097,7 @@
     ],
     "KG": [
       {
-        "displayName": "Kouaho (guy) Gueye",
+        "displayName": "Kouaho (Guy) Gueye",
         "sourceName": "GUEYE Kouaho (Guy)"
       }
     ],
@@ -1234,7 +1213,7 @@
     ],
     "MM": [
       {
-        "displayName": "Manfei (cecilia) Mao",
+        "displayName": "Manfei (Cecilia) Mao",
         "sourceName": "MAO Manfei (Cecilia)"
       }
     ],
@@ -1352,12 +1331,6 @@
         "sourceName": "CHARLES Rudolph"
       }
     ],
-    "RK": [
-      {
-        "displayName": "Robert Kitley",
-        "sourceName": "KITLEY Robert"
-      }
-    ],
     "SB": [
       {
         "displayName": "Scott Bouttle",
@@ -1418,7 +1391,7 @@
     ],
     "SSY": [
       {
-        "displayName": "Shufan (sunny) Sun",
+        "displayName": "Shufan (Sunny) Sun",
         "sourceName": "SUN Shufan (Sunny)"
       }
     ],
@@ -1494,13 +1467,13 @@
     ],
     "WY": [
       {
-        "displayName": "Yang (rick) Wang",
+        "displayName": "Yang (Rick) Wang",
         "sourceName": "WANG Yang (Rick)"
       }
     ],
     "XF": [
       {
-        "displayName": "Xinyao (yoyo) Feng",
+        "displayName": "Xinyao (Yoyo) Feng",
         "sourceName": "FENG Xinyao (YoYo)"
       }
     ],
@@ -1524,12 +1497,6 @@
       {
         "displayName": "Yuki Liang",
         "sourceName": "LIANG Yuki"
-      }
-    ],
-    "YS": [
-      {
-        "displayName": "Yin Hung Sze",
-        "sourceName": "SZE Yin Hung"
       }
     ],
     "YZ": [
@@ -1564,13 +1531,13 @@
     ],
     "ZLU": [
       {
-        "displayName": "Lu (lucy) Zhang",
+        "displayName": "Lu (Lucy) Zhang",
         "sourceName": "ZHANG Lu (Lucy)"
       }
     ],
     "ZY": [
       {
-        "displayName": "Yuyang (yosef) Zhou",
+        "displayName": "Yuyang (Yosef) Zhou",
         "sourceName": "ZHOU Yuyang (Yosef)"
       }
     ]

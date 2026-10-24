@@ -3,6 +3,7 @@ import { asc, notInArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import * as XLSX from "xlsx";
 import { DAYS, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
+import { capitalizeBracketedNames, isExcludedTeacherCode, isExcludedTeacherName } from "../shared/teacher-names.js";
 import { getDb } from "./db.js";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
 import {
@@ -135,10 +136,13 @@ function parseWorkbookBuffer(buffer: Buffer): ParsedTimetable {
     if (!room || !week || !day) throw new Error("Every schedule row must include a valid Room, Week, and Day.");
     if (!WEEKS.includes(week as (typeof WEEKS)[number])) throw new Error(`Invalid week “${week}”.`);
     const period = parsePeriod(valueFrom(row, ["period", "periodid", "periodlabel"]));
-    const occupant = textValue(valueFrom(row, ["occupant", "rawoccupant", "sourceoccupant"]));
-    const occupantDisplay = textValue(valueFrom(row, ["occupantdisplay", "subject", "display"])) ?? occupant;
+    const occupantValue = textValue(valueFrom(row, ["occupant", "rawoccupant", "sourceoccupant"]));
+    const occupant = occupantValue ? capitalizeBracketedNames(occupantValue) : null;
+    const displayValue = textValue(valueFrom(row, ["occupantdisplay", "subject", "display"])) ?? occupant;
+    const occupantDisplay = displayValue ? capitalizeBracketedNames(displayValue) : null;
     const staffCodes = (textValue(valueFrom(row, ["staffcodes", "teachercodes"])) ?? "")
-      .split(",").map(code => code.trim()).filter(Boolean);
+      .split(",").map(code => code.trim())
+      .filter(code => Boolean(code) && !isExcludedTeacherCode(code) && !isExcludedTeacherName(code));
     if (staffCodes.length > 32 || staffCodes.some(code => code.length > 32)) {
       throw new Error(`The teacher codes for ${room} exceed the supported limit.`);
     }
@@ -266,9 +270,10 @@ async function readCurrentTimetable(): Promise<ExportRoom[]> {
       week: entry.week,
       day: entry.day,
       period: entry.period,
-      occupant: entry.occupant,
-      occupantDisplay: entry.occupantDisplay,
-      staffCodes: entry.staffCodes?.split(",").map(code => code.trim()).filter(Boolean) ?? [],
+      occupant: entry.occupant ? capitalizeBracketedNames(entry.occupant) : null,
+      occupantDisplay: entry.occupantDisplay ? capitalizeBracketedNames(entry.occupantDisplay) : null,
+      staffCodes: entry.staffCodes?.split(",").map(code => code.trim())
+        .filter(code => Boolean(code) && !isExcludedTeacherCode(code) && !isExcludedTeacherName(code)) ?? [],
       teachers: staffForCodes(
         entry.staffCodes,
         entry.occupant,
