@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "crons": [],
   "cleanUrls": true,
   "routes": [
     {
@@ -8,12 +7,11 @@
       "dest": "server.js"
     },
     {
-      "src": "/(.*)\\.(js|css|png|jpg|svg|ico)",
+      "src": "/(.*)\\.(js|css|png|jpg|jpeg|svg|ico|json|txt)",
       "dest": "server.js"
     },
     {
       "src": "/(.*)",
-      "middleware": "password-protect",
       "dest": "server.js"
     }
   ]
