@@ -6,7 +6,7 @@ import { serveStatic } from "./server/_core/static.js";
 // 1. Initialize Manus's core pre-configured database application engine
 const app = createExpressApp();
 
-// 2. Clear, fixed Password Protection Middleware
+// 2. Structural Password Protection Middleware
 app.use((req, res, next) => {
   const sitePassword = process.env.SITE_PASSWORD;
 
@@ -15,17 +15,18 @@ app.use((req, res, next) => {
     return next();
   }
 
-  // CRITICAL BYPASS: Ensure core background database routes and asset paths bypass the login wall
+  // SYSTEM EXCLUSION: Let backend paths and system file extensions bypass the prompt
   if (
     req.path.startsWith('/api') || 
     req.path.startsWith('/data') || 
     req.path.startsWith('/db') ||
     req.path.startsWith('/_next') ||
-    req.path.includes('.') // Allows static script bundles, stylesheets, and asset files to pass
+    req.path.includes('.') // Let compiled structural styles (.css) and bundles (.js) stream cleanly
   ) {
     return next();
   }
 
+  // TARGET LOCK: Only enforce passwords on raw text webpage paths (like / or /dashboard)
   const authHeader = req.headers['authorization'];
 
   if (authHeader && authHeader.startsWith('Basic ')) {
@@ -35,8 +36,7 @@ app.use((req, res, next) => {
       const decoded = Buffer.from(token, 'base64').toString('utf8');
       const parts = decoded.split(':');
       
-      // FIXED ENGINE: Pull out array index 1 for the literal password value
-      const password = parts[1]; 
+      const password = parts[1]; // Pull out the password string value
 
       if (password === sitePassword) {
         return next(); // Password matches perfectly, unlock the session!
