@@ -1,10 +1,12 @@
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import express, { type NextFunction, type Request, type Response } from "express";
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 import { publicPlatformScript } from "./server/_core/publicConfig";
+import { registerSitePasswordGate } from "./server/_core/site-password.js";
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -149,6 +151,27 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
+function attachSitePasswordGate(middlewares: ViteDevServer["middlewares"]): void {
+  const gateApp = express();
+  registerSitePasswordGate(gateApp);
+  middlewares.use((req, res, next) => {
+    const handler = gateApp as unknown as (request: Request, response: Response, next: NextFunction) => void;
+    handler(req as unknown as Request, res as unknown as Response, next as NextFunction);
+  });
+}
+
+function vitePluginSitePasswordGate(): Plugin {
+  return {
+    name: "campus-locator-site-password-gate",
+    configureServer(server) {
+      attachSitePasswordGate(server.middlewares);
+    },
+    configurePreviewServer(server) {
+      attachSitePasswordGate(server.middlewares);
+    },
+  };
+}
+
 // Static development and static publishing use the same public-value whitelist
 // as Express. Runtime-only secrets never enter the browser bundle. Express keeps
 // serving this path dynamically when the application server is selected.
@@ -168,7 +191,14 @@ function vitePluginPublicPlatformConfig(): Plugin {
   };
 }
 
-const plugins = [vitePluginPublicPlatformConfig(), react(), tailwindcss(), jsxLocPlugin(), vitePluginManusDebugCollector()];
+const plugins = [
+  vitePluginSitePasswordGate(),
+  vitePluginPublicPlatformConfig(),
+  react(),
+  tailwindcss(),
+  jsxLocPlugin(),
+  vitePluginManusDebugCollector(),
+];
 
 export default defineConfig({
   plugins,

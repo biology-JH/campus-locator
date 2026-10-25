@@ -5,6 +5,7 @@ import { appRouter } from "../routers.js";
 import { createContext } from "./context.js";
 import { registerOAuthRoutes } from "./oauth.js";
 import { publicPlatformScript } from "./publicConfig.js";
+import { registerSitePasswordGate } from "./site-password.js";
 
 export function createExpressApp() {
   const app = express();
@@ -12,6 +13,7 @@ export function createExpressApp() {
   if (process.env.VERCEL === "1") app.set("trust proxy", 1);
 
   app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
+  registerSitePasswordGate(app);
   app.get("/api/platform/config.js", (_req, res) => {
     res.set("Cache-Control", "no-store").type("application/javascript").send(publicPlatformScript());
   });
