@@ -4,6 +4,7 @@ import {
   isExcludedTeacherCode,
   isExcludedTeacherName,
 } from "../shared/teacher-names.js";
+import teacherAbbreviations from "./data/teacher-abbreviations.json" with { type: "json" };
 
 describe("teacher name normalization", () => {
   it("capitalizes the first letter in every bracketed name without changing other text", () => {
@@ -25,13 +26,16 @@ describe("teacher name normalization", () => {
       "Sam Sze Yin Hung",
       "Sze Yin Hung",
       "Yin Hung Sze",
+      "Paul Lo",
       "Robert Kitney",
       "Robert Kitley",
     ]) {
       expect(isExcludedTeacherName(name), name).toBe(true);
     }
     expect(isExcludedTeacherName("Sam Lingwood")).toBe(false);
-    expect(["GM", "YS", "RK"].every(isExcludedTeacherCode)).toBe(true);
+    expect(["GM", "YS", "RK", "PL"].every(isExcludedTeacherCode)).toBe(true);
+    expect(teacherAbbreviations.staff.some(person => person.displayName === "Paul Lo")).toBe(false);
+    expect(teacherAbbreviations.byCode).not.toHaveProperty("PL");
     expect(isExcludedTeacherCode("KG")).toBe(false);
   });
 });

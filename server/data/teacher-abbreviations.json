@@ -1,7 +1,7 @@
 {
   "sourceFile": "teacherabbreviation.xlsx",
-  "staffCount": 142,
-  "uniqueCodeCount": 129,
+  "staffCount": 141,
+  "uniqueCodeCount": 128,
   "staff": [
     {
       "code": "AK",
@@ -674,11 +674,6 @@
       "displayName": "Sarah Morrison"
     },
     {
-      "code": "PL",
-      "sourceName": "LO Paul",
-      "displayName": "Paul Lo"
-    },
-    {
       "code": "NS",
       "sourceName": "SCOTT Nareerut",
       "displayName": "Nareerut Scott"
@@ -1295,12 +1290,6 @@
       {
         "displayName": "Paul Damien Brady",
         "sourceName": "BRADY Paul Damien"
-      }
-    ],
-    "PL": [
-      {
-        "displayName": "Paul Lo",
-        "sourceName": "LO Paul"
       }
     ],
     "PM": [

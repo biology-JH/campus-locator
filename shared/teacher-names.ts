@@ -1,4 +1,4 @@
-const EXCLUDED_TEACHER_CODES = new Set(["GM", "YS", "RK"]);
+const EXCLUDED_TEACHER_CODES = new Set(["GM", "YS", "RK", "PL"]);
 
 // These canonical source spellings correspond to the removal names requested in the UI.
 const EXCLUDED_TEACHER_NAMES = new Set([
@@ -7,6 +7,7 @@ const EXCLUDED_TEACHER_NAMES = new Set([
   "sam sze yin hung",
   "sze yin hung",
   "yin hung sze",
+  "paul lo",
   "robert kitney",
   "robert kitley",
 ]);
