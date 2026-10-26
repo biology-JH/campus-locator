@@ -92,7 +92,7 @@
       "displayName": "Billy Grindley"
     },
     {
-      "room": "B606",
+      "room": "B608",
       "week": "A",
       "day": "Wednesday",
       "period": "lesson4",
@@ -101,7 +101,7 @@
       "displayName": "Billy Grindley"
     },
     {
-      "room": "B607",
+      "room": "B609",
       "week": "A",
       "day": "Friday",
       "period": "lesson2",
@@ -938,7 +938,7 @@
       "displayName": "Peter Stapleton"
     },
     {
-      "room": "B607",
+      "room": "B609",
       "week": "A",
       "day": "Tuesday",
       "period": "lesson3",
@@ -1045,7 +1045,7 @@
       "displayName": "Caroline Jane Morgan"
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "A",
       "day": "Monday",
       "period": "lesson2",
@@ -1062,7 +1062,7 @@
       ]
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "B",
       "day": "Tuesday",
       "period": "lesson2",
@@ -1152,7 +1152,7 @@
       "displayName": "Craig Billington"
     },
     {
-      "room": "B604",
+      "room": "B605",
       "week": "A",
       "day": "Tuesday",
       "period": "lesson1",
@@ -1161,7 +1161,7 @@
       "displayName": "Caroline Jane Morgan"
     },
     {
-      "room": "B604",
+      "room": "B605",
       "week": "A",
       "day": "Thursday",
       "period": "lesson4",
@@ -1170,7 +1170,7 @@
       "displayName": "Caroline Jane Morgan"
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "A",
       "day": "Wednesday",
       "period": "lesson1",
@@ -1692,7 +1692,7 @@
       "displayName": "Brian Totman"
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "A",
       "day": "Tuesday",
       "period": "lesson1",
@@ -1701,7 +1701,7 @@
       "displayName": "Patrick Mcgovern"
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "B",
       "day": "Wednesday",
       "period": "lesson1",
@@ -1782,7 +1782,7 @@
       "displayName": "Mason Stewart"
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "A",
       "day": "Tuesday",
       "period": "lesson6",
@@ -1791,7 +1791,7 @@
       "displayName": "Daniel Owusu Nyantakyi"
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "A",
       "day": "Wednesday",
       "period": "lesson4",
@@ -2043,7 +2043,7 @@
       "displayName": "Simon Kelleher"
     },
     {
-      "room": "B604",
+      "room": "B605",
       "week": "A",
       "day": "Friday",
       "period": "lesson1",
@@ -2142,7 +2142,7 @@
       "displayName": "Daniel Owusu Nyantakyi"
     },
     {
-      "room": "B604",
+      "room": "B605",
       "week": "B",
       "day": "Tuesday",
       "period": "lesson2",
@@ -2376,7 +2376,7 @@
       "displayName": "Harley Cunningham"
     },
     {
-      "room": "B604",
+      "room": "B605",
       "week": "B",
       "day": "Friday",
       "period": "lesson2",
@@ -2385,7 +2385,7 @@
       "displayName": "Harley Cunningham"
     },
     {
-      "room": "B605",
+      "room": "B606",
       "week": "B",
       "day": "Monday",
       "period": "lesson7",
@@ -2394,7 +2394,7 @@
       "displayName": "Harley Cunningham"
     },
     {
-      "room": "B606",
+      "room": "B608",
       "week": "B",
       "day": "Tuesday",
       "period": "lesson3",
@@ -2403,7 +2403,7 @@
       "displayName": "Shanmuga Vadivu Ramasamy"
     },
     {
-      "room": "B607",
+      "room": "B609",
       "week": "A",
       "day": "Monday",
       "period": "lesson1",
@@ -2592,7 +2592,7 @@
       "displayName": "Brendan Dunstan-Smith"
     },
     {
-      "room": "B606",
+      "room": "B608",
       "week": "A",
       "day": "Friday",
       "period": "lesson4",

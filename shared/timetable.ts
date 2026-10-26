@@ -26,8 +26,8 @@ export const LAB_ROOM_NUMBERS = [
   "B501",
   "B601",
   "B602",
-  "B604",
   "B605",
+  "B606",
 ] as const;
 
 export function isLabRoom(roomNumber: string): boolean {

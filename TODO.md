@@ -87,3 +87,10 @@
 ## Header redesign preview evidence
 - [x] Confirmed in Preview that the building photo spans the hero, three selected school-space photos overlap in a polished asymmetric composition, and all four image assets return HTTP 200.
 - [x] Confirmed the full stylesheet is loaded and the rotated photo cards have nonzero dimensions at desktop preview size.
+
+
+## Room list and timetable renumbering
+- [ ] Add room B603 to the room list with an initially blank schedule; rename B604 to B605, B605 to B606, B606 to B608, and B607 to B609.
+- [ ] Update the room identifiers consistently in the timetable and room-specific staff rules so teacher schedules and searches continue to resolve under the new room numbers.
+- [ ] Preserve all other live schedule fields during the transactional Admin Excel synchronization; do not modify or replace any database connection strings, environment variables, or credentials.
+- [ ] Verify the live room list, affected teacher schedules, room searches, and database health after the synchronization; leave the existing Aiven connection active.

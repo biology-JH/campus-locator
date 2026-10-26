@@ -299,7 +299,7 @@ describe("staffForCodes", () => {
       { code: "SV", names: ["Stephanie Visser"] },
       { code: "CC", names: ["Curtis Chung"] },
     ]);
-    expect(resolveCell("B605", "A", "Monday", "lesson2")).toEqual([
+    expect(resolveCell("B606", "A", "Monday", "lesson2")).toEqual([
       { code: "SV", names: ["Stephanie Visser"] },
       { code: "CC", names: ["Curtis Chung"] },
     ]);
@@ -376,9 +376,23 @@ describe("staffForCodes", () => {
     expect(resolveCell("B513", "B", "Tuesday", "lesson3")).toEqual([
       { code: "PS", names: ["Paul Stanley"] },
     ]);
-    expect(resolveCell("B607", "A", "Tuesday", "lesson3")).toEqual([
+    expect(resolveCell("B609", "A", "Tuesday", "lesson3")).toEqual([
       { code: "GP", names: ["Paul Gillespie"] },
     ]);
+  });
+
+  it("adds blank B603 and follows the requested room renumbering", () => {
+    const b6Rooms = timetableData.rooms
+      .map(room => room.room)
+      .filter(room => /^B6\d{2}$/.test(room));
+    expect(b6Rooms).toEqual(["B601", "B602", "B603", "B605", "B606", "B608", "B609"]);
+
+    const b603 = roomsByName.get("B603");
+    expect(b603?.schedule).toHaveLength(80);
+    expect(b603?.schedule.every(slot => !slot.occupant && !slot.occupantDisplay && slot.staffCodes.length === 0)).toBe(true);
+    expect(LAB_ROOM_NUMBERS).toContain("B605");
+    expect(LAB_ROOM_NUMBERS).toContain("B606");
+    expect(LAB_ROOM_NUMBERS).not.toContain("B604");
   });
 
   it("applies the latest exact Saraswati, Phoenix, and Shanmuga corrections", () => {
@@ -462,7 +476,7 @@ it("applies the latest Daniel and multi-name preferences", () => {
   expect(resolveCell("B501", "A", "Monday", "lesson2")).toEqual([
     { code: "DN", names: ["Daniel Owusu Nyantakyi"] },
   ]);
-  expect(resolveCell("B604", "B", "Tuesday", "lesson2")).toEqual([
+  expect(resolveCell("B605", "B", "Tuesday", "lesson2")).toEqual([
     { code: "DN", names: ["Daniel Owusu Nyantakyi"] },
   ]);
   expect(names("GP", "10I E1 G P", "lesson1")).toEqual(["Paul Gillespie"]);

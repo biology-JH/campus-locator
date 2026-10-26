@@ -38,9 +38,10 @@ function isValidSessionToken(token: unknown, password: string, now = Date.now())
   const [payload, signature] = parts;
 
   try {
-    const expectedSignature = createHmac("sha256", password).update(payload).digest();
-    const providedSignature = Buffer.from(signature, "base64url");
-    if (providedSignature.length !== expectedSignature.length || !timingSafeEqual(expectedSignature, providedSignature)) return false;
+    const expectedSignature = createHmac("sha256", password).update(payload).digest("base64url");
+    const expectedSignatureBytes = Buffer.from(expectedSignature, "ascii");
+    const providedSignatureBytes = Buffer.from(signature, "ascii");
+    if (providedSignatureBytes.length !== expectedSignatureBytes.length || !timingSafeEqual(expectedSignatureBytes, providedSignatureBytes)) return false;
 
     const decoded = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as {
       version?: unknown;
