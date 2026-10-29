@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { PERIODS, EXCLUDED_ROOM_NUMBERS } from "../shared/timetable.js";
 import {
-  SCHOOL_WEEK_CYCLE_ANCHOR,
+  SCHOOL_WEEK_CYCLE_ANCHORS,
   scheduleSlotForDate,
   WeekAnchorNotConfiguredError,
 } from "../shared/school-week.js";
@@ -34,7 +34,7 @@ async function requireDatabase() {
 
 function resolveCalendarSlot(date: string, period: z.infer<typeof periodInput>) {
   try {
-    return scheduleSlotForDate(date, period, SCHOOL_WEEK_CYCLE_ANCHOR);
+    return scheduleSlotForDate(date, period, SCHOOL_WEEK_CYCLE_ANCHORS);
   } catch (error) {
     if (error instanceof WeekAnchorNotConfiguredError) {
       throw new TRPCError({

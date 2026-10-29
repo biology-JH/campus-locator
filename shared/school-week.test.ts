@@ -29,13 +29,21 @@ describe("school Week A/B date mapping", () => {
     expect(scheduleSlotForDate("2026-08-10", "lesson1", anchor).scheduleWeek).toBe("B");
   });
 
-  it("matches the confirmed 2026–27 reset and reference weeks", () => {
+  it("honors the confirmed 2026–27 resets and skip week", () => {
     expect(scheduleSlotForDate("2026-10-26", "lesson1").scheduleWeek).toBe("A");
     expect(scheduleSlotForDate("2027-01-04", "lesson1").scheduleWeek).toBe("A");
     expect(scheduleSlotForDate("2027-02-08", "lesson1").scheduleWeek).toBe("B");
     expect(scheduleSlotForDate("2027-04-05", "lesson1").scheduleWeek).toBe("B");
-    expect(scheduleSlotForDate("2027-06-07", "lesson1").scheduleWeek).toBe("A");
-    expect(() => scheduleSlotForDate("2027-01-03", "lesson1")).toThrow(/Monday through Friday/);
+    expect(scheduleSlotForDate("2027-04-12", "lesson1").scheduleWeek).toBe("A");
+    expect(scheduleSlotForDate("2027-06-01", "lesson1").scheduleWeek).toBe("B");
+    expect(() => scheduleSlotForDate("2027-06-07", "lesson1")).toThrow(/week beginning 2027-06-07 is skipped/);
+    expect(() => scheduleSlotForDate("2027-06-11", "lesson7")).toThrow(/week beginning 2027-06-07 is skipped/);
+    expect(scheduleSlotForDate("2027-06-14", "lesson1")).toMatchObject({
+      weekMonday: "2027-06-14",
+      scheduleWeek: "A",
+      weekday: "Monday",
+    });
+    expect(() => scheduleSlotForDate("2027-06-13", "lesson1")).toThrow(/Monday through Friday/);
   });
 
   it("rejects weekend dates and malformed or impossible calendar dates", () => {

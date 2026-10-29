@@ -142,7 +142,7 @@ export default function RoomBookingPanel() {
             <span className="booking-reservation-count">{reservations.length}</span>
           </header>
           {slotQuery.isLoading ? <div className="booking-list-state" role="status"><LoaderCircle size={15} className="spin" /> Loading reservations…</div> : null}
-          {slotQuery.isError ? <div className="booking-list-state">Reservations are unavailable until the school-week cycle is configured.</div> : null}
+          {slotQuery.isError ? <div className="booking-list-state">Reservations are unavailable for the selected school date.</div> : null}
           {slot && !slotQuery.isLoading && reservations.length === 0 ? <div className="booking-list-empty"><DoorOpen size={20} /><span>No reservations have been made for this slot.</span></div> : null}
           {reservations.length > 0 ? (
             <ul className="booking-reservation-list">
