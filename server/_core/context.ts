@@ -1,6 +1,7 @@
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema.js";
 import { hasValidAdminPasswordSession } from "./admin-session.js";
+import { hasValidSitePasswordSession } from "./site-password.js";
 import { sdk } from "./sdk.js";
 
 export type TrpcContext = {
@@ -8,6 +9,7 @@ export type TrpcContext = {
   res: CreateExpressContextOptions["res"];
   user: User | null;
   adminPasswordSession?: boolean;
+  sitePasswordSession?: boolean;
 };
 
 export async function createContext(
@@ -27,5 +29,6 @@ export async function createContext(
     res: opts.res,
     user,
     adminPasswordSession: hasValidAdminPasswordSession(opts.req),
+    sitePasswordSession: hasValidSitePasswordSession(opts.req),
   };
 }

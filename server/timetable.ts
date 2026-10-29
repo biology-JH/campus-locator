@@ -35,7 +35,7 @@ const visibleStaffAttributions = <T extends { names: string[] }>(staff: T[]) => 
   }))
   .filter(attribution => attribution.names.length > 0);
 
-function publicTeacherNames() {
+export function publicTeacherNames() {
   const names = new Set<string>();
   for (const people of Object.values(teacherAbbreviations.byCode)) {
     for (const person of people) {
@@ -104,7 +104,7 @@ export const timetableRouter = router({
   roomList: publicProcedure.query(async () => {
     const db = await requireDatabase();
     return db
-      .select({ roomNumber: classrooms.roomNumber, sourcePage: classrooms.sourcePage })
+      .select({ id: classrooms.id, roomNumber: classrooms.roomNumber, sourcePage: classrooms.sourcePage })
       .from(classrooms)
       .where(notInArray(classrooms.roomNumber, [...EXCLUDED_ROOM_NUMBERS]))
       .orderBy(asc(classrooms.displayOrder));

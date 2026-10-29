@@ -94,3 +94,14 @@
 - [ ] Update the room identifiers consistently in the timetable and room-specific staff rules so teacher schedules and searches continue to resolve under the new room numbers.
 - [ ] Preserve all other live schedule fields during the transactional Admin Excel synchronization; do not modify or replace any database connection strings, environment variables, or credentials.
 - [ ] Verify the live room list, affected teacher schedules, room searches, and database health after the synchronization; leave the existing Aiven connection active.
+
+
+## Room Booking System (requested 2026-10-29)
+- [ ] Update our Aiven/MySQL database schema to include a `bookings` table that tracks `room_id`, `teacher_name` and/or `teacher_id`, `schedule_week` (`A` or `B`), `weekday` (Monday to Friday), and class period, while leaving existing timetable data and database connection settings unchanged.
+- [x] Implement the alternating week logic: the school follows a standard Monday-to-Friday schedule where one full week is Week A and the next full week is Week B; provide a backend function that maps calendar weeks to Week A or Week B automatically using the attached school calendar's confirmed cycle. The user confirmed Monday 2027-01-04 = Week A at the 2027 reset; tests cover the supplied reference weeks.
+- [ ] Build a frontend booking form on the site. Booking access must be protected by the existing shared `SITE_PASSWORD`; teachers use this shared password to submit a booking.
+- [ ] Add strict validation so the system blocks attempts to double-book the same room for the same schedule week, weekday, and class period, including simultaneous requests.
+- [ ] Commit the code changes to GitHub and verify that the Vercel deployment builds successfully; use the attached calendar document for the Week A/Week B mapping and do not guess the anchor.
+
+
+**Progress note (2026-10-29):** Local booking UI/API/schema work is implemented. The user confirmed Monday 2027-01-04 as Week A for the 2027 reset; the week helper now uses that anchor. Before this confirmation, `pnpm test` passed (76 tests), `pnpm run check` passed, the Vite frontend build passed, and both server entrypoints bundled. Production Aiven schema creation and GitHub/Vercel publication are still pending.

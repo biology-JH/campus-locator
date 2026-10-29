@@ -65,3 +65,36 @@ export const timetableEntries = mysqlTable(
 
 export type Classroom = typeof classrooms.$inferSelect;
 export type TimetableEntry = typeof timetableEntries.$inferSelect;
+
+/** A recurring reservation for one classroom and one alternating timetable slot. */
+export const bookings = mysqlTable(
+  "bookings",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    roomId: int("room_id")
+      .notNull()
+      .references(() => classrooms.id, { onDelete: "cascade" }),
+    teacherId: varchar("teacher_id", { length: 64 }).notNull(),
+    teacherName: varchar("teacher_name", { length: 160 }).notNull(),
+    scheduleWeek: mysqlEnum("schedule_week", ["A", "B"]).notNull(),
+    weekday: mysqlEnum("weekday", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]).notNull(),
+    classPeriod: mysqlEnum("class_period", ["mentor", "lesson1", "lesson2", "lesson3", "lesson4", "lesson5", "lesson6", "lesson7"]).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  table => ({
+    roomSlotUnique: uniqueIndex("booking_room_slot_unique").on(
+      table.roomId,
+      table.scheduleWeek,
+      table.weekday,
+      table.classPeriod,
+    ),
+    slotLookupIndex: index("booking_slot_lookup_idx").on(
+      table.scheduleWeek,
+      table.weekday,
+      table.classPeriod,
+    ),
+  }),
+);
+
+export type Booking = typeof bookings.$inferSelect;
+export type InsertBooking = typeof bookings.$inferInsert;

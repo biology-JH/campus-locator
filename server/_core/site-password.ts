@@ -70,6 +70,12 @@ function requestHasValidSession(req: Request, password: string): boolean {
   return isValidSessionToken(pair.slice(prefix.length), password);
 }
 
+/** True only when a configured SITE_PASSWORD has a matching, signed session cookie. */
+export function hasValidSitePasswordSession(req: Request): boolean {
+  const password = configuredSitePassword();
+  return password !== null && requestHasValidSession(req, password);
+}
+
 function usesPublicHttps(req: Request): boolean {
   const forwardedProtocol = req.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
   return forwardedProtocol === "https" || req.protocol === "https";

@@ -1,41 +1,42 @@
-# Roomfinder continuation plan
+# Campus Locator — Room Booking System plan
 
 ## Scope
 
-Continue the supplied Roomfinder emergency export as an imported Webdev web project. Preserve the existing React / Express / tRPC / Drizzle implementation, visual language, timetable data, staff-resolution rules, tests, and secure admin workflow. Do not scaffold a replacement application or infer unresolved teacher identities.
+Extend the deployed YCIS Campus Locator in place. Preserve the existing React/Vite, Express/tRPC, Drizzle/MySQL stack, timetable, teacher search, schedule editor, shared SITE_PASSWORD gate, and Aiven connection. Add a recurring room-booking flow without changing existing timetable records or environment variables. Bookings are recurring Week A/B + weekday + period reservations because the requested schema contains no one-time booking date.
 
 ## Implementation approach
 
-1. Copy the supplied source tree into this fresh flexible Webdev project, excluding the archived project identity (`.manus-starter-init.json`), Git metadata, dependencies, and generated build output.
-2. Preserve the existing frontend routes (`/` and `/admin`), shared timetable constants, server routers, Drizzle schema/migrations, PDF parser, seed data, and authoritative mapping files under `server/data/` plus `teachers_mapping.json`.
-3. Keep teacher-resolution precedence exactly as documented: exact room/week/day/period/full-occupant overrides, active contextual exclusions and mentor rules, grade-and-subject workbook rules, then complete-roster fallback. Leave unresolved duplicate or multi-name Lab cases visible; retain the two explicitly confirmed two-staff exceptions.
-4. Keep database-backed room availability and master schedules, the listed excluded rooms, Lab labels, source-cell suppressions, secure PDF upload replacement, and transaction/error behavior intact.
-5. Register host-managed diagnostics, restore the pinned dependencies, run type checking, tests, and production build, then start the existing development command on the configured port 3000 and verify `/api/health` and `/manus-routes.json`.
-6. Save the imported application as a checkpoint only after checks pass. Do not publish unless explicitly requested.
+1. Add a new `bookings` MySQL table with an auto ID, `room_id` linked to `classrooms.id`, teacher name and a stable hashed teacher identifier, schedule week (`A`/`B`), weekday (Monday–Friday), class period (canonical period IDs), and creation timestamp. Enforce a unique constraint across room, schedule week, weekday, and period; this database constraint is the authoritative concurrent double-booking guard. Keep the migration additive and leave classrooms/timetable rows untouched.
+2. Add a shared date-only week-cycle helper. The user confirmed that Monday 2027-01-04 is Week A at the calendar-year 2027 reset. Use that as the anchor; it maps the supplied 2026-10-26, 2027-02-14, 2027-04-05, and 2027-06-13 references consistently. Treat weeks as Monday–Friday calendar weeks and alternate A/B by complete Monday-starting weeks without timezone/DST drift. Derive weekday and Week A/B on the server from the submitted calendar date rather than trusting client-supplied labels. The supplied workbook itself contains no explicit A/B labels.
+3. Add booking APIs behind a server-verified SITE_PASSWORD session procedure. Read reservations for a selected date/period, validate room and teacher against current room/staff data, derive the recurring schedule slot, and return a clear conflict when the database uniqueness constraint rejects a duplicate. Keep existing public health and unrelated timetable routes unchanged.
+4. Add a fourth `Room Booking` view to the existing Home dashboard. Reuse the site's editorial school-operations visual system and canonical room/teacher/period lists. Let teachers select a calendar date, room, teacher, and period; show the derived weekday and Week A/B; mark rooms already booked for that recurring slot; list the current reservations; and explain that a reservation repeats for its Week A/B slot.
+5. Test date-boundary/parity validation, SITE_PASSWORD authorization, invalid fields, and duplicate-key conflict mapping; assert the database's unique index from the migration. Run the existing test suite, TypeScript check, and production build. Use the existing Aiven connection for the one-table additive `CREATE TABLE IF NOT EXISTS` migration on the first authenticated booking API call; do not print or change credentials. Commit the code to GitHub `main` and verify the Vercel deployment build.
 
 ## Project structure
 
-- `client/`: React application, pages, reusable UI, styles, and route entrypoints.
-- `server/`: Express entrypoint, tRPC routers, timetable queries, admin PDF replacement route, auth helpers, parser support, and staff resolution.
-- `server/data/`: checked-in timetable export, teacher roster, workbook subject rules, exact manual overrides, and source-cell suppressions.
-- `drizzle/`: MySQL schema, relations, and checked-in migrations for classrooms and timetable entries.
-- `scripts/`: deterministic timetable parsing, seeding, attribution backfill, and source-cell cleanup utilities.
-- `shared/`: Week/Day/Period types, room exclusions, Lab labels, and shared constants.
-- `public/`: static route manifest and project mark.
+- `client/src/pages/Home.tsx`: existing dashboard navigation and booking form view.
+- `client/src/index.css`: existing design tokens/responsive panel styles plus booking-specific styles.
+- `server/booking.ts`: tRPC booking queries/mutations, server-side date/teacher/room validation, and conflict handling.
+- `server/_core/site-password.ts` and `server/_core/trpc.ts`: signed shared-site-session verification for booking APIs.
+- `server/routers.ts`: register the booking router.
+- `drizzle/schema.ts`, `drizzle/0003_add_bookings.sql`, and `drizzle/meta/`: additive MySQL schema and migration metadata.
+- `shared/timetable.ts`: canonical period/week/day types reused by the booking UI and API.
+- `shared/school-week.ts`: date-only Monday-based alternating-week calculation with a confirmed Week A anchor.
+- `server/*test.ts` and `shared/*test.ts`: isolated tests for access, validation, parity, and conflicts.
 
 ## Design decisions
 
-The export already contains an approved staff-tool visual system, so no new style exploration is needed.
+Reuse the deployed dashboard's approved visual system; do not redesign existing panels or alter the right-hand availability/schedule sizing.
 
 - **Design movement:** editorial school operations tool with a calm, high-contrast utility surface.
-- **Core principles:** fast scanning, clear Free/Occupied status, mobile-first controls, and trustworthy ambiguity handling.
-- **Color philosophy:** warm paper-like neutrals carry the interface; green communicates confirmed availability; red communicates occupancy; amber/neutral states communicate incomplete data without implying certainty.
-- **Layout paradigm:** a compact editorial header followed by focused task panels and progressive disclosure from room search to full master schedule.
-- **Signature elements:** the Roomfinder mark, pill-based status indicators, and Week A/B ribbon schedule blocks.
-- **Interaction philosophy:** defaults make the common vacancy lookup immediate; room details open from result cards; unresolved names remain explicitly labeled rather than silently normalized.
-- **Animation:** use only existing lightweight loading indicators and smooth result navigation; no decorative motion that slows staff lookup.
-- **Typography system:** preserve the export’s existing font stack, scale, spacing, and responsive breakpoints.
-- **Brand essence:** a dependable school staff tool for finding the right room quickly; clear, practical, trustworthy.
-- **Brand voice:** concise operational labels such as “Find free rooms” and “Room master schedule”; avoid marketing copy.
-- **Wordmark and mark:** preserve the supplied Roomfinder mark and existing `app.config.ts` logo URL.
-- **Signature brand color:** preserve the existing export palette rather than introducing a new brand color.
+- **Core principles:** fast scanning, clear availability, accessible form controls, and trustworthy conflict prevention.
+- **Color philosophy:** warm paper-like neutrals carry the interface; green communicates available/bookable, red indicates a confirmed conflict, and amber marks explanatory limitations.
+- **Layout paradigm:** a compact booking form alongside a focused list of existing reservations, responsive to a single column on small screens.
+- **Signature elements:** existing Roomfinder mark, pill-style Week A/B label, and the current dashboard's teal booking-status accents.
+- **Interaction philosophy:** derive the recurring week automatically from the chosen date; never ask teachers to guess A/B; make already-booked rooms unavailable and still enforce the database constraint.
+- **Animation:** use only existing lightweight loading indicators; no decorative motion.
+- **Typography system:** preserve the export's Plus Jakarta Sans/Inter stack, scale, spacing, and responsive breakpoints.
+- **Brand essence:** a dependable school staff tool for finding and booking the right room; clear, practical, trustworthy.
+- **Brand voice:** concise operational labels such as “Book a room” and “Available for this recurring slot”; clearly disclose that a reservation repeats each matching A/B week.
+- **Wordmark and mark:** preserve the existing Roomfinder mark and project logo URL.
+- **Signature brand color:** preserve the existing teal/green dashboard palette.

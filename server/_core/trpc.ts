@@ -10,6 +10,15 @@ const t = initTRPC.context<TrpcContext>().create({
 export const router = t.router;
 export const publicProcedure = t.procedure;
 
+export const sitePasswordProcedure = t.procedure.use(
+  t.middleware(async ({ ctx, next }) => {
+    if (ctx.sitePasswordSession !== true) {
+      throw new TRPCError({ code: "UNAUTHORIZED", message: "A valid SITE_PASSWORD session is required for room bookings." });
+    }
+    return next();
+  }),
+);
+
 const requireUser = t.middleware(async opts => {
   const { ctx, next } = opts;
 

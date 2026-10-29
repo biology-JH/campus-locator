@@ -24,8 +24,9 @@ import { capitalizeBracketedNames, isExcludedTeacherName } from "@shared/teacher
 import { trpc } from "@/lib/trpc";
 import { hasAdminRole } from "@/lib/admin-access";
 import { stageBatchAssignment, validateBatchDraft } from "@/lib/batch-schedule";
+import RoomBookingPanel from "@/components/RoomBookingPanel";
 
-type View = "vacancy" | "room" | "teacher";
+type View = "vacancy" | "room" | "teacher" | "booking";
 const PERIOD_TIME_RANGES: Record<PeriodId, string> = {
   mentor: "8:00 – 8:10",
   lesson1: "8:10 – 9:10",
@@ -299,18 +300,18 @@ export default function Home() {
           </figure>
         </section>
 
-        <div className="dashboard-layout">
+        <div className={view === "booking" ? "dashboard-layout booking-layout" : "dashboard-layout"}>
           <aside className="filter-panel" aria-label="Availability filters">
             <div className="filter-panel-heading">
               <div className="filter-panel-icon"><SlidersHorizontal size={18} /></div>
               <div>
                 <span className="panel-kicker">CONTROL PANEL</span>
-                <h2>{view === "teacher" ? "Find a teacher" : "Find a room"}</h2>
-                <p>{view === "teacher" ? "Search staff and check who is teaching or free." : "Set the moment, then scan the room board."}</p>
+                <h2>{view === "teacher" ? "Find a teacher" : view === "booking" ? "Book a room" : "Find a room"}</h2>
+                <p>{view === "teacher" ? "Search staff and check who is teaching or free." : view === "booking" ? "Reserve an available recurring timetable slot." : "Set the moment, then scan the room board."}</p>
               </div>
             </div>
 
-            <div className="view-switch dashboard-view-switch" role="tablist" aria-label="Room search mode">
+            <div className="view-switch dashboard-view-switch" role="tablist" aria-label="Campus Locator navigation">
               <button
                 role="tab"
                 aria-selected={view === "vacancy"}
@@ -335,6 +336,14 @@ export default function Home() {
               >
                 <UserRound size={15} /><span>Teacher Finder</span>
               </button>
+              <button
+                role="tab"
+                aria-selected={view === "booking"}
+                className={view === "booking" ? "view-tab active" : "view-tab"}
+                onClick={() => setView("booking")}
+              >
+                <CalendarDays size={15} /><span>Room Booking</span>
+              </button>
             </div>
 
             {view === "teacher" ? (
@@ -350,7 +359,7 @@ export default function Home() {
               </section>
             ) : null}
 
-            {view !== "teacher" ? (
+            {view === "vacancy" || view === "room" ? (
               <div className="filter-block">
                 <label className="filter-label" htmlFor="room-filter">
                   <Search size={14} /> {view === "vacancy" ? "Search open rooms" : "Search a room"}
@@ -398,6 +407,8 @@ export default function Home() {
               </div>
             ) : null}
 
+            {view !== "booking" ? (
+              <>
             <div className="filter-divider" />
 
             <div className="filter-block filter-block-time">
@@ -565,10 +576,14 @@ export default function Home() {
                 ) : null}
               </section>
             ) : null}
+              </>
+            ) : null}
 
           </aside>
 
           <section className="dashboard-results" aria-live="polite">
+            {view === "booking" ? <RoomBookingPanel /> : null}
+
             {view === "teacher" && teacherInput.trim().length >= 2 ? (
               <section className="teacher-location-panel" aria-live="polite">
                 <div className="teacher-location-heading">
