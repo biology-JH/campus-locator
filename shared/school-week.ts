@@ -51,6 +51,22 @@ function formatDateOnly(dateMs: number): string {
   return new Date(dateMs).toISOString().slice(0, 10);
 }
 
+/** Return the same selected weekday in a relative Monday-starting calendar week. */
+export function dateInCalendarWeek(
+  referenceDate: string,
+  weekOffset: number,
+  preferredWeekdayDate: string = referenceDate,
+): string {
+  if (!Number.isInteger(weekOffset)) {
+    throw new RangeError("The calendar-week offset must be a whole number.");
+  }
+
+  const referenceMonday = mondayForDate(parseDateOnly(referenceDate));
+  const preferredWeekday = new Date(parseDateOnly(preferredWeekdayDate)).getUTCDay();
+  const weekdayOffset = preferredWeekday >= 1 && preferredWeekday <= 5 ? preferredWeekday - 1 : 0;
+  return formatDateOnly(referenceMonday + weekOffset * WEEK_MS + weekdayOffset * DAY_MS);
+}
+
 function normalizeAnchors(
   anchorOrAnchors: SchoolWeekAnchor | readonly SchoolWeekAnchor[] | null,
 ): Array<SchoolWeekAnchor & { mondayMs: number }> {

@@ -1148,6 +1148,12 @@ h1 { margin: 13px 0 9px; color: var(--ink); font-size: clamp(34px, 4vw, 49px); f
 .booking-field input, .booking-field select { width: 100%; min-width: 0; height: 44px; padding: 0 12px; border: 1px solid #d9e3df; border-radius: 9px; background: #fbfdfc; color: var(--dashboard-ink); font-size: 13px; font-weight: 620; }
 .booking-field input:focus, .booking-field select:focus { border-color: #68a89b; outline: 0; box-shadow: 0 0 0 3px rgba(18,105,95,.09); }
 .booking-field select:disabled { cursor: not-allowed; background: #f1f4f3; color: #8b9897; }
+.booking-week-jumps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.booking-week-jump-button { min-width: 0; min-height: 49px; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border: 1px solid #d9e3df; border-radius: 9px; background: #fbfdfc; color: var(--dashboard-ink); cursor: pointer; text-align: left; transition: border-color .15s ease, background .15s ease; }
+.booking-week-jump-button:hover, .booking-week-jump-button[aria-pressed="true"] { border-color: #68a89b; background: #f0f8f4; }
+.booking-week-jump-button span { font-size: 12px; font-weight: 780; }
+.booking-week-jump-button strong { color: var(--dashboard-green-dark); font-size: 10px; font-weight: 850; text-align: right; }
+.booking-date-hint { margin: -7px 0 0; color: var(--dashboard-muted); font-size: 10px; line-height: 1.4; }
 .booking-slot-preview { min-height: 45px; display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #d7e7e0; border-radius: 9px; background: #f5faf7; color: #58716a; font-size: 12px; }
 .booking-slot-preview strong { flex: 0 0 auto; padding: 4px 7px; border-radius: 6px; background: #e4f3ec; color: var(--dashboard-green-dark); font-size: 10px; font-weight: 850; letter-spacing: .04em; }
 .booking-submit { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px; padding: 0 14px; border: 1px solid var(--dashboard-green-dark); border-radius: 9px; background: var(--dashboard-green-dark); color: #fff; font-size: 13px; font-weight: 780; cursor: pointer; transition: background .15s ease, opacity .15s ease; }

@@ -99,7 +99,7 @@
 ## Room Booking System (requested 2026-10-29)
 - [ ] Update our Aiven/MySQL database schema to include a `bookings` table that tracks `room_id`, `teacher_name` and/or `teacher_id`, `schedule_week` (`A` or `B`), `weekday` (Monday to Friday), and class period, while leaving existing timetable data and database connection settings unchanged.
 - [x] Implement the alternating week logic: the school follows a standard Monday-to-Friday schedule where one full week is Week A and the next full week is Week B; provide a backend function that maps calendar weeks to Week A or Week B automatically using the attached school calendar's confirmed cycle. Confirmed exceptions: Monday 2027-01-04 = Week A; Monday 2027-04-12 resets to Week A; the week containing Tuesday 2027-06-01 = Week B; skip the school week beginning Monday 2027-06-07; Monday 2027-06-14 resets to Week A.
-- [ ] Build a frontend booking form on the site. Booking access must be protected by the existing shared `SITE_PASSWORD`; teachers use this shared password to submit a booking.
+- [ ] Build a frontend booking form on the site. Booking access must be protected by the existing shared `SITE_PASSWORD`; teachers use this shared password to submit a booking. Provide clearly labeled `This Week` and `Next Week` controls with the calculated Week A/B indicator, and retain a date picker/calendar navigation so teachers can jump to later dates and months in the term; calculate future labels using the custom school reset and skipped-week rules.
 - [ ] Add strict validation so the system blocks attempts to double-book the same room for the same schedule week, weekday, and class period, including simultaneous requests.
 - [ ] Commit the code changes to GitHub and verify that the Vercel deployment builds successfully; use the attached calendar document for the Week A/Week B mapping and do not guess the anchor.
 
@@ -107,3 +107,19 @@
 **Progress note (2026-10-29):** Local booking UI/API/schema work is implemented. The user confirmed Monday 2027-01-04 as Week A for the 2027 reset; the week helper now uses that anchor. Before this confirmation, `pnpm test` passed (76 tests), `pnpm run check` passed, the Vite frontend build passed, and both server entrypoints bundled. Production Aiven schema creation and GitHub/Vercel publication are still pending.
 
 **Updated progress note (2026-10-29):** The user clarified additional cycle resets and a skipped school week. Local code and regression tests now cover the Monday 2027-04-12 Week A reset, Monday 2027-06-07 skipped week, and Monday 2027-06-14 Week A restart. The earlier test/build counts predate this clarification; re-run checks before committing. Production schema creation and deployment remain pending.
+
+
+## Vercel integration/provisioning follow-up (2026-10-29)
+- [ ] Inspect the entire repository, including `vercel.json`, `package.json`, and configuration files, for Supabase plugins/references; remove project-scoped Supabase hooks so the site uses Aiven `DATABASE_URL` only.
+- [ ] Resolve the Vercel resource-provisioning failure, make a fresh production deployment, and verify the live backend connects to Aiven and initializes the additive `bookings` table.
+
+**Progress note:** Source/config/lockfile contain no Supabase reference, the Vercel project-scoped marketplace configuration list is empty, and the project's connector list is empty. The authenticated dashboard does show a team-level Supabase installation with one connected database and a `Delete Supabase` control. It has not been removed because deletion may remove a database or provisioned variables. `vercel project disconnect` is not a supported command in the installed CLI; `--no-cache` is also not listed, while `--force` without `--with-cache` is the supported fresh-build option. Awaiting explicit choice about the team-level resource before any deletion; no env values have been read or changed.
+
+
+**Progress update (2026-10-29):** Added `This Week`/`Next Week` shortcuts with computed Week A/B or skipped-week indicators and retained the date picker for future dates/months. The full suite now includes the shared calendar tests: 86 tests pass; TypeScript check, frontend build, and Vercel server-entry bundle pass. The source/config/lockfile scan found no Supabase references, but Vercel Storage shows a suspended Supabase resource connected to Campus Locator Preview and Production. It has not been disconnected: the supported project-scoped disconnect removes that resource's environment variables. No Aiven settings, production database, or environment values were changed.
+
+
+**Vercel resource update (2026-10-29):** With the user's approval, disconnected `supabase-byzantine-castle` from project `campus-locator` in Preview and Production. The resource remains retained; Vercel reports `uninstalled`, zero project connections, and zero resource-managed environment-variable mappings. The Aiven database configuration was not inspected or changed. The direct production deploy and Aiven booking-table read-back remain pending.
+
+
+**Environment-name verification (2026-10-29):** After the approved disconnect, Vercel's read-only Production environment listing still shows the `DATABASE_URL` key and no `SUPABASE_*` names. No environment values were read, printed, or changed.

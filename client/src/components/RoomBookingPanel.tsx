@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { CalendarDays, CheckCircle2, DoorOpen, LoaderCircle, ShieldCheck } from "lucide-react";
 import { isLabRoom, PERIODS, type PeriodId } from "@shared/timetable";
+import { dateInCalendarWeek, scheduleSlotForDate } from "@shared/school-week";
 import { trpc } from "@/lib/trpc";
 
 function todayInHongKong(): string {
@@ -12,6 +13,15 @@ function todayInHongKong(): string {
   }).formatToParts(new Date());
   const part = (type: string) => parts.find(value => value.type === type)?.value ?? "";
   return `${part("year")}-${part("month")}-${part("day")}`;
+}
+
+function weekIndicator(date: string, period: PeriodId): string {
+  try {
+    return `Week ${scheduleSlotForDate(date, period).scheduleWeek}`;
+  } catch (error) {
+    if (error instanceof Error && error.message.includes("is skipped")) return "Skipped school week";
+    return "Unavailable";
+  }
 }
 
 export default function RoomBookingPanel() {
@@ -27,6 +37,10 @@ export default function RoomBookingPanel() {
   const teacherQuery = trpc.timetable.teacherList.useQuery(undefined, { staleTime: 300_000 });
   const slotQuery = trpc.bookings.slotReservations.useQuery({ date, period }, { retry: false, staleTime: 15_000 });
   const slot = slotQuery.data;
+  const thisWeekDate = useMemo(() => dateInCalendarWeek(today, 0, date), [today, date]);
+  const nextWeekDate = useMemo(() => dateInCalendarWeek(today, 1, date), [today, date]);
+  const thisWeekLabel = useMemo(() => weekIndicator(thisWeekDate, period), [thisWeekDate, period]);
+  const nextWeekLabel = useMemo(() => weekIndicator(nextWeekDate, period), [nextWeekDate, period]);
   const availabilityQuery = trpc.timetable.availability.useQuery(
     slot ? { week: slot.scheduleWeek, day: slot.weekday, period } : { week: "A", day: "Monday", period },
     { enabled: Boolean(slot), staleTime: 10_000 },
@@ -55,6 +69,13 @@ export default function RoomBookingPanel() {
   const busy = slotQuery.isLoading || availabilityQuery.isLoading || roomQuery.isLoading || teacherQuery.isLoading;
   const submitDisabled = busy || createBooking.isPending || !slot || !selectedRoom || !selectedTeacher;
 
+  function jumpToDate(targetDate: string) {
+    setDate(targetDate);
+    setRoomId("");
+    setSuccessMessage("");
+    createBooking.reset();
+  }
+
   function submitBooking(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSuccessMessage("");
@@ -82,16 +103,25 @@ export default function RoomBookingPanel() {
         <form className="room-booking-form" onSubmit={submitBooking}>
           <h3>New room reservation</h3>
           <label className="booking-field" htmlFor="booking-date">
-            <span>School date</span>
-            <input id="booking-date" type="date" value={date} min={today} onChange={event => { setDate(event.target.value); setSuccessMessage(""); createBooking.reset(); }} required />
+            <span>School date · Jump to any date</span>
+            <input id="booking-date" type="date" value={date} min={today} onChange={event => jumpToDate(event.target.value)} required />
           </label>
+          <div className="booking-week-jumps" role="group" aria-label="Quick week navigation">
+            <button className="booking-week-jump-button" type="button" aria-pressed={date === thisWeekDate} onClick={() => jumpToDate(thisWeekDate)}>
+              <span>This Week</span><strong>{thisWeekLabel}</strong>
+            </button>
+            <button className="booking-week-jump-button" type="button" aria-pressed={date === nextWeekDate} onClick={() => jumpToDate(nextWeekDate)}>
+              <span>Next Week</span><strong>{nextWeekLabel}</strong>
+            </button>
+          </div>
+          <p className="booking-date-hint">Use the calendar picker to jump to future dates or months in the term.</p>
           <div className="booking-slot-preview" aria-live="polite">
             {slot ? (
               <><strong>Week {slot.scheduleWeek}</strong><span>{slot.weekday} · {slot.periodLabel}</span></>
             ) : slotQuery.isLoading ? (
               <><LoaderCircle size={16} className="spin" /><span>Checking the school-week cycle…</span></>
             ) : (
-              <><CalendarDays size={16} /><span>Week/day will appear after the calendar cycle is configured.</span></>
+              <><CalendarDays size={16} /><span>Choose a valid school date to see its Week A/B label.</span></>
             )}
           </div>
           <label className="booking-field" htmlFor="booking-period">
