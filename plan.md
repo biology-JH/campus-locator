@@ -12,6 +12,10 @@ Extend the deployed YCIS Campus Locator in place. Preserve the existing React/Vi
 4. Add a fourth `Room Booking` view to the existing Home dashboard. Reuse the site's editorial school-operations visual system and canonical room/teacher/period lists. Let teachers select a calendar date, room, teacher, and period; show the derived weekday and Week A/B; mark rooms already booked for that recurring slot; list the current reservations; and explain that a reservation repeats for its Week A/B slot. Provide prominent `This Week` and `Next Week` shortcuts with calculated Week A/B labels, and retain the native date picker so teachers can jump to any later date/month in the term using the same school reset/skip rules.
 5. Test date-boundary/parity validation, SITE_PASSWORD authorization, invalid fields, and duplicate-key conflict mapping; assert the database's unique index from the migration. Run the existing test suite, TypeScript check, and production build. Use the existing Aiven connection for the one-table additive `CREATE TABLE IF NOT EXISTS` migration on the first authenticated booking API call; do not print or change credentials. Commit the code to GitHub `main` and verify the Vercel deployment build.
 
+6. Enlarge the four existing dashboard navigation buttons (`Availability`, `Room Schedule`, `Teacher Finder`, `Room Booking`) in place, preserving their exact order and layout structure.
+7. Extend the existing `/admin` page, reusing its signed Admin session and configured `ADMIN_SECRET_KEY`/`ROOMFINDER_ADMIN_PASSWORD` credential. Add a database-backed active-bookings table with immediate per-row deletion.
+8. Export all active reservations as a clean CSV with exactly `Date`, `Period`, `Room`, and `Teacher` columns. The date represents the next matching recurring school-calendar occurrence. Accept the edited CSV through a drop area; validate that it only omits rows from the signed export snapshot, preview cancellation counts, and delete omitted rows in one transaction. Reject stale snapshots, added/modified rows, malformed files, and accidental empty snapshots; require a separate explicit confirmation for cancel-all.
+
 ## Project structure
 
 - `client/src/pages/Home.tsx`: existing dashboard navigation and booking form view.
@@ -22,6 +26,8 @@ Extend the deployed YCIS Campus Locator in place. Preserve the existing React/Vi
 - `drizzle/schema.ts`, `drizzle/0003_add_bookings.sql`, and `drizzle/meta/`: additive MySQL schema and migration metadata.
 - `shared/timetable.ts`: canonical period/week/day types reused by the booking UI and API.
 - `shared/school-week.ts`: date-only Monday-based A/B calculation with school-confirmed resets and skipped-week validation.
+- `client/src/pages/AdminPage.tsx`: existing secure Admin portal extended with booking export, row removal, and CSV reconciliation controls.
+- `server/admin-bookings.ts`: Admin-only booking listing, CSV export/validation, row deletion, and transactional snapshot reconciliation.
 - `server/*test.ts` and `shared/*test.ts`: isolated tests for access, validation, parity, and conflicts.
 
 ## Design decisions

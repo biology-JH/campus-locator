@@ -6,6 +6,7 @@ import { DAYS, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
 import { capitalizeBracketedNames, isExcludedTeacherCode, isExcludedTeacherName } from "../shared/teacher-names.js";
 import { getDb } from "./db.js";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
+import { registerAdminBookingRoutes } from "./admin-bookings.js";
 import {
   clearAdminPasswordSessionCookie,
   createAdminPasswordSessionToken,
@@ -314,7 +315,7 @@ export function registerAdminRoutes(app: express.Express) {
   app.post(`${ADMIN_PATH}/login`, express.json({ limit: "2kb" }), (req, res) => {
     res.set("Cache-Control", "no-store, private");
     if (!hasConfiguredAdminPassword()) {
-      console.error("[Admin Auth] Password login is unavailable; configure ADMIN_SECRET_KEY with at least 20 characters.");
+      console.error("[Admin Auth] Password login is unavailable; set ADMIN_SECRET_KEY or ROOMFINDER_ADMIN_PASSWORD to at least 20 characters.");
       res.status(503).json({ message: "Admin password login is not configured for this deployment." });
       return;
     }
@@ -385,6 +386,7 @@ export function registerAdminRoutes(app: express.Express) {
       }
     },
   );
+  registerAdminBookingRoutes(app, requireAdmin, requireAdminPageRequest);
 }
 
 export function adminUploadErrorHandler(): express.ErrorRequestHandler {
@@ -395,10 +397,16 @@ export function adminUploadErrorHandler(): express.ErrorRequestHandler {
     }
     const status = (error as { status?: number; type?: string }).status;
     if (status === 413 || (error as { type?: string }).type === "entity.too.large") {
-      res.status(413).json({ message: "The Excel schedule is larger than the 20 MB upload limit. The existing timetable was not changed." });
+      const message = req.path.startsWith(`${ADMIN_PATH}/bookings/csv/`)
+        ? "The booking CSV is larger than the 5 MB upload limit; no bookings were changed."
+        : "The Excel schedule is larger than the 20 MB upload limit. The existing timetable was not changed.";
+      res.status(413).json({ message });
       return;
     }
-    console.error("[Admin] Excel upload request parsing failed.", errorDetails(error));
-    res.status(400).json({ message: "The Excel schedule could not be read. The existing timetable was not changed." });
+    const isBookingCsv = req.path.startsWith(`${ADMIN_PATH}/bookings/csv/`);
+    console.error(isBookingCsv ? "[Admin Bookings] CSV request parsing failed." : "[Admin] Excel upload request parsing failed.", errorDetails(error));
+    res.status(400).json({ message: isBookingCsv
+      ? "The booking CSV could not be read; no bookings were changed."
+      : "The Excel schedule could not be read. The existing timetable was not changed." });
   };
 }

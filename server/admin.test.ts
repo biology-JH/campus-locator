@@ -99,6 +99,7 @@ let baseUrl = "";
 
 beforeEach(async () => {
   vi.stubEnv("ADMIN_SECRET_KEY", LOCAL_TEST_ADMIN_SECRET);
+  vi.stubEnv("ROOMFINDER_ADMIN_PASSWORD", "");
   getDbMock.mockReset();
   authenticateRequestMock.mockReset().mockResolvedValue(null);
   ({ server, url: baseUrl } = await startServer());
@@ -154,6 +155,18 @@ describe("Admin password session", () => {
     expect(response.headers.get("set-cookie")).toBeNull();
   });
 
+  it("accepts ROOMFINDER_ADMIN_PASSWORD when ADMIN_SECRET_KEY is absent", async () => {
+    vi.stubEnv("ADMIN_SECRET_KEY", "");
+    vi.stubEnv("ROOMFINDER_ADMIN_PASSWORD", LOCAL_TEST_ADMIN_SECRET);
+    const response = await fetch(`${baseUrl}/api/admin/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: LOCAL_TEST_ADMIN_SECRET }),
+    });
+    expect(response.status).toBe(200);
+    expect(response.headers.get("set-cookie")).toContain("roomfinder_admin_password_session=");
+  });
+
   it("rejects tampered and expired sessions with HTTP 403 on admin and batch-save APIs", async () => {
     vi.stubEnv("ADMIN_SECRET_KEY", LOCAL_TEST_ADMIN_SECRET);
     const validToken = createAdminPasswordSessionToken();
@@ -201,6 +214,20 @@ describe("Admin password session", () => {
 });
 
 describe("Admin Excel upload route", () => {
+  it("rejects list, export, row deletion, preview and CSV sync without a verified Admin session", async () => {
+    const adminHeaders = { "X-Requested-With": "RoomfinderAdmin" };
+    const csvHeaders = { ...adminHeaders, "Content-Type": "text/csv" };
+    const responses = await Promise.all([
+      fetch(`${baseUrl}/api/admin/bookings`, { headers: adminHeaders }),
+      fetch(`${baseUrl}/api/admin/bookings/export`, { headers: adminHeaders }),
+      fetch(`${baseUrl}/api/admin/bookings/1`, { method: "DELETE", headers: adminHeaders }),
+      fetch(`${baseUrl}/api/admin/bookings/csv/preview`, { method: "POST", headers: csvHeaders, body: "Date,Period,Room,Teacher\n" }),
+      fetch(`${baseUrl}/api/admin/bookings/csv/sync`, { method: "POST", headers: csvHeaders, body: "Date,Period,Room,Teacher\n" }),
+    ]);
+    expect(responses.map(response => response.status)).toEqual([403, 403, 403, 403, 403]);
+    expect(getDbMock).not.toHaveBeenCalled();
+  });
+
   it("rejects a non-Admin role with HTTP 403 before accessing the database", async () => {
     authenticateRequestMock.mockResolvedValue({ role: "user" });
     const response = await fetch(`${baseUrl}/api/admin/timetable/excel`, {

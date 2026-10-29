@@ -123,3 +123,11 @@
 
 
 **Environment-name verification (2026-10-29):** After the approved disconnect, Vercel's read-only Production environment listing still shows the `DATABASE_URL` key and no `SUPABASE_*` names. No environment values were read, printed, or changed.
+
+
+## Admin bookings management and navigation sizing (requested 2026-10-29)
+- [ ] Scale up the four primary dashboard tools while strictly preserving the same order, layout format, and design structure: `Availability`, `Room Schedule`, `Teacher Finder`, `Room Booking`.
+- [ ] Implement an administrative dashboard protected by `ROOMFINDER_ADMIN_PASSWORD` or `ADMIN_SECRET_KEY`. When authenticated, provide a `Download Master Schedule CSV` button that queries Aiven and exports exactly these columns: `Date`, `Period`, `Room`, and `Teacher`.
+- [ ] Provide both Admin-only cancellation methods: (a) list all active bookings in a clean table with a `Remove Row` button next to each entry; clicking it immediately deletes that specific row from Aiven; and (b) provide an `Upload Updated Schedule` CSV drop area so deleting rows from the downloaded CSV synchronizes the missing bookings as cancellations.
+- [ ] Verify the UI, security, and transactional CSV synchronization locally, execute the test suite, and push the live build to Vercel without changing database credentials or unrelated environment variables.
+- [x] Data integrity: Use transactions for row-by-row and CSV snapshot deletions; reconcile only omissions from the exact fresh signed export, reject stale/modified/added/malformed snapshots, and require a separate explicit Admin confirmation before cancel-all.
