@@ -61,11 +61,28 @@ describe("staffForCodes", () => {
 
   it("uses English, CUG, Chinese, and Chemistry course codes from the workbook", () => {
     expect(names("GP", "10 IE 3 GP", "lesson1")).toEqual(["Paul Gillespie"]);
-    expect(names("GP", "10 CU 2 GP", "lesson1")).toEqual(["Prachi Gupta"]);
-    expect(names("GP", "13 CAS 2 GP", "lesson1")).toEqual(["Prachi Gupta"]);
+    expect(names("GP", "10 CU 2 GP", "lesson1")).toEqual(["Paul Gillespie"]);
+    expect(names("GP", "13 CAS 2 GP", "lesson1")).toEqual(["Paul Gillespie"]);
     expect(names("HR", "07 SCI 9 HR", "lesson1")).toEqual(["Hannah Roberts"]);
     expect(names("HR", "08 CS 5 HR", "lesson1")).toEqual(["Runlin He"]);
     expect(names("HR", "13 CH 4 HR", "lesson1")).toEqual(["Hannah Roberts"]);
+  });
+
+  it("applies the requested display-only BT and GP context corrections", () => {
+    const prachiCourses = [
+      "13 CUG2 G P",
+      "11 CU G5 G P",
+      "12 CU G5 G P",
+      "10 CU G6 G P",
+      "10 CU G4 G P",
+      "13 CU G7 G P",
+    ];
+    for (const occupant of prachiCourses) {
+      expect(names("GP", occupant, "lesson1"), occupant).toEqual(["Prachi Gupta"]);
+    }
+    expect(names("GP", "12 CAS 2 GP", "lesson1")).toEqual(["Paul Gillespie"]);
+    expect(names("BT", "09L S4 B T", "lesson4")).toEqual(["Tao Jennifer Bian"]);
+    expect(names("VT", "Sa bret oot h5 V T", "lesson5")).toEqual(["Vaishali Tanna"]);
   });
 
   it("resolves art/history, physics/science/coding, DT, and computer science", () => {

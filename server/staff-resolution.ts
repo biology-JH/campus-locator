@@ -490,6 +490,43 @@ function applyUserContextPreferences(
   return resolved;
 }
 
+const PRACHI_GP_COURSE_KEYS = new Set([
+  "13CUG2GP",
+  "11CUG5GP",
+  "12CUG5GP",
+  "10CUG6GP",
+  "10CUG4GP",
+  "13CUG7GP",
+]);
+
+function normalizeStaffIdentifier(value: string): string {
+  return value.toLocaleUpperCase().replace(/[^A-Z0-9]/g, "");
+}
+
+function applyDisplayOnlyNameCorrections(
+  occupant: string | null,
+  attributions: StaffAttribution[],
+): StaffAttribution[] {
+  const normalizedOccupant = normalizeStaffIdentifier(occupant ?? "");
+  const isPrachiGpCourse = [...PRACHI_GP_COURSE_KEYS].some(course =>
+    normalizedOccupant.includes(course)
+  );
+
+  return attributions.map(attribution => {
+    const code = normalizeStaffIdentifier(attribution.code);
+    if (code.includes("GP")) {
+      return { ...attribution, names: [isPrachiGpCourse ? "Prachi Gupta" : "Paul Gillespie"] };
+    }
+    if (code === "BT" && normalizedOccupant.includes("09LS4")) {
+      return { ...attribution, names: ["Tao Jennifer Bian"] };
+    }
+    if (code === "VT" && normalizedOccupant.includes("SABRETOOTH5")) {
+      return { ...attribution, names: ["Vaishali Tanna"] };
+    }
+    return attribution;
+  });
+}
+
 function removeBiologySamLingwood(
   occupant: string | null,
   resolved: StaffAttribution[]
@@ -580,14 +617,17 @@ export function staffForCodes(
         (override.code && override.displayName
           ? [{ code: override.code, displayName: override.displayName }]
           : []);
-      return normalizeStaffAttributions(assignments
+      const manualResolved = assignments
         .filter(
           assignment => !isCodeExcludedFromRoom(assignment.code, location) && !isExcludedTeacherCode(assignment.code)
         )
         .map(assignment => ({
           code: assignment.code,
           names: [assignment.displayName],
-        })));
+        }));
+      return normalizeStaffAttributions(
+        applyDisplayOnlyNameCorrections(occupant, manualResolved)
+      );
     }
   }
 
@@ -603,10 +643,12 @@ export function staffForCodes(
     .split(",")
     .filter(code => Boolean(code) && !isCodeExcludedFromRoom(code, location) && !isExcludedTeacherCode(code))
     .map(code => ({ code, names: namesForCode(code, occupant, period) }));
+  const contextResolved = applyUserContextPreferences(occupant, resolved).filter(
+    attribution => attribution.names.length > 0
+  );
+  const displayResolved = applyDisplayOnlyNameCorrections(occupant, contextResolved);
   return normalizeStaffAttributions(removeBiologySamLingwood(
     occupant,
-    applyUserContextPreferences(occupant, resolved).filter(
-      attribution => attribution.names.length > 0
-    )
+    displayResolved
   ));
 }
