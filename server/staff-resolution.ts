@@ -33,6 +33,9 @@ function normalizeStaffAttributions(attributions: StaffAttribution[]): StaffAttr
     const names = [...new Set(attribution.names
       .map(capitalizeBracketedNames)
       .filter(name => !isExcludedTeacherName(name)))];
+    if (names.includes("Lauren Minnie") && !names.includes("Gia Baker")) {
+      names.push("Gia Baker");
+    }
     return names.length ? [{ ...attribution, names }] : [];
   });
 }
@@ -514,6 +517,9 @@ function applyDisplayOnlyNameCorrections(
 
   return attributions.map(attribution => {
     const code = normalizeStaffIdentifier(attribution.code);
+    if (code === "JB" && normalizedOccupant === "12PT1JB") {
+      return { ...attribution, names: ["Gia Baker"] };
+    }
     if (code.includes("GP")) {
       return { ...attribution, names: [isPrachiGpCourse ? "Prachi Gupta" : "Paul Gillespie"] };
     }

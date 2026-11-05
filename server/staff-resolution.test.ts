@@ -85,6 +85,47 @@ describe("staffForCodes", () => {
     expect(names("VT", "Sa bret oot h5 V T", "lesson5")).toEqual(["Vaishali Tanna"]);
   });
 
+  it("maps all 12 exact 12 PT 1 JB timetable entries to Gia Baker", () => {
+    const matchingEntries = timetableData.rooms.flatMap(room =>
+      room.schedule
+        .filter(entry => entry.occupant?.trim().toUpperCase() === "12 PT 1 JB")
+        .map(entry => ({ room, entry }))
+    );
+
+    expect(matchingEntries).toHaveLength(12);
+    for (const { room, entry } of matchingEntries) {
+      expect(
+        staffForCodes(
+          entry.staffCodes.join(","),
+          entry.occupant,
+          entry.period as PeriodId,
+          { roomNumber: room.room, week: entry.week, day: entry.day }
+        )
+      ).toEqual([{ code: "JB", names: ["Gia Baker"] }]);
+    }
+  });
+
+  it("adds Gia Baker as a co-teacher everywhere Lauren Minnie resolves", () => {
+    let laurenSlots = 0;
+    for (const room of timetableData.rooms) {
+      for (const entry of room.schedule) {
+        const staff = staffForCodes(
+          entry.staffCodes.join(","),
+          entry.occupant,
+          entry.period as PeriodId,
+          { roomNumber: room.room, week: entry.week, day: entry.day }
+        );
+        for (const attribution of staff) {
+          if (attribution.names.includes("Lauren Minnie")) {
+            laurenSlots += 1;
+            expect(attribution.names).toContain("Gia Baker");
+          }
+        }
+      }
+    }
+    expect(laurenSlots).toBeGreaterThan(0);
+  });
+
   it("resolves art/history, physics/science/coding, DT, and computer science", () => {
     expect(names("LK", "08 VA 3 LK", "lesson1")).toEqual(["Leanne Kingston"]);
     expect(names("LK", "11 HIS 4 LK", "lesson1")).toEqual(["Kelsey Lowe"]);
@@ -187,7 +228,7 @@ describe("staffForCodes", () => {
       { code: "HY", names: ["Hazel Yuen"] },
     ]);
     expect(resolveCell("A605", "A", "Monday", "lesson1")).toEqual([
-      { code: "LM", names: ["Lauren Minnie"] },
+      { code: "LM", names: ["Lauren Minnie", "Gia Baker"] },
     ]);
     expect(names("FG", "12 EN GH L1 F G", "lesson1")).toEqual(["Gareth Flint"]);
     expect(names("MA", "13 EN GH L1 M A", "lesson1")).toEqual([
@@ -373,9 +414,16 @@ describe("staffForCodes", () => {
         details.staff
           ? details.staff.map(assignment => ({
               code: assignment.code,
-              names: [assignment.displayName],
+              names: assignment.displayName === "Lauren Minnie"
+                ? ["Lauren Minnie", "Gia Baker"]
+                : [assignment.displayName],
             }))
-          : [{ code: details.code, names: [details.displayName] }]
+          : [{
+              code: details.code,
+              names: details.displayName === "Lauren Minnie"
+                ? ["Lauren Minnie", "Gia Baker"]
+                : [details.displayName],
+            }]
       );
     }
   });
