@@ -43,6 +43,7 @@ export function publicTeacherNames() {
       if (!isHiddenStaffName(name)) names.add(name);
     }
   }
+  names.add("Gia Baker");
   return [...names].sort((left, right) => left.localeCompare(right));
 }
 

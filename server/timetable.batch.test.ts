@@ -233,6 +233,8 @@ describe("Teacher Finder directory exclusions and name formatting", () => {
 
     expect(names).toContain("Kouaho (Guy) Gueye");
     expect(names).toContain("Xinyao (Yoyo) Feng");
+    expect(names).toContain("Gia Baker");
+    expect(names).toEqual([...names].sort((left, right) => left.localeCompare(right)));
     expect(names.some(isExcludedTeacherName)).toBe(false);
     expect(names).not.toEqual(expect.arrayContaining(["Gregg Morrison", "Yin Hung Sze", "Robert Kitley"]));
   });
