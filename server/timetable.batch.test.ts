@@ -107,6 +107,25 @@ function makeMemoryDatabase(roomCount: number) {
   return { db, entryRows, updatedRooms };
 }
 
+function makeWebsiteOverlayDatabase(roomRows: unknown[], entryRows: unknown[]) {
+  const queryForTable = (table: unknown) => {
+    const rows = table === classrooms ? roomRows : entryRows;
+    const query: {
+      where: (...args: unknown[]) => typeof query;
+      orderBy: (...args: unknown[]) => typeof query;
+      limit: (...args: unknown[]) => typeof query;
+      then: (resolve: (value: unknown[]) => unknown, reject?: (reason: unknown) => unknown) => Promise<unknown>;
+    } = {
+      where: () => query,
+      orderBy: () => query,
+      limit: () => query,
+      then: (resolve, reject) => Promise.resolve(rows).then(resolve, reject),
+    };
+    return query;
+  };
+  return { select: () => ({ from: queryForTable }) };
+}
+
 const selection = { week: "A" as const, day: "Monday" as const, period: "lesson1" as const };
 
 beforeEach(() => {
@@ -253,5 +272,76 @@ describe("Teacher Finder directory exclusions and name formatting", () => {
     expect(result.activeTeachers.some(assignment => assignment.teacher.includes("Kouaho (Guy) Gueye"))).toBe(true);
     expect(names.some(isExcludedTeacherName)).toBe(false);
     console.info("[Local simulation] Teacher Finder list success: active/free API results omit all excluded names; database access used an in-memory mock only.");
+  });
+});
+
+describe("website-only vacancy overlay", () => {
+  it("shows A802 Tuesday Week B Period 4 vacant across schedule and availability without modifying its mock row", async () => {
+    const roomRows = [{ roomNumber: "A802", sourcePage: 1, displayOrder: 1 }];
+    const entryRows = [{
+      roomNumber: "A802",
+      week: "B",
+      day: "Tuesday",
+      period: "lesson4",
+      occupant: "12 Economics IB HL 3",
+      occupantDisplay: "12 Economics IB HL 3",
+      staffCodes: "BW",
+    }];
+    getDbMock.mockResolvedValue(makeWebsiteOverlayDatabase(roomRows, entryRows) as never);
+    const caller = appRouter.createCaller(makeContext("user"));
+
+    const [schedule, availability] = await Promise.all([
+      caller.timetable.masterSchedule({ roomNumber: "A802" }),
+      caller.timetable.availability({ week: "B", day: "Tuesday", period: "lesson4" }),
+    ]);
+    const weekB = schedule.weeks.find(week => week.week === "B");
+    const tuesday = weekB?.days.find(day => day.day === "Tuesday");
+    const slot = tuesday?.slots.find(item => item.period === "lesson4");
+
+    expect(slot).toMatchObject({
+      occupant: null,
+      occupantDisplay: null,
+      staff: [],
+      hasRecord: true,
+      isOccupied: false,
+    });
+    expect(availability.freeRooms).toEqual([
+      expect.objectContaining({ roomNumber: "A802", occupant: null, isFree: true }),
+    ]);
+    expect(availability.occupiedCount).toBe(0);
+    expect(entryRows[0]?.occupant).toBe("12 Economics IB HL 3");
+    expect(entryRows[0]?.staffCodes).toBe("BW");
+  });
+
+  it.each([
+    { day: "Wednesday" as const, period: "lesson6" as const },
+    { day: "Thursday" as const, period: "lesson3" as const },
+  ])("hides Woo Sik Byun and marks his room free on Week B $day $period", async ({ day, period }) => {
+    const roomRows = [{ roomNumber: "A804", sourcePage: 1, displayOrder: 1 }];
+    const entryRows = [{
+      roomNumber: "A804",
+      week: "B",
+      day,
+      period,
+      occupant: "12 Economics IB HL 3",
+      occupantDisplay: "12 Economics IB HL 3",
+      staffCodes: "BW",
+    }];
+    getDbMock.mockResolvedValue(makeWebsiteOverlayDatabase(roomRows, entryRows) as never);
+    const caller = appRouter.createCaller(makeContext("user"));
+
+    const [availability, teachers, teacherLocation] = await Promise.all([
+      caller.timetable.availability({ week: "B", day, period }),
+      caller.timetable.teachersForSlot({ week: "B", day, period }),
+      caller.timetable.teacherLocations({ teacher: "Woo Sik Byun", week: "B", day, period }),
+    ]);
+
+    expect(availability.freeRooms).toEqual([
+      expect.objectContaining({ roomNumber: "A804", occupant: null, isFree: true }),
+    ]);
+    expect(teachers.activeTeachers).toEqual([]);
+    expect(teachers.freeTeachers).toContain("Woo Sik Byun");
+    expect(teacherLocation.matches).toEqual([]);
+    expect(entryRows[0]?.staffCodes).toBe("BW");
   });
 });

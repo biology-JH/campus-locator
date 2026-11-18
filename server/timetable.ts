@@ -8,6 +8,7 @@ import { classrooms, timetableEntries } from "../drizzle/schema.js";
 import { adminProcedure, publicProcedure, router } from "./_core/trpc.js";
 import { staffForCodes } from "./staff-resolution.js";
 import { formatSubjectDisplay } from "./subject-resolution.js";
+import { isWebsiteOnlyVacancy } from "./website-vacancy-overrides.js";
 import teacherAbbreviations from "./data/teacher-abbreviations.json" with { type: "json" };
 import { capitalizeBracketedNames, isExcludedTeacherName } from "../shared/teacher-names.js";
 
@@ -255,6 +256,11 @@ export const timetableRouter = router({
       const activeNames = new Set<string>();
 
       for (const entry of entryRows) {
+        if (isWebsiteOnlyVacancy({
+          ...input,
+          roomNumber: entry.roomNumber,
+          staffCodes: entry.staffCodes,
+        })) continue;
         if (!entry.occupant) continue;
         const attributions = visibleStaffAttributions(staffForCodes(
           entry.staffCodes,
@@ -303,7 +309,11 @@ export const timetableRouter = router({
           .where(notInArray(classrooms.roomNumber, [...EXCLUDED_ROOM_NUMBERS]))
           .orderBy(asc(classrooms.displayOrder)),
         db
-          .select({ roomNumber: timetableEntries.roomNumber, occupant: timetableEntries.occupant })
+          .select({
+            roomNumber: timetableEntries.roomNumber,
+            occupant: timetableEntries.occupant,
+            staffCodes: timetableEntries.staffCodes,
+          })
           .from(timetableEntries)
           .where(
             and(
@@ -314,10 +324,16 @@ export const timetableRouter = router({
           ),
       ]);
 
-      const entriesByRoom = new Map(entryRows.map(entry => [entry.roomNumber, entry.occupant]));
+      const entriesByRoom = new Map(entryRows.map(entry => [entry.roomNumber, entry]));
       const schedule = roomRows.map(room => {
-        const hasRecord = entriesByRoom.has(room.roomNumber);
-        const occupant = entriesByRoom.get(room.roomNumber) ?? null;
+        const entry = entriesByRoom.get(room.roomNumber);
+        const hasRecord = Boolean(entry);
+        const displayAsVacant = Boolean(entry && isWebsiteOnlyVacancy({
+          ...input,
+          roomNumber: room.roomNumber,
+          staffCodes: entry.staffCodes,
+        }));
+        const occupant = displayAsVacant ? null : entry?.occupant ?? null;
         return {
           ...room,
           occupant,
@@ -367,6 +383,11 @@ export const timetableRouter = router({
       const roomOrder = new Map(roomRows.map(room => [room.roomNumber, room.displayOrder]));
       const query = input.teacher.toLocaleLowerCase();
       const matches = entryRows.flatMap(entry => {
+        if (isWebsiteOnlyVacancy({
+          ...input,
+          roomNumber: entry.roomNumber,
+          staffCodes: entry.staffCodes,
+        })) return [];
         const staff = visibleStaffAttributions(staffForCodes(
           entry.staffCodes,
           entry.occupant,
@@ -430,18 +451,27 @@ export const timetableRouter = router({
             day,
             slots: PERIODS.map(period => {
               const entry = entryMap.get(keyFor(week, day, period.id));
+              const displayAsVacant = Boolean(entry && isWebsiteOnlyVacancy({
+                week,
+                day,
+                period: period.id,
+                roomNumber: room.roomNumber,
+                staffCodes: entry.staffCodes,
+              }));
               return {
                 period: period.id,
                 label: period.label,
-                occupant: entry?.occupant ?? null,
-                occupantDisplay: capitalizeBracketedNames(formatSubjectDisplay(entry?.occupantDisplay ?? entry?.occupant ?? null)),
-                staff: visibleStaffAttributions(staffForCodes(entry?.staffCodes ?? null, entry?.occupant ?? null, period.id, {
+                occupant: displayAsVacant ? null : entry?.occupant ?? null,
+                occupantDisplay: displayAsVacant
+                  ? null
+                  : capitalizeBracketedNames(formatSubjectDisplay(entry?.occupantDisplay ?? entry?.occupant ?? null)),
+                staff: displayAsVacant ? [] : visibleStaffAttributions(staffForCodes(entry?.staffCodes ?? null, entry?.occupant ?? null, period.id, {
                   roomNumber: room.roomNumber,
                   week,
                   day,
                 })),
                 hasRecord: Boolean(entry),
-                isOccupied: Boolean(entry?.occupant),
+                isOccupied: !displayAsVacant && Boolean(entry?.occupant),
               };
             }),
           })),
