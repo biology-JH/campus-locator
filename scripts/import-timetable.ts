@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import XLSX from "xlsx";
-import { DAYS, PERIODS, WEEKS, type Day, type PeriodId, type Week } from "../shared/timetable";
+import { DAYS, isNonRoomLocationLabel, PERIODS, WEEKS, type Day, type PeriodId, type Week } from "../shared/timetable";
 import { capitalizeBracketedNames, isExcludedTeacherCode, isExcludedTeacherName } from "../shared/teacher-names";
 import { classrooms, timetableEntries } from "../drizzle/schema";
 
@@ -75,11 +75,14 @@ function parseWorkbook(filePath: string): { rooms: ImportRoom[]; entries: Import
     const row = rows[index]!;
     const rowNumber = index + 2;
     const room = nullableText(getValue(row, ["room", "roomnumber"]))?.toUpperCase();
+    if (!room) throw new Error(`Row ${rowNumber} must include Room.`);
+    if (isNonRoomLocationLabel(room)) continue;
+
     const weekText = nullableText(getValue(row, ["week"]))?.toUpperCase();
     const dayText = nullableText(getValue(row, ["day"]));
     const periodText = nullableText(getValue(row, ["period", "periodid"]));
-    if (!room || !weekText || !dayText || !periodText) {
-      throw new Error(`Row ${rowNumber} must include Room, Week, Day, and Period.`);
+    if (!weekText || !dayText || !periodText) {
+      throw new Error(`Row ${rowNumber} must include Week, Day, and Period.`);
     }
     if (!WEEKS.includes(weekText as Week)) throw new Error(`Invalid week on row ${rowNumber}: ${weekText}.`);
     const day = DAYS.find(candidate => candidate.toLowerCase() === dayText.toLowerCase());

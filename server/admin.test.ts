@@ -63,9 +63,12 @@ function makeDbHarness(failOnTimetableUpsert = false): DbHarness {
   return { db, operations, wasRolledBack: () => rolledBack };
 }
 
-function createWorkbook(overrides: Partial<{ occupant: string; occupantDisplay: string; staffCodes: string }> = {}): Buffer {
-  const rows = WEEKS.flatMap(week => DAYS.flatMap(day => PERIODS.map(period => ({
-    Room: "A101",
+function createWorkbook(
+  overrides: Partial<{ occupant: string; occupantDisplay: string; staffCodes: string }> = {},
+  roomNumbers: string[] = ["A101"],
+): Buffer {
+  const rows = roomNumbers.flatMap(roomNumber => WEEKS.flatMap(week => DAYS.flatMap(day => PERIODS.map(period => ({
+    Room: roomNumber,
     "Source Page": 1,
     Week: week,
     Day: day,
@@ -74,7 +77,7 @@ function createWorkbook(overrides: Partial<{ occupant: string; occupantDisplay: 
     Occupant: week === "A" && day === "Monday" && period.id === "lesson1" ? overrides.occupant ?? "12 BIO" : "",
     "Occupant Display": week === "A" && day === "Monday" && period.id === "lesson1" ? overrides.occupantDisplay ?? "12 BIO" : "",
     "Teacher Codes": week === "A" && day === "Monday" && period.id === "lesson1" ? overrides.staffCodes ?? "" : "",
-  }))));
+  })))));
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(rows), "Schedule");
   return XLSX.write(workbook, { bookType: "xlsx", type: "buffer" }) as Buffer;
@@ -274,6 +277,28 @@ describe("Admin Excel upload route", () => {
     expect(harness.operations.filter(operation => operation.kind === "delete")).toHaveLength(2);
     expect(harness.wasRolledBack()).toBe(false);
     console.info("[Local simulation] Excel upload success: server parsed Schedule.xlsx; PostgreSQL-style upserts committed to the mocked DB (1 room, 80 entries).");
+  });
+
+  it("omits Auditorium and GLC Glassroom from uploaded room records regardless of capitalization", async () => {
+    authenticateRequestMock.mockResolvedValue({ role: "admin" });
+    const harness = makeDbHarness();
+    getDbMock.mockResolvedValue(harness.db);
+    const response = await fetch(`${baseUrl}/api/admin/timetable/excel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "X-Requested-With": "RoomfinderAdmin",
+      },
+      body: new Uint8Array(createWorkbook({}, ["A101", "AUDITORIUM", "GLC Glassroom"])),
+    });
+    const result = await response.json() as { roomsProcessed: number; entriesProcessed: number };
+    const roomRows = harness.operations.find(operation => operation.table === "classrooms" && operation.kind === "upsert")?.rows as Array<{ roomNumber: string }>;
+    const entryRows = harness.operations.find(operation => operation.table === "timetable_entries" && operation.kind === "upsert")?.rows as Array<{ roomNumber: string }>;
+
+    expect(response.status).toBe(200);
+    expect(result).toMatchObject({ roomsProcessed: 1, entriesProcessed: 80 });
+    expect(roomRows.map(room => room.roomNumber)).toEqual(["A101"]);
+    expect([...new Set(entryRows.map(entry => entry.roomNumber))]).toEqual(["A101"]);
   });
 
   it("normalizes bracketed teacher text and filters excluded codes in an isolated Excel upload", async () => {

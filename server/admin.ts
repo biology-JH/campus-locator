@@ -2,7 +2,7 @@ import express, { type Request, type RequestHandler } from "express";
 import { asc, notInArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import * as XLSX from "xlsx";
-import { DAYS, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
+import { DAYS, isNonRoomLocationLabel, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
 import { capitalizeBracketedNames, isExcludedTeacherCode, isExcludedTeacherName } from "../shared/teacher-names.js";
 import { getDb } from "./db.js";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
@@ -131,10 +131,13 @@ function parseWorkbookBuffer(buffer: Buffer): ParsedTimetable {
   const roomMap = new Map<string, { room: string; page: number; schedule: ParsedTimetable["rooms"][number]["schedule"] }>();
   for (const row of rows) {
     const room = textValue(valueFrom(row, ["room", "roomnumber"]))?.toUpperCase();
+    if (!room) throw new Error("Every schedule row must include a valid Room.");
+    if (isNonRoomLocationLabel(room)) continue;
+
     const week = textValue(valueFrom(row, ["week"]))?.toUpperCase();
     const rawDay = textValue(valueFrom(row, ["day"]));
     const day = DAYS.find(candidate => candidate.toLowerCase() === rawDay?.toLowerCase());
-    if (!room || !week || !day) throw new Error("Every schedule row must include a valid Room, Week, and Day.");
+    if (!week || !day) throw new Error("Every schedule row must include a valid Week and Day.");
     if (!WEEKS.includes(week as (typeof WEEKS)[number])) throw new Error(`Invalid week “${week}”.`);
     const period = parsePeriod(valueFrom(row, ["period", "periodid", "periodlabel"]));
     const occupantValue = textValue(valueFrom(row, ["occupant", "rawoccupant", "sourceoccupant"]));

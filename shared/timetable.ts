@@ -35,12 +35,18 @@ export function isLabRoom(roomNumber: string): boolean {
   return LAB_ROOM_NUMBERS.some(room => room === roomNumber);
 }
 
+export const NON_ROOM_LOCATION_LABELS = ["AUDITORIUM", "GLC GLASSROOM"] as const;
+
+export function isNonRoomLocationLabel(roomNumber: string): boolean {
+  const normalized = roomNumber.trim().toUpperCase();
+  return (NON_ROOM_LOCATION_LABELS as readonly string[]).includes(normalized);
+}
+
 export const EXCLUDED_ROOM_NUMBERS = [
   "GLC",
-  "Auditorium",
+  ...NON_ROOM_LOCATION_LABELS,
   "LT1",
   "LT2",
-  "GLC glassroom",
   "A603",
   "A708",
 ] as const;

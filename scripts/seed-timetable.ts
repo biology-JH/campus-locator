@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Pool } from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
-import type { Day, PeriodId, Week } from "../shared/timetable";
+import { isNonRoomLocationLabel, type Day, type PeriodId, type Week } from "../shared/timetable";
 import timetableData from "../server/data/timetable.json";
 import { classrooms, timetableEntries } from "../drizzle/schema";
 
@@ -29,12 +29,13 @@ async function seed() {
       );
     }
 
-    const roomValues = timetableData.rooms.map((room, displayOrder) => ({
+    const validRooms = timetableData.rooms.filter(room => !isNonRoomLocationLabel(room.room));
+    const roomValues = validRooms.map((room, displayOrder) => ({
       roomNumber: room.room,
       sourcePage: room.page,
       displayOrder,
     }));
-    const entryValues = timetableData.rooms.flatMap(room =>
+    const entryValues = validRooms.flatMap(room =>
       room.schedule.map(cell => ({
         roomNumber: room.room,
         week: cell.week as Week,

@@ -667,7 +667,7 @@ export default function Home() {
                         {activeTeacherAssignments.length ? activeTeacherAssignments.map((assignment, index) => (
                           <li className="teacher-slot-row" key={`${assignment.roomNumber}-${assignment.teacher}-${index}`}>
                             <span className="teacher-slot-name" title={displayTeacherNames(assignment.teacher)}>
-                              {assignment.isAmbiguous ? `Possible: ${displayTeacherNames(assignment.teacher)}` : displayTeacherNames(assignment.teacher)}
+                              {displayTeacherNames(assignment.teacher)}
                             </span>
                             <span className="teacher-slot-chip teacher-slot-room" title={`Assigned room ${assignment.roomNumber}`}>{assignment.roomNumber}</span>
                           </li>
