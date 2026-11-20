@@ -27,9 +27,9 @@ describe("room booking authorization and conflict mapping", () => {
       .toThrow(WeekAnchorNotConfiguredError);
   });
 
-  it("maps MySQL unique-index collisions to a room-slot conflict", () => {
-    expect(isDuplicateBookingError({ code: "ER_DUP_ENTRY", errno: 1062 })).toBe(true);
-    expect(isDuplicateBookingError({ cause: { errno: 1062 } })).toBe(true);
-    expect(isDuplicateBookingError({ code: "ER_ACCESS_DENIED_ERROR" })).toBe(false);
+  it("maps PostgreSQL unique-index collisions to a room-slot conflict", () => {
+    expect(isDuplicateBookingError({ code: "23505" })).toBe(true);
+    expect(isDuplicateBookingError({ cause: { code: "23505" } })).toBe(true);
+    expect(isDuplicateBookingError({ code: "08006" })).toBe(false);
   });
 });

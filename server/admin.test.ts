@@ -32,14 +32,13 @@ function makeDbHarness(failOnTimetableUpsert = false): DbHarness {
   const tx = {
     insert: (table: unknown) => ({
       values: (rows: unknown[]) => ({
-        onDuplicateKeyUpdate: async () => {
+        onConflictDoUpdate: async () => {
           const tableName = table === classrooms ? "classrooms" : "timetable_entries";
           operations.push({ kind: "upsert", table: tableName, rows });
           if (failOnTimetableUpsert && table === timetableEntries) {
             throw Object.assign(new Error("mocked timetable upsert failure"), {
-              code: "ER_TEST_WRITE",
-              errno: 1234,
-              sqlState: "HY000",
+              code: "23505",
+              detail: "mocked unique constraint violation",
             });
           }
         },
@@ -274,7 +273,7 @@ describe("Admin Excel upload route", () => {
       .toHaveLength(80);
     expect(harness.operations.filter(operation => operation.kind === "delete")).toHaveLength(2);
     expect(harness.wasRolledBack()).toBe(false);
-    console.info("[Local simulation] Excel upload success: server parsed Schedule.xlsx; UPSERT committed to mocked DB (1 room, 80 entries); shared Aiven was not modified.");
+    console.info("[Local simulation] Excel upload success: server parsed Schedule.xlsx; PostgreSQL-style upserts committed to the mocked DB (1 room, 80 entries).");
   });
 
   it("normalizes bracketed teacher text and filters excluded codes in an isolated Excel upload", async () => {
@@ -304,7 +303,7 @@ describe("Admin Excel upload route", () => {
       occupantDisplay: "Xinyao (Yoyo) Feng",
       staffCodes: "KG,XF",
     });
-    console.info("[Local simulation] Name-normalized Excel upload success: bracketed names canonicalized and excluded codes removed in mock-only UPSERT; shared Aiven was not modified.");
+    console.info("[Local simulation] Name-normalized Excel upload success: bracketed names canonicalized and excluded codes removed in mock-only upserts.");
   });
 
   it("accepts a valid password session for Excel sync while keeping all database calls mocked", async () => {
@@ -331,7 +330,7 @@ describe("Admin Excel upload route", () => {
     expect(harness.operations.filter(operation => operation.kind === "upsert").map(operation => operation.table))
       .toEqual(["classrooms", "timetable_entries"]);
     expect(authenticateRequestMock).not.toHaveBeenCalled();
-    console.info("[Local simulation] Password-authenticated Excel sync success: mock UPSERT committed; shared Aiven was not modified.");
+    console.info("[Local simulation] Password-authenticated Excel sync success: mock PostgreSQL upserts committed.");
   });
 
   it("returns 422 and performs no database write for an incomplete workbook", async () => {
@@ -370,7 +369,7 @@ describe("Admin Excel upload route", () => {
       expect(harness.wasRolledBack()).toBe(true);
       expect(log).toHaveBeenCalledWith(
         "[Admin] Excel timetable transaction failed; the database transaction was rolled back.",
-        expect.objectContaining({ code: "ER_TEST_WRITE", errno: 1234, sqlState: "HY000", message: "mocked timetable upsert failure" }),
+        expect.objectContaining({ code: "23505", detail: "mocked unique constraint violation", message: "mocked timetable upsert failure" }),
       );
     } finally {
       log.mockRestore();

@@ -463,7 +463,7 @@ export default function Home() {
                   <div className="batch-editor-content">
                     <p className="batch-editor-help">Stage as many room swaps as needed. Nothing is written until you confirm Save.</p>
                     <p className="batch-editor-shared-warning">
-                      This Preview uses the shared Aiven timetable database also used by the live site. Confirming Save will update that shared schedule.
+                      This Preview uses the shared timetable database also used by the live site. Confirming Save will update that shared schedule.
                     </p>
 
                     {batchEditQuery.isFetching ? (
@@ -561,7 +561,7 @@ export default function Home() {
                         {showBatchSaveConfirmation ? (
                           <div className="batch-editor-confirmation" role="group" aria-labelledby="batch-confirm-title" aria-describedby="batch-confirm-copy">
                             <strong id="batch-confirm-title">Confirm shared schedule update</strong>
-                            <p id="batch-confirm-copy">This saves the selected slot to Aiven, which is shared with the live timetable. The website code remains local, but the schedule data will change.</p>
+                            <p id="batch-confirm-copy">This saves the selected slot to the database shared with the live timetable. The website code remains local, but the schedule data will change.</p>
                             <div>
                               <button type="button" className="batch-editor-cancel" onClick={() => setShowBatchSaveConfirmation(false)} disabled={saveBatchMutation.isPending}>Back to edits</button>
                               <button type="button" className="batch-editor-save" onClick={confirmBatchSave} disabled={saveBatchMutation.isPending || batchHasConflicts || !batchHasChanges}>

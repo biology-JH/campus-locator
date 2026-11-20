@@ -1,8 +1,10 @@
-import "dotenv/config";
+import dotenv from "dotenv";
 import { createServer } from "http";
 import { createExpressApp } from "./app.js";
 import { setupVite } from "./vite";
 import { serveStatic } from "./static";
+
+dotenv.config({ path: [".env.local", ".env"] });
 
 async function startServer() {
   const app = createExpressApp();

@@ -183,15 +183,15 @@ function errorDetails(error: unknown) {
     name?: unknown;
     message?: unknown;
     code?: unknown;
-    errno?: unknown;
-    sqlState?: unknown;
+    detail?: unknown;
+    constraint?: unknown;
     stack?: unknown;
   };
   return {
     name: typeof value.name === "string" ? value.name : "Error",
     code: typeof value.code === "string" || typeof value.code === "number" ? value.code : undefined,
-    errno: typeof value.errno === "number" ? value.errno : undefined,
-    sqlState: typeof value.sqlState === "string" ? value.sqlState : undefined,
+    detail: typeof value.detail === "string" ? value.detail.slice(0, 1600) : undefined,
+    constraint: typeof value.constraint === "string" ? value.constraint : undefined,
     message: typeof value.message === "string" ? value.message.slice(0, 1600) : "Unknown error",
     stack: typeof value.stack === "string" ? value.stack.split("\n").slice(0, 7).join("\n") : undefined,
   };
@@ -220,20 +220,22 @@ async function upsertTimetable(timetable: ParsedTimetable) {
 
   await db.transaction(async tx => {
     for (let index = 0; index < roomRows.length; index += 200) {
-      await tx.insert(classrooms).values(roomRows.slice(index, index + 200)).onDuplicateKeyUpdate({
+      await tx.insert(classrooms).values(roomRows.slice(index, index + 200)).onConflictDoUpdate({
+        target: classrooms.roomNumber,
         set: {
-          sourcePage: sql`VALUES(${classrooms.sourcePage})`,
-          displayOrder: sql`VALUES(${classrooms.displayOrder})`,
+          sourcePage: sql`excluded."sourcePage"`,
+          displayOrder: sql`excluded."displayOrder"`,
         },
       });
     }
     for (let index = 0; index < entries.length; index += 200) {
-      await tx.insert(timetableEntries).values(entries.slice(index, index + 200)).onDuplicateKeyUpdate({
+      await tx.insert(timetableEntries).values(entries.slice(index, index + 200)).onConflictDoUpdate({
+        target: [timetableEntries.roomNumber, timetableEntries.week, timetableEntries.day, timetableEntries.period],
         set: {
-          occupant: sql`VALUES(${timetableEntries.occupant})`,
-          occupantDisplay: sql`VALUES(${timetableEntries.occupantDisplay})`,
-          staffCodes: sql`VALUES(${timetableEntries.staffCodes})`,
-          sourcePage: sql`VALUES(${timetableEntries.sourcePage})`,
+          occupant: sql`excluded."occupant"`,
+          occupantDisplay: sql`excluded."occupantDisplay"`,
+          staffCodes: sql`excluded."staffCodes"`,
+          sourcePage: sql`excluded."sourcePage"`,
         },
       });
     }

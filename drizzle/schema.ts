@@ -1,18 +1,33 @@
-import { index, int, mysqlEnum, mysqlTable, text, timestamp, uniqueIndex, varchar } from "drizzle-orm/mysql-core";
+import {
+  index,
+  integer,
+  pgEnum,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  uniqueIndex,
+  varchar,
+} from "drizzle-orm/pg-core";
 
-/**
- * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- */
-export const users = mysqlTable("users", {
-  id: int("id").autoincrement().primaryKey(),
+export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
+export const weekEnum = pgEnum("week", ["A", "B"]);
+export const dayEnum = pgEnum("day", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]);
+export const periodEnum = pgEnum("period", ["mentor", "lesson1", "lesson2", "lesson3", "lesson4", "lesson5", "lesson6", "lesson7"]);
+export const scheduleWeekEnum = pgEnum("schedule_week", ["A", "B"]);
+export const weekdayEnum = pgEnum("weekday", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]);
+export const classPeriodEnum = pgEnum("class_period", ["mentor", "lesson1", "lesson2", "lesson3", "lesson4", "lesson5", "lesson6", "lesson7"]);
+
+/** Core user table backing the existing authentication flow. */
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
   openId: varchar("openId", { length: 64 }).notNull().unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  role: userRoleEnum("role").default("user").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
 });
 
@@ -20,13 +35,13 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 /** All classrooms appearing in the supplied aSc summary timetable. */
-export const classrooms = mysqlTable(
+export const classrooms = pgTable(
   "classrooms",
   {
-    id: int("id").autoincrement().primaryKey(),
+    id: serial("id").primaryKey(),
     roomNumber: varchar("roomNumber", { length: 64 }).notNull().unique(),
-    sourcePage: int("sourcePage").notNull(),
-    displayOrder: int("displayOrder").notNull(),
+    sourcePage: integer("sourcePage").notNull(),
+    displayOrder: integer("displayOrder").notNull(),
   },
   table => ({
     displayOrderIndex: index("classrooms_display_order_idx").on(table.displayOrder),
@@ -34,23 +49,23 @@ export const classrooms = mysqlTable(
 );
 
 /** One normalized record per room, alternating week, weekday, and requested period. */
-export const timetableEntries = mysqlTable(
+export const timetableEntries = pgTable(
   "timetable_entries",
   {
-    id: int("id").autoincrement().primaryKey(),
+    id: serial("id").primaryKey(),
     roomNumber: varchar("roomNumber", { length: 64 })
       .notNull()
       .references(() => classrooms.roomNumber, { onDelete: "cascade" }),
-    week: mysqlEnum("week", ["A", "B"]).notNull(),
-    day: mysqlEnum("day", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]).notNull(),
-    period: mysqlEnum("period", ["mentor", "lesson1", "lesson2", "lesson3", "lesson4", "lesson5", "lesson6", "lesson7"]).notNull(),
-    /** Exact abbreviated text extracted from the source PDF; null means explicitly vacant. */
+    week: weekEnum("week").notNull(),
+    day: dayEnum("day").notNull(),
+    period: periodEnum("period").notNull(),
+    /** Exact abbreviated text extracted from the source; null means explicitly vacant. */
     occupant: text("occupant"),
     /** Display text with uniquely resolved staff abbreviations removed; class/group data is kept. */
     occupantDisplay: text("occupantDisplay"),
     /** Comma-separated teacher abbreviation codes matched to this timetable cell. */
     staffCodes: text("staffCodes"),
-    sourcePage: int("sourcePage").notNull(),
+    sourcePage: integer("sourcePage").notNull(),
   },
   table => ({
     roomSlotUnique: uniqueIndex("timetable_room_slot_unique").on(
@@ -67,18 +82,18 @@ export type Classroom = typeof classrooms.$inferSelect;
 export type TimetableEntry = typeof timetableEntries.$inferSelect;
 
 /** A recurring reservation for one classroom and one alternating timetable slot. */
-export const bookings = mysqlTable(
+export const bookings = pgTable(
   "bookings",
   {
-    id: int("id").autoincrement().primaryKey(),
-    roomId: int("room_id")
+    id: serial("id").primaryKey(),
+    roomId: integer("room_id")
       .notNull()
       .references(() => classrooms.id, { onDelete: "cascade" }),
     teacherId: varchar("teacher_id", { length: 64 }).notNull(),
     teacherName: varchar("teacher_name", { length: 160 }).notNull(),
-    scheduleWeek: mysqlEnum("schedule_week", ["A", "B"]).notNull(),
-    weekday: mysqlEnum("weekday", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]).notNull(),
-    classPeriod: mysqlEnum("class_period", ["mentor", "lesson1", "lesson2", "lesson3", "lesson4", "lesson5", "lesson6", "lesson7"]).notNull(),
+    scheduleWeek: scheduleWeekEnum("schedule_week").notNull(),
+    weekday: weekdayEnum("weekday").notNull(),
+    classPeriod: classPeriodEnum("class_period").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   table => ({

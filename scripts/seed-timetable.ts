@@ -1,16 +1,18 @@
-import "dotenv/config";
-import { createPool } from "mysql2/promise";
-import { drizzle } from "drizzle-orm/mysql2";
+import dotenv from "dotenv";
+import { Pool } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
 import type { Day, PeriodId, Week } from "../shared/timetable";
 import timetableData from "../server/data/timetable.json";
 import { classrooms, timetableEntries } from "../drizzle/schema";
 
-const databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is required to seed the timetable.");
+dotenv.config({ path: [".env.local", ".env"] });
+
+const connectionString = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL_UNPOOLED or DATABASE_URL is required to seed the timetable.");
 }
 
-const pool = createPool(databaseUrl);
+const pool = new Pool({ connectionString });
 const db = drizzle(pool);
 const chunkSize = 400;
 

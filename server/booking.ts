@@ -60,8 +60,8 @@ export function isDuplicateBookingError(error: unknown): boolean {
     const candidate = pending.pop();
     if (!candidate || typeof candidate !== "object" || seen.has(candidate)) continue;
     seen.add(candidate);
-    const value = candidate as { code?: unknown; errno?: unknown; cause?: unknown };
-    if (value.code === "ER_DUP_ENTRY" || value.errno === 1062) return true;
+    const value = candidate as { code?: unknown; cause?: unknown };
+    if (value.code === "23505") return true;
     if (value.cause) pending.push(value.cause);
   }
   return false;

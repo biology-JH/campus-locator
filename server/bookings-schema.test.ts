@@ -1,44 +1,35 @@
-import { readFile } from "node:fs/promises";
-import { afterEach, describe, expect, it, vi } from "vitest";
-import {
-  BOOKINGS_MIGRATION_CONTENT,
-  ensureBookingsSchema,
-} from "./bookings-schema.js";
+import { describe, expect, it, vi } from "vitest";
+import { ensureBookingsSchema } from "./bookings-schema.js";
 
-afterEach(() => vi.restoreAllMocks());
+function makeDatabase() {
+  const limit = vi.fn().mockResolvedValue([]);
+  const from = vi.fn().mockReturnValue({ limit });
+  const select = vi.fn().mockReturnValue({ from });
+  return { db: { select }, select, from, limit };
+}
 
-describe("bookings schema migration", () => {
-  it("matches the checked-in additive migration bytes and journal order", async () => {
-    const file = await readFile(new URL("../drizzle/0003_add_bookings.sql", import.meta.url), "utf8");
-    expect(BOOKINGS_MIGRATION_CONTENT).toBe(file);
-    expect(file).toContain("CONSTRAINT `booking_room_slot_unique` UNIQUE (`room_id`,`schedule_week`,`weekday`,`class_period`)");
-    expect(file).toContain("CREATE TABLE IF NOT EXISTS `bookings`");
-    expect(file).toContain("FOREIGN KEY (`room_id`) REFERENCES `classrooms`(`id`)");
+describe("PostgreSQL bookings schema verification", () => {
+  it("checks the migrated bookings table once per database object", async () => {
+    const mock = makeDatabase();
+
+    await ensureBookingsSchema(mock.db as never);
+    await ensureBookingsSchema(mock.db as never);
+
+    expect(mock.select).toHaveBeenCalledTimes(1);
+    expect(mock.from).toHaveBeenCalledTimes(1);
+    expect(mock.limit).toHaveBeenCalledWith(0);
   });
 
-  it("creates only the additive bookings table once per database object", async () => {
-    const db = { execute: vi.fn().mockResolvedValue(undefined) };
-
-    await ensureBookingsSchema(db as never);
-    await ensureBookingsSchema(db as never);
-
-    expect(db.execute).toHaveBeenCalledTimes(1);
-    expect(BOOKINGS_MIGRATION_CONTENT).toContain("booking_room_slot_unique");
-    expect(BOOKINGS_MIGRATION_CONTENT).not.toMatch(/DROP\s+TABLE|DELETE\s+FROM/i);
-  });
-
-  it("allows a retry if the first migration attempt fails", async () => {
-    const db = {
-      execute: vi.fn()
-        .mockRejectedValueOnce(Object.assign(new Error("not surfaced"), { code: "ER_TEST" }))
-        .mockResolvedValue(undefined),
-    };
+  it("allows a retry if the first table verification fails", async () => {
+    const mock = makeDatabase();
+    mock.limit.mockRejectedValueOnce(Object.assign(new Error("not surfaced"), { code: "42P01" }));
     const errorSpy = vi.spyOn(console, "error").mockImplementation(() => undefined);
 
-    await expect(ensureBookingsSchema(db as never)).rejects.toThrow(/temporarily unavailable/);
-    await ensureBookingsSchema(db as never);
+    await expect(ensureBookingsSchema(mock.db as never)).rejects.toThrow(/temporarily unavailable/);
+    await ensureBookingsSchema(mock.db as never);
 
-    expect(db.execute).toHaveBeenCalledTimes(2);
-    expect(errorSpy).toHaveBeenCalledWith("[Bookings] Schema initialization failed (ER_TEST).");
+    expect(mock.select).toHaveBeenCalledTimes(2);
+    expect(errorSpy).toHaveBeenCalledWith("[Bookings] PostgreSQL schema verification failed (42P01).");
+    errorSpy.mockRestore();
   });
 });

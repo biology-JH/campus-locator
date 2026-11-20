@@ -1,7 +1,9 @@
 // Vercel Deploy Fix v3 - Stable Core Setup
-import "dotenv/config";
+import dotenv from "dotenv";
 import { createExpressApp } from "./server/_core/app.js";
 import { serveStatic } from "./server/_core/static.js";
+
+dotenv.config({ path: [".env.local", ".env"] });
 
 // 1. Initialize Manus's core pre-configured database application engine
 const app = createExpressApp();

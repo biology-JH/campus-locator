@@ -1,54 +1,51 @@
-import "dotenv/config";
-import { createPool } from "mysql2/promise";
+import dotenv from "dotenv";
+import { sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 import type { Day, PeriodId, Week } from "../shared/timetable";
 import timetableData from "../server/data/timetable.json";
+import { timetableEntries } from "../drizzle/schema";
 
-const databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is required to backfill staff attribution.");
+dotenv.config({ path: [".env.local", ".env"] });
+
+const connectionString = process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error("DATABASE_URL_UNPOOLED or DATABASE_URL is required to backfill staff attribution.");
 }
 
-const pool = createPool(databaseUrl);
+const pool = new Pool({ connectionString });
+const db = drizzle(pool);
 const chunkSize = 200;
 
-type BackfillRow = [string, Week, Day, PeriodId, string | null, string | null, string | null, number];
-
 async function backfill() {
-  const rows: BackfillRow[] = timetableData.rooms.flatMap(room =>
-    room.schedule.map((cell): BackfillRow => [
-      room.room,
-      cell.week as Week,
-      cell.day as Day,
-      cell.period as PeriodId,
-      cell.occupant,
-      cell.occupantDisplay,
-      cell.staffCodes.join(",") || null,
-      room.page,
-    ]),
+  const rows = timetableData.rooms.flatMap(room =>
+    room.schedule.map(cell => ({
+      roomNumber: room.room,
+      week: cell.week as Week,
+      day: cell.day as Day,
+      period: cell.period as PeriodId,
+      occupant: cell.occupant,
+      occupantDisplay: cell.occupantDisplay,
+      staffCodes: cell.staffCodes.join(",") || null,
+      sourcePage: room.page,
+    })),
   );
-  const connection = await pool.getConnection();
 
   try {
-    await connection.beginTransaction();
-    for (let index = 0; index < rows.length; index += chunkSize) {
-      const batch = rows.slice(index, index + chunkSize);
-      await connection.query(
-        `INSERT INTO timetable_entries
-          (roomNumber, week, day, period, occupant, occupantDisplay, staffCodes, sourcePage)
-         VALUES ?
-         ON DUPLICATE KEY UPDATE
-          occupantDisplay = VALUES(occupantDisplay),
-          staffCodes = VALUES(staffCodes)`,
-        [batch],
-      );
-    }
-    await connection.commit();
+    await db.transaction(async tx => {
+      for (let index = 0; index < rows.length; index += chunkSize) {
+        const batch = rows.slice(index, index + chunkSize);
+        await tx.insert(timetableEntries).values(batch).onConflictDoUpdate({
+          target: [timetableEntries.roomNumber, timetableEntries.week, timetableEntries.day, timetableEntries.period],
+          set: {
+            occupantDisplay: sql`excluded."occupantDisplay"`,
+            staffCodes: sql`excluded."staffCodes"`,
+          },
+        });
+      }
+    });
     console.log(`Backfilled staff attribution for ${rows.length} source timetable cells.`);
-  } catch (error) {
-    await connection.rollback();
-    throw error;
   } finally {
-    connection.release();
     await pool.end();
   }
 }

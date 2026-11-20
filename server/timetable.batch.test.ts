@@ -177,7 +177,7 @@ describe("Admin batch schedule save", () => {
     expect(memory.db.transaction).toHaveBeenCalledOnce();
     expect(memory.updatedRooms).toHaveLength(count);
     expect(memory.entryRows.map(entry => entry.occupant)).toEqual(expectedOccupants);
-    console.info(`[Local simulation] Batch schedule save success: ${label} swap committed to in-memory mock DB (${count} rooms); shared Aiven was not modified.`);
+    console.info(`[Local simulation] Batch schedule save success: ${label} swap committed to the in-memory mock DB (${count} rooms).`);
   });
 
   it("rejects a non-Admin before it accesses the database", async () => {
@@ -223,7 +223,7 @@ describe("Admin batch schedule save", () => {
     expect(result.updatedRooms).toBe(3);
     expect(memory.db.transaction).toHaveBeenCalledOnce();
     expect(memory.entryRows.map(entry => entry.occupant)).toEqual(["Class B", "Class C", "Class A"]);
-    console.info("[Local simulation] Password session batch-save success: 3-way swap committed to in-memory mock DB; shared Aiven was not modified.");
+    console.info("[Local simulation] Password session batch-save success: 3-way swap committed to the in-memory mock DB.");
   });
 });
 
