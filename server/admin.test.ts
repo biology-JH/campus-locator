@@ -331,6 +331,30 @@ describe("Admin Excel upload route", () => {
     console.info("[Local simulation] Name-normalized Excel upload success: bracketed names canonicalized and excluded codes removed in mock-only upserts.");
   });
 
+  it("corrects Uni cor n in uploaded occupant and display text while preserving group suffixes", async () => {
+    authenticateRequestMock.mockResolvedValue({ role: "admin" });
+    const harness = makeDbHarness();
+    getDbMock.mockResolvedValue(harness.db);
+    const response = await fetch(`${baseUrl}/api/admin/timetable/excel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "X-Requested-With": "RoomfinderAdmin",
+      },
+      body: new Uint8Array(createWorkbook({
+        occupant: "Uni cor n3 S S Y",
+        occupantDisplay: "Uni cor n3",
+      })),
+    });
+    const entries = harness.operations.find(operation => operation.table === "timetable_entries" && operation.kind === "upsert")?.rows as Array<{
+      week: string; day: string; period: string; occupant: string; occupantDisplay: string;
+    }>;
+    const imported = entries.find(entry => entry.week === "A" && entry.day === "Monday" && entry.period === "lesson1");
+
+    expect(response.status).toBe(200);
+    expect(imported).toMatchObject({ occupant: "Unicorn3 S S Y", occupantDisplay: "Unicorn3" });
+  });
+
   it("accepts a valid password session for Excel sync while keeping all database calls mocked", async () => {
     authenticateRequestMock.mockRejectedValue(new Error("No OAuth account session"));
     const harness = makeDbHarness();

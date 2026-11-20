@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Pool } from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { isNonRoomLocationLabel, type Day, type PeriodId, type Week } from "../shared/timetable";
+import { isNonRoomLocationLabel, normalizeKnownTimetableText, type Day, type PeriodId, type Week } from "../shared/timetable";
 import timetableData from "../server/data/timetable.json";
 import { classrooms, timetableEntries } from "../drizzle/schema";
 
@@ -41,8 +41,8 @@ async function seed() {
         week: cell.week as Week,
         day: cell.day as Day,
         period: cell.period as PeriodId,
-        occupant: cell.occupant,
-        occupantDisplay: cell.occupantDisplay,
+        occupant: normalizeKnownTimetableText(cell.occupant),
+        occupantDisplay: normalizeKnownTimetableText(cell.occupantDisplay),
         staffCodes: cell.staffCodes.join(",") || null,
         sourcePage: room.page,
       })),

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { TrpcContext } from "./_core/context.js";
-import { bookingRouter, isDuplicateBookingError } from "./booking.js";
+import { bookingRouter, bookingTeacherNames, canonicalBookingTeacherName, isDuplicateBookingError } from "./booking.js";
+import { publicTeacherNames } from "./timetable.js";
 import { scheduleSlotForDate, WeekAnchorNotConfiguredError } from "../shared/school-week.js";
 
 function caller(sitePasswordSession: boolean) {
@@ -16,10 +17,24 @@ function caller(sitePasswordSession: boolean) {
 
 describe("room booking authorization and conflict mapping", () => {
   it("rejects a guest without a verified shared SITE_PASSWORD session", async () => {
+    await expect(caller(false).teacherList())
+      .rejects.toMatchObject({ code: "UNAUTHORIZED" });
     await expect(caller(false).slotReservations({ date: "2026-10-27", period: "lesson1" }))
       .rejects.toMatchObject({ code: "UNAUTHORIZED" });
-    await expect(caller(false).create({ date: "2026-10-27", period: "lesson1", roomId: 1, teacherName: "Teacher" }))
+    await expect(caller(false).create({ date: "2026-10-27", period: "lesson1", roomId: 1, teacherName: "Guest" }))
       .rejects.toMatchObject({ code: "UNAUTHORIZED" });
+  });
+
+  it("exposes Guest only in the password-protected booking name list", async () => {
+    expect(publicTeacherNames()).not.toContain("Guest");
+    expect(bookingTeacherNames()).toContain("Guest");
+    await expect(caller(true).teacherList()).resolves.toContain("Guest");
+  });
+
+  it("canonicalizes Guest as an accepted booking name", () => {
+    expect(canonicalBookingTeacherName("Guest")).toBe("Guest");
+    expect(canonicalBookingTeacherName("guest")).toBe("Guest");
+    expect(canonicalBookingTeacherName("Not a staff member")).toBe("");
   });
 
   it("fails closed until the calendar Week A anchor is verified", () => {

@@ -34,7 +34,7 @@ export default function RoomBookingPanel() {
   const utils = trpc.useUtils();
 
   const roomQuery = trpc.timetable.roomList.useQuery(undefined, { staleTime: 60_000 });
-  const teacherQuery = trpc.timetable.teacherList.useQuery(undefined, { staleTime: 300_000 });
+  const teacherQuery = trpc.bookings.teacherList.useQuery(undefined, { staleTime: 300_000 });
   const slotQuery = trpc.bookings.slotReservations.useQuery({ date, period }, { retry: false, staleTime: 15_000 });
   const slot = slotQuery.data;
   const thisWeekDate = useMemo(() => dateInCalendarWeek(today, 0, date), [today, date]);

@@ -240,6 +240,7 @@ export const timetableRouter = router({
           .select({
             roomNumber: timetableEntries.roomNumber,
             occupant: timetableEntries.occupant,
+            occupantDisplay: timetableEntries.occupantDisplay,
             staffCodes: timetableEntries.staffCodes,
           })
           .from(timetableEntries)
@@ -252,7 +253,7 @@ export const timetableRouter = router({
       ]);
 
       const roomOrder = new Map(roomRows.map(room => [room.roomNumber, room.displayOrder]));
-      const activeByRoomAndName = new Map<string, { teacher: string; roomNumber: string; isAmbiguous: boolean }>();
+      const activeByRoomAndName = new Map<string, { teacher: string; roomNumber: string; subject: string | null; isAmbiguous: boolean }>();
       const activeNames = new Set<string>();
 
       for (const entry of entryRows) {
@@ -278,6 +279,7 @@ export const timetableRouter = router({
             activeByRoomAndName.set(key, {
               teacher: names.join(" / "),
               roomNumber: entry.roomNumber,
+              subject: capitalizeBracketedNames(formatSubjectDisplay(entry.occupantDisplay ?? entry.occupant)),
               isAmbiguous: names.length > 1,
             });
           }

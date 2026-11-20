@@ -270,6 +270,13 @@ describe("Teacher Finder directory exclusions and name formatting", () => {
     ];
 
     expect(result.activeTeachers.some(assignment => assignment.teacher.includes("Kouaho (Guy) Gueye"))).toBe(true);
+    expect(result.activeTeachers).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        teacher: expect.stringContaining("Kouaho (Guy) Gueye"),
+        roomNumber: "A",
+        subject: "Class A",
+      }),
+    ]));
     expect(names.some(isExcludedTeacherName)).toBe(false);
     console.info("[Local simulation] Teacher Finder list success: active/free API results omit all excluded names; database access used an in-memory mock only.");
   });

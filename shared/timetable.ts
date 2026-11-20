@@ -50,3 +50,8 @@ export const EXCLUDED_ROOM_NUMBERS = [
   "A603",
   "A708",
 ] as const;
+
+export function normalizeKnownTimetableText(value: string | null): string | null {
+  if (value === null) return null;
+  return value.replace(/\buni\s+cor\s+n/gi, "Unicorn");
+}

@@ -2,7 +2,7 @@ import express, { type Request, type RequestHandler } from "express";
 import { asc, notInArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import * as XLSX from "xlsx";
-import { DAYS, isNonRoomLocationLabel, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
+import { DAYS, isNonRoomLocationLabel, normalizeKnownTimetableText, PERIODS, WEEKS, type PeriodId } from "../shared/timetable.js";
 import { capitalizeBracketedNames, isExcludedTeacherCode, isExcludedTeacherName } from "../shared/teacher-names.js";
 import { getDb } from "./db.js";
 import { classrooms, timetableEntries } from "../drizzle/schema.js";
@@ -140,9 +140,9 @@ function parseWorkbookBuffer(buffer: Buffer): ParsedTimetable {
     if (!week || !day) throw new Error("Every schedule row must include a valid Week and Day.");
     if (!WEEKS.includes(week as (typeof WEEKS)[number])) throw new Error(`Invalid week “${week}”.`);
     const period = parsePeriod(valueFrom(row, ["period", "periodid", "periodlabel"]));
-    const occupantValue = textValue(valueFrom(row, ["occupant", "rawoccupant", "sourceoccupant"]));
+    const occupantValue = normalizeKnownTimetableText(textValue(valueFrom(row, ["occupant", "rawoccupant", "sourceoccupant"])));
     const occupant = occupantValue ? capitalizeBracketedNames(occupantValue) : null;
-    const displayValue = textValue(valueFrom(row, ["occupantdisplay", "subject", "display"])) ?? occupant;
+    const displayValue = normalizeKnownTimetableText(textValue(valueFrom(row, ["occupantdisplay", "subject", "display"]))) ?? occupant;
     const occupantDisplay = displayValue ? capitalizeBracketedNames(displayValue) : null;
     const staffCodes = (textValue(valueFrom(row, ["staffcodes", "teachercodes"])) ?? "")
       .split(",").map(code => code.trim())

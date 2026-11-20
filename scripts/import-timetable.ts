@@ -3,7 +3,7 @@ import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import XLSX from "xlsx";
-import { DAYS, isNonRoomLocationLabel, PERIODS, WEEKS, type Day, type PeriodId, type Week } from "../shared/timetable";
+import { DAYS, isNonRoomLocationLabel, normalizeKnownTimetableText, PERIODS, WEEKS, type Day, type PeriodId, type Week } from "../shared/timetable";
 import { capitalizeBracketedNames, isExcludedTeacherCode, isExcludedTeacherName } from "../shared/teacher-names";
 import { classrooms, timetableEntries } from "../drizzle/schema";
 
@@ -106,9 +106,9 @@ function parseWorkbook(filePath: string): { rooms: ImportRoom[]; entries: Import
     if (seenSlots.has(slotKey)) throw new Error(`Duplicate timetable slot on row ${rowNumber}: ${room} ${weekText} ${day} ${period}.`);
     seenSlots.add(slotKey);
 
-    const occupantText = nullableText(getValue(row, ["occupant", "rawoccupant", "sourceoccupant"]));
+    const occupantText = normalizeKnownTimetableText(nullableText(getValue(row, ["occupant", "rawoccupant", "sourceoccupant"])));
     const occupant = occupantText ? capitalizeBracketedNames(occupantText) ?? null : null;
-    const displayText = nullableText(getValue(row, ["occupantdisplay", "subject", "display"])) ?? occupant;
+    const displayText = normalizeKnownTimetableText(nullableText(getValue(row, ["occupantdisplay", "subject", "display"]))) ?? occupant;
     const occupantDisplay = displayText ? capitalizeBracketedNames(displayText) ?? null : null;
     const staffCodes = (nullableText(getValue(row, ["staffcodes", "teachercodes"])) ?? "")
       .split(",")

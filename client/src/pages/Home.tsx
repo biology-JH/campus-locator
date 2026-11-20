@@ -87,6 +87,7 @@ export default function Home() {
   const [roomInput, setRoomInput] = useState("");
   const [roomFilter, setRoomFilter] = useState("");
   const [teacherInput, setTeacherInput] = useState("");
+  const [expandedActiveTeacher, setExpandedActiveTeacher] = useState<string | null>(null);
   const [isModifySchedule, setIsModifySchedule] = useState(false);
   const [batchDraft, setBatchDraft] = useState<Record<string, string>>({});
   const [batchRoomSearch, setBatchRoomSearch] = useState("");
@@ -665,11 +666,28 @@ export default function Home() {
                       </div>
                       <ul className="teacher-slot-list" aria-label={`Active teachers for ${day}, ${selectedPeriod}, Week ${week}`}>
                         {activeTeacherAssignments.length ? activeTeacherAssignments.map((assignment, index) => (
-                          <li className="teacher-slot-row" key={`${assignment.roomNumber}-${assignment.teacher}-${index}`}>
-                            <span className="teacher-slot-name" title={displayTeacherNames(assignment.teacher)}>
+                          <li
+                            className={`teacher-slot-row${expandedActiveTeacher === JSON.stringify([week, day, period, assignment.roomNumber, assignment.teacher]) ? " is-expanded" : ""}`}
+                            key={`${assignment.roomNumber}-${assignment.teacher}-${index}`}
+                          >
+                            <button
+                              type="button"
+                              className="teacher-slot-name teacher-slot-name-button"
+                              title={displayTeacherNames(assignment.teacher)}
+                              aria-expanded={expandedActiveTeacher === JSON.stringify([week, day, period, assignment.roomNumber, assignment.teacher])}
+                              aria-controls={`active-teacher-subject-${index}`}
+                              onClick={() => {
+                                const key = JSON.stringify([week, day, period, assignment.roomNumber, assignment.teacher]);
+                                setExpandedActiveTeacher(current => current === key ? null : key);
+                              }}
+                            >
                               {displayTeacherNames(assignment.teacher)}
-                            </span>
+                            </button>
                             <span className="teacher-slot-chip teacher-slot-room" title={`Assigned room ${assignment.roomNumber}`}>{assignment.roomNumber}</span>
+                            <div id={`active-teacher-subject-${index}`} className="teacher-slot-subject" hidden={expandedActiveTeacher !== JSON.stringify([week, day, period, assignment.roomNumber, assignment.teacher])}>
+                              <b>Subject</b>
+                              <span>{capitalizeBracketedNames(assignment.subject ?? "Subject not available")}</span>
+                            </div>
                           </li>
                         )) : <li className="teacher-slot-empty">No resolved teacher assignments for this slot.</li>}
                       </ul>

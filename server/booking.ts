@@ -53,6 +53,15 @@ function stableTeacherId(name: string): string {
   return createHash("sha256").update(name.trim().toLocaleLowerCase("en")).digest("hex").slice(0, 32);
 }
 
+export function bookingTeacherNames(): string[] {
+  return [...new Set([...publicTeacherNames(), "Guest"])].sort((left, right) => left.localeCompare(right));
+}
+
+export function canonicalBookingTeacherName(candidate: string): string {
+  const normalized = capitalizeBracketedNames(candidate.trim());
+  return bookingTeacherNames().find(name => name.toLocaleLowerCase("en") === normalized.toLocaleLowerCase("en")) ?? "";
+}
+
 export function isDuplicateBookingError(error: unknown): boolean {
   const pending: unknown[] = [error];
   const seen = new Set<object>();
@@ -73,12 +82,10 @@ function safeDatabaseErrorCode(error: unknown): string | undefined {
   return typeof code === "string" ? code : undefined;
 }
 
-function canonicalTeacherName(candidate: string): string {
-  const normalized = capitalizeBracketedNames(candidate.trim());
-  return publicTeacherNames().find(name => name.toLocaleLowerCase("en") === normalized.toLocaleLowerCase("en")) ?? "";
-}
-
 export const bookingRouter = router({
+  teacherList: sitePasswordProcedure
+    .query(() => bookingTeacherNames()),
+
   slotReservations: sitePasswordProcedure
     .input(z.object({ date: dateInput, period: periodInput }).strict())
     .query(async ({ input }) => {
@@ -124,7 +131,7 @@ export const bookingRouter = router({
       await ensureBookingsSchema(db);
       const slot = resolveCalendarSlot(input.date, input.period);
 
-      const teacherName = canonicalTeacherName(input.teacherName);
+      const teacherName = canonicalBookingTeacherName(input.teacherName);
       if (!teacherName) {
         throw new TRPCError({ code: "BAD_REQUEST", message: "Select a teacher from the current staff list." });
       }
